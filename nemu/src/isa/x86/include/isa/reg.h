@@ -17,6 +17,7 @@ enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
  */
 
 typedef struct {
+ union{
   struct {
     uint32_t _32;
     uint16_t _16;
@@ -28,11 +29,9 @@ typedef struct {
   /* In NEMU, rtlreg_t is exactly uint32_t. This makes RTL instructions
    * in PA2 able to directly access these registers.
    */
-  union{
+  
   rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
-  uint16_t ax, cx, dx, bx, sp, bp, si, di;
-  uint8_t  ah,al,ch,cl,dh,dl,bh,bl;
-  };
+ };
   vaddr_t pc;
 
 } CPU_state;
