@@ -17,6 +17,7 @@ enum { R_AL, R_CL, R_DL, R_BL, R_AH, R_CH, R_DH, R_BH };
  */
 
 typedef struct {
+union{
  union{
   struct {
    union{	  
@@ -32,8 +33,10 @@ typedef struct {
    * in PA2 able to directly access these registers.
    */
   
-  rtlreg_t eax, ecx, edx, ebx, esp, ebp, esi, edi;
- };
+  rtlreg_t eax,  edx, ebx, esp, ebp, esi, edi;
+   };
+  rtlreg_t ecx;
+  };
   vaddr_t pc;
 
 } CPU_state;
