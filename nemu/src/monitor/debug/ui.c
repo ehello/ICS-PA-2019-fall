@@ -62,7 +62,26 @@ static int print_reg(char *args){
      return -1;
   /*else if (strcmp(arg,"w") == 0){
   }*/
+}
 
+static int scan_memory(char *args){
+  char *num = strtok(args," ");
+  char *add = strtok(NULL," ");
+  int n;
+  if ((num != NULL)&&(add != NULL)){
+    sscanf(num,"%d",&n);
+    char *temp;
+    paddr_t addr = strtol(add,&temp,16);
+    for(int i=0;i<n;i++){
+       paddr_t data = paddr_read(addr+i*4,4);
+       printf("%d",data);
+    }
+    return 0;
+  }
+  else
+     return -1;
+
+	  
 }
 static struct {
   char *name;
@@ -74,7 +93,7 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   {"si","Run the program for n step before stop",step_exec},
   {"info","Print the state of registers",print_reg},
-  //{"x","Memory address",},
+  {"x","Memory address",scan_memory},
 
   /* TODO: Add more commands */
 
