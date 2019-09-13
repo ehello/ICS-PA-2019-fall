@@ -44,19 +44,19 @@ void reg_test() {
 void isa_reg_display() {
   int i;
   for (i = R_EAX; i <= R_EDI; i++){
-    printf("%d.\n",reg_l(i));
+    printf("%d\n",reg_l(i));
   }
   for (i = R_EAX; i <= R_EDI; i++){
-    printf("%d.\n",reg_w(i));
+    printf("%d\n",reg_w(i));
   }
-  printf("%d.\n",reg_b(R_AL));
-  printf("%d.\n",reg_b(R_AH));
-  printf("%d.\n",reg_b(R_BL));
-  printf("%d.\n",reg_b(R_BH));
-  printf("%d.\n",reg_b(R_CL));
-  printf("%d.\n",reg_b(R_CH));
-  printf("%d.\n",reg_b(R_DL));
-  printf("%d.",reg_b(R_DH));
+  printf("%d\n",reg_b(R_AL));
+  printf("%d\n",reg_b(R_AH));
+  printf("%d\n",reg_b(R_BL));
+  printf("%d\n",reg_b(R_BH));
+  printf("%d\n",reg_b(R_CL));
+  printf("%d\n",reg_b(R_CH));
+  printf("%d\n",reg_b(R_DL));
+  printf("%d",reg_b(R_DH));
 
 }
 
