@@ -8,6 +8,7 @@
 #include <readline/history.h>
 
 void cpu_exec(uint64_t);
+void isa_reg_display();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -37,38 +38,28 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_help(char *args);
-
-void isa_reg_display();
-
+/*
+static int step_exec(char *args){
+  char *arg = strtok(NULL," ");
+  int i;
+};
+*/
 static struct {
   char *name;
   char *description;
- // int (*handler) (char *);
-  union{
-    int (*handler) (char *);
-    void (*handler1) ();
-    void (*handler2) (uint64_t);
-  };
+  int (*handler) (char *);
 } cmd_table [] = {
-  { "help", "Display informations about all supported commands",{cmd_help} },
-  { "c", "Continue the execution of the program",{ cmd_c} },
-  { "q", "Exit NEMU",{ cmd_q} },
- // {"si","Run the program for n step before stop",cpu_exec},
+  { "help", "Display informations about all supported commands", cmd_help },
+  { "c", "Continue the execution of the program", cmd_c },
+  { "q", "Exit NEMU", cmd_q },
+  //{"si","Run the program for n step before stop",{cpu_exec}},
   //{"info","Print the state of registers",isa_reg_display},
   //{"x","Memory address",},
 
   /* TODO: Add more commands */
 
 };
-/*
-static struct {
-  char *name;
-  char *description;
-  void (*handler) ();
-} cmd_table [] = {
 
-};
-*/
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
