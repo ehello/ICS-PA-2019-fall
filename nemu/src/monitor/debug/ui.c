@@ -74,7 +74,7 @@ static int scan_memory(char *args){
     paddr_t addr = strtol(add,&temp,16);
     for(int i=0;i<n;i++){
        paddr_t data = paddr_read(addr+i*4,4);
-       printf("%d",data);
+       printf("%d\n",data);
     }
     return 0;
   }
