@@ -38,20 +38,37 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
+void isa_reg_display();
+
 static struct {
   char *name;
   char *description;
-  int (*handler) (char *);
+ // int (*handler) (char *);
+  union{
+    int (*handler) (char *);
+    void (*handler1) ();
+    void (*handler2) (uint64_t);
+  };
 } cmd_table [] = {
-  { "help", "Display informations about all supported commands", cmd_help },
-  { "c", "Continue the execution of the program", cmd_c },
-  { "q", "Exit NEMU", cmd_q },
- // {"si [N]","Run the program for n step before stop",cpu_exec},
- // {"info SUBCMD","Print the state of registers",},
+  { "help", "Display informations about all supported commands",{cmd_help} },
+  { "c", "Continue the execution of the program",{ cmd_c} },
+  { "q", "Exit NEMU",{ cmd_q} },
+ // {"si","Run the program for n step before stop",cpu_exec},
+  //{"info","Print the state of registers",isa_reg_display},
+  //{"x","Memory address",},
 
   /* TODO: Add more commands */
 
 };
+/*
+static struct {
+  char *name;
+  char *description;
+  void (*handler) ();
+} cmd_table [] = {
+
+};
+*/
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
