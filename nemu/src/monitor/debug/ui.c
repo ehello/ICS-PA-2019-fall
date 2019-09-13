@@ -6,9 +6,9 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "reg.h"
 
 void cpu_exec(uint64_t);
-void isa_reg_display();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 static char* rl_gets() {
@@ -52,6 +52,18 @@ static int step_exec(char *args){
     return -1;
 };
 
+static int print_reg(char *args){
+  char *arg = strtok(NULL," ");
+  if (strcmp(arg, "r") == 0){
+    isa_reg_display();
+    return 0;
+  }
+  else
+     return -1;
+  /*else if (strcmp(arg,"w") == 0){
+  }*/
+
+}
 static struct {
   char *name;
   char *description;
@@ -61,7 +73,7 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si","Run the program for n step before stop",step_exec},
-  //{"info","Print the state of registers",isa_reg_display},
+  {"info","Print the state of registers",print_reg},
   //{"x","Memory address",},
 
   /* TODO: Add more commands */
