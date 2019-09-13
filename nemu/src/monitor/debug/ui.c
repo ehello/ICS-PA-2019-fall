@@ -38,12 +38,20 @@ static int cmd_q(char *args) {
 }
 
 static int cmd_help(char *args);
-/*
+
 static int step_exec(char *args){
   char *arg = strtok(NULL," ");
-  int i;
+  if(arg != NULL){
+    int n;
+    sscanf(arg,"%d",&n);
+    n = (uint64_t) n;
+    cpu_exec(n);
+    return 0;
+  }
+  else
+    return -1;
 };
-*/
+
 static struct {
   char *name;
   char *description;
@@ -52,7 +60,7 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  //{"si","Run the program for n step before stop",{cpu_exec}},
+  {"si","Run the program for n step before stop",step_exec},
   //{"info","Print the state of registers",isa_reg_display},
   //{"x","Memory address",},
 
