@@ -46,6 +46,8 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
+ // {"si [N]","Run the program for n step before stop",cpu_exec},
+ // {"info SUBCMD","Print the state of registers",},
 
   /* TODO: Add more commands */
 
