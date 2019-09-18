@@ -53,7 +53,7 @@ static int step_exec(char *args){
 };
 
 static int print_reg(char *args){
-  char *arg = strtok(NULL," ");
+  char *arg = strtok(NULL," ");//在函数中的strtok，第一个参数可以直接设为NULL
   if (strcmp(arg, "r") == 0){
     isa_reg_display();
     return 0;
@@ -71,9 +71,9 @@ static int scan_memory(char *args){
   if ((num != NULL)&&(add != NULL)){
     sscanf(num,"%d",&n);
     char *temp;
-    paddr_t addr = strtol(add,&temp,16);
+    vaddr_t addr = strtol(add,&temp,16);
     for(int i=0;i<n;i++){
-       paddr_t data = paddr_read(addr+i*4,4);
+       vaddr_t data = vaddr_read(addr+i*4,4);
        printf("%d\n",data);
     }
     return 0;
@@ -91,7 +91,7 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  {"si","Run the program for n step before stop",step_exec},
+  {"si","Step one instruction exactly",step_exec},
   {"info","Print the state of registers",print_reg},
   {"x","Memory address",scan_memory},
 
