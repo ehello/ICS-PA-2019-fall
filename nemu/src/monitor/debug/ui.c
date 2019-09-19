@@ -53,7 +53,7 @@ static int step_exec(char *args){
 };
 
 static int print_reg(char *args){
-  char *arg = strtok(NULL," ");//在函数中的strtok，第一个参数可以直接设为NULL
+  char *arg = strtok(NULL," ");//参数设成NULL后，直接从第二个子串开始
   if (strcmp(arg, "r") == 0){
     isa_reg_display();
     return 0;
@@ -64,6 +64,24 @@ static int print_reg(char *args){
   }*/
 }
 
+//static bool make_token(char *e);
+/*
+static int compute_EXPR(char *args){
+  if (make_token(args)){
+    int l = sizeof(tokens)/sizeof(tokens[0]);
+    for (int i=0; i<l;i++){
+      int str_l = sizeof(tokens[i].str)/sizeof(tokens[i].str[0]);
+      for (int j=0; j<str_l; j++)
+	printf("%s",tokens[i].str[j]);
+      printf("\n");
+    }
+    return 0;
+  } 
+  else
+    return -1;
+    
+}
+*/
 static int scan_memory(char *args){
   char *num = strtok(args," ");
   char *add = strtok(NULL," ");
@@ -94,6 +112,7 @@ static struct {
   {"si","Step one instruction exactly",step_exec},
   {"info","Print the state of registers",print_reg},
   {"x","Memory address",scan_memory},
+ //{"p", "Compute the value of EXPR", compute_EXPR}
 
   /* TODO: Add more commands */
 

@@ -5,9 +5,9 @@
  */
 #include <sys/types.h>
 #include <regex.h>
-
+#include "monitor/expr.h"
 enum {
-  TK_NOTYPE = 256, TK_EQ
+  TK_NOTYPE = 256, TK_EQ, TK_FIG
 
   /* TODO: Add more token types */
 
@@ -23,8 +23,14 @@ static struct rule {
    */
 
   {" +", TK_NOTYPE},    // spaces
+  {"\\(", '('},         // left parenthesis
+  {"\\)", ')'},         // right parenthesis
+  {"\\*", '*'},         // multiply
+  {"/", '/'},           // divide
   {"\\+", '+'},         // plus
-  {"==", TK_EQ}         // equal
+  {"-", '-'},           // minus
+  {"==", TK_EQ},        // equal
+  {"[0-9]", TK_FIG}     // figures
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -80,6 +86,43 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
+	  case TK_NOTYPE : break;
+	  case (int)'(' : {tokens[nr_token].type = rules[i].token_type;
+			   tokens[nr_token].str[0] = e[position - substr_len];
+			   nr_token += 1;
+		          } break;
+	  case (int)')' : {tokens[nr_token].type = rules[i].token_type;
+			   tokens[nr_token].str[0] = e[position - substr_len];
+			   nr_token += 1;
+		          } break;
+	  case (int)'*' : {tokens[nr_token].type = rules[i].token_type;
+			   tokens[nr_token].str[0] = e[position - substr_len];
+			   nr_token += 1;
+		          } break;
+	  case (int)'/' : {tokens[nr_token].type = rules[i].token_type;
+			   tokens[nr_token].str[0] = e[position - substr_len];
+			   nr_token += 1;
+		          } break;
+	  case (int)'+' : {tokens[nr_token].type = rules[i].token_type;
+			   tokens[nr_token].str[0] = e[position - substr_len];
+			   nr_token += 1;
+		          } break;
+	  case (int)'-' : {tokens[nr_token].type = rules[i].token_type;
+			   tokens[nr_token].str[0] = e[position - substr_len];
+			   nr_token += 1;
+		          } break;
+	  case TK_EQ : {tokens[nr_token].type = rules[i].token_type;
+			tokens[nr_token].str[0] = e[position - substr_len];
+			tokens[nr_token].str[1] = e[position - substr_len + 1];
+		        } break;
+	  case TK_FIG : {tokens[nr_token].type = rules[i].token_type;
+			   int t = position - substr_len;
+			   for (int j = 0; j< substr_len; j++){
+			      tokens[nr_token].str[j] = e[t];
+			      t+=1;
+			   }
+			   nr_token += 1;
+		          } break;
           default: TODO();
         }
 
