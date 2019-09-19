@@ -148,10 +148,11 @@ uint32_t expr(char *e, bool *success) {
     make_token(e);
     int l =sizeof(tokens)/sizeof(tokens[0]);
     for (int i=0; i<l ; i++){
-      int str_l = sizeof(tokens[i].str)/sizeof(tokens[i].str[0]);
-      for (int j=0; j<str_l ; j++)
-         printf("%c", tokens[i].str[j]);
-      printf("\n");
+      //int str_l = sizeof(tokens[i].str)/sizeof(tokens[i].str[0]);
+      //for (int j=0; j<str_l ; j++)
+      //   printf("%c", tokens[i].str[j]);
+      printf("%s\n",tokens[i].str);
+      //printf("\n");
     }
       
   }
