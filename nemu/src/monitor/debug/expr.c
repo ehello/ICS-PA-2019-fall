@@ -145,6 +145,7 @@ uint32_t expr(char *e, bool *success) {
     return 0;
   }
   else{
+    make_token(e);
     int l =sizeof(tokens)/sizeof(tokens[0]);
     for (int i=0; i<l ; i++){
       int str_l = sizeof(tokens[i].str)/sizeof(tokens[i].str[0]);
