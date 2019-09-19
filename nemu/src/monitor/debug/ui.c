@@ -64,10 +64,9 @@ static int print_reg(char *args){
   }*/
 }
 
-//static bool make_token(char *e);
-/*
+
 static int compute_EXPR(char *args){
-  if (make_token(args)){
+  /*if (make_token(args)){
     int l = sizeof(tokens)/sizeof(tokens[0]);
     for (int i=0; i<l;i++){
       int str_l = sizeof(tokens[i].str)/sizeof(tokens[i].str[0]);
@@ -78,10 +77,12 @@ static int compute_EXPR(char *args){
     return 0;
   } 
   else
-    return -1;
-    
+    return -1;*/
+  bool p = true;
+  bool *success = &p;
+  expr(args, success);
+  return 0;
 }
-*/
 static int scan_memory(char *args){
   char *num = strtok(args," ");
   char *add = strtok(NULL," ");
@@ -112,7 +113,7 @@ static struct {
   {"si","Step one instruction exactly",step_exec},
   {"info","Print the state of registers",print_reg},
   {"x","Memory address",scan_memory},
- //{"p", "Compute the value of EXPR", compute_EXPR}
+  {"p", "Compute the value of EXPR", compute_EXPR}
 
   /* TODO: Add more commands */
 

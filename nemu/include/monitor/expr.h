@@ -6,5 +6,4 @@
 
 uint32_t expr(char *, bool *);
 #endif
-//static bool make_token(char *e);
 
