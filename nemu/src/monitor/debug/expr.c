@@ -135,7 +135,7 @@ static bool make_token(char *e) {
       return false;
     }
   }
-
+  nr_token = 0;
   return true;
 }
 
@@ -153,6 +153,7 @@ uint32_t expr(char *e, bool *success) {
          printf("%c", tokens[i].str[j]);
       printf("\n");
     }
+      
   }
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
