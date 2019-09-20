@@ -146,8 +146,7 @@ uint32_t expr(char *e, bool *success) {
   }
   else{
     //int l =sizeof(tokens)/sizeof(tokens[0]);
-    int l = nr_token - 1;
-    for (int i=0; i<l ; i++){
+    for (int i=0; i<nr_token ; i++){
       printf("%s",tokens[i].str);
       printf("\n");
     }
