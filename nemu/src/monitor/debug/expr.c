@@ -135,7 +135,7 @@ static bool make_token(char *e) {
       return false;
     }
   }
-  nr_token = 0;
+
   return true;
 }
 
@@ -145,12 +145,9 @@ uint32_t expr(char *e, bool *success) {
     return 0;
   }
   else{
-    make_token(e);
-    int l =sizeof(tokens)/sizeof(tokens[0]);
+    //int l =sizeof(tokens)/sizeof(tokens[0]);
+    int l = nr_token - 1;
     for (int i=0; i<l ; i++){
-      //int str_l = sizeof(tokens[i].str)/sizeof(tokens[i].str[0]);
-      //for (int j=0; j<str_l ; j++)
-      //   printf("%c", tokens[i].str[j]);
       printf("%s",tokens[i].str);
       printf("\n");
     }
