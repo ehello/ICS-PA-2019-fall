@@ -215,21 +215,48 @@ uint32_t expr(char *e, bool *success) {
     return 0;
   }
   else{
-   /* for (int i=0; i<nr_token ; i++){
+    /*
+     for (int i=0; i<nr_token ; i++){
       printf("%s",tokens[i].str);
       printf("\n");
     }//print the expr after regex*/
-   /*	  
-   for (int i=0; i<nr_tokens; i++){
-      switch(tokens[i].str[0]){
+   	  
+   for (int i=0; i<nr_token-1; i++){// whether legal
+      switch(tokens[i].type){
 	default : break; 
-	case "+" : { if (tokens[i+1].type == TK_FIG ||)
-		   }
+	case (int)'+' : { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
+			  else 
+			    assert(0);
+		   }break;
+       case (int)'-': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
+			  else 
+			    assert(0);
+		   }break;
+       case (int)'*': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
+			  else 
+			    assert(0);
+		   }break;
+       case (int)'/': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
+			  else 
+			    assert(0);
+		   }break;
+       case (int)'(': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
+			  else 
+			    assert(0);
+		   }break;
+       case (int)')': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
+			     assert(0) ;
+			  else ;
+		   }break;
+       case TK_FIG: { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
+			     assert(0) ;
+			  else ;
+		   }break;
       }
    }
-   */
+   
    int p = 0, q = nr_token-1;
-  printf("%d", eval(p,q));   
+   printf("%d", eval(p,q));   
   }
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
