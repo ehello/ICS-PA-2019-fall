@@ -229,7 +229,7 @@ uint32_t expr(char *e, bool *success) {
    }
    */
    int p = 0, q = nr_token-1;
-   eval(p,q);   
+  printf("%d", eval(p,q));   
   }
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
