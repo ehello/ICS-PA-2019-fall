@@ -143,18 +143,24 @@ static bool make_token(char *e) {
   return true;
 }
 
+void eval(int head, int tail){
+  if (head > tail){
+  
+  }
+}
+
 uint32_t expr(char *e, bool *success) {
   if (!make_token(e)) {
     *success = false;
     return 0;
   }
   else{
-    //int l =sizeof(tokens)/sizeof(tokens[0]);
-    for (int i=0; i<nr_token ; i++){
+   /* for (int i=0; i<nr_token ; i++){
       printf("%s",tokens[i].str);
       printf("\n");
-    }
-      
+    }//print the expr after regex*/
+   int p = 0, q = nr_token-1;
+   eval(p,q);   
   }
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
