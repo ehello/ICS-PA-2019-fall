@@ -69,7 +69,7 @@ static bool make_token(char *e) {
 
   nr_token = 0;
   for (int i = 0; i<32; i++){
-    char src[] = "\0";
+    char src[1] = "";
     strcpy(tokens[i].str,src);	   
   }
   while (e[position] != '\0') {
