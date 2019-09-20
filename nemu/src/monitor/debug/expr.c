@@ -149,7 +149,7 @@ bool check_parentheses(int p,int q){// examing parentheses
     return false;
   else{
     int count = 0, flag = 0;
-    for (int j = p+1; j<=q; j++){
+    for (int j = p+1; j<q; j++){
       assert(count >= -1);
       if (count == -1)
         flag = 1;
