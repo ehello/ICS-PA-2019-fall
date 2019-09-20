@@ -69,8 +69,9 @@ static bool make_token(char *e) {
 
   nr_token = 0;
   for (int i = 0; i<32; i++){
-    char src[32] = "";
-    strcpy(tokens[i].str,src);	   
+   memset(tokens[i].str,'\0',sizeof(tokens[i].str)-1);
+	  // char src[32] = "";
+   // strcpy(tokens[i].str,src);	   
   }
   while (e[position] != '\0') {
     /* Try all rules one by one. */
