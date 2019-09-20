@@ -68,11 +68,10 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-  for (int i = 0; i<32; i++)
-   for (int j=0; j<31; j++){
-     char src[] = "";
-     strcpy(tokens[i].str,src);	   
-   }
+  for (int i = 0; i<32; i++){
+    char src[] = "";
+    strcpy(tokens[i].str,src);	   
+  }
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
