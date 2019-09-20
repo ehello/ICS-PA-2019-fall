@@ -150,7 +150,7 @@ bool check_parentheses(int p,int q){// examing parentheses
   else{
     int count = 0, flag = 0;
     for (int j = p+1; j<=q; j++){
-      //assert(count >= -1);
+      assert(count >= -1);
       if (count == -1)
         flag = 1;
       if (tokens[j].type == (int)'(')
@@ -158,7 +158,7 @@ bool check_parentheses(int p,int q){// examing parentheses
       else if (tokens[j].type == (int)')')
         count -= 1;
     }
-    //assert(count == 0);
+    assert(count == 0);
     if (flag ==0)
       return true;
     else if (flag == 1)
@@ -170,7 +170,7 @@ bool check_parentheses(int p,int q){// examing parentheses
 
 uint32_t  eval(int head, int tail){
   if (head > tail){
-    //assert(0);
+    assert(0);
     return -1;
   }
   else if (head == tail){
