@@ -143,10 +143,70 @@ static bool make_token(char *e) {
   return true;
 }
 
-void eval(int head, int tail){
-  if (head > tail){
-  
+
+bool check_parentheses(int p,int q){// examing parentheses
+  if(tokens[p].type !=(int)'(' || tokens[q].type !=(int)')')
+    return false;
+  else{
+    int count = 0, flag = 0;
+    for (int j = p+1; j<=q; j++){
+      //assert(count >= -1);
+      if (count == -1)
+        flag = 1;
+      if (tokens[j].type == (int)'(')
+        count += 1;
+      else if (tokens[j].type == (int)')')
+        count -= 1;
+    }
+    //assert(count == 0);
+    if (flag ==0)
+      return true;
+    else if (flag == 1)
+      return false;   
   }
+  return false;
+}
+
+
+uint32_t  eval(int head, int tail){
+  if (head > tail){
+    //assert(0);
+    return -1;
+  }
+  else if (head == tail){
+    uint32_t  number; 
+    sscanf(tokens[head].str, "%d", &number);
+    return number;
+  }
+  else if (check_parentheses(head, tail) == true)
+    return eval(head+1, tail-1);  
+  else{
+    /*if (tokens[tail].str[0] != ')'){
+	    
+    }    
+    int t = tail - 1;
+    for (t; t>head; t--){
+     if (t != ")" &&(t == ""))
+    }*/
+    int op = 0;
+    for (int t = tail-1; t>head ; t--){
+      if (tokens[t].type==(int)'+'||tokens[t].type==(int)'-'){
+	op = t;
+	break;
+      }
+    }
+    uint32_t val1 = eval(head, op-1);
+    uint32_t val2 = eval(op+1,tail);
+    switch (tokens[op].type){
+      case (int)'+' : return val1 + val2;break;
+      case (int)'-' : return val1 - val2;break;
+      case (int)'*' : return val1 * val2;break;
+      case (int)'/' : return val1 / val2; break;
+      default : break;
+    }
+  }
+  return -1;
+
 }
 
 uint32_t expr(char *e, bool *success) {
@@ -159,6 +219,15 @@ uint32_t expr(char *e, bool *success) {
       printf("%s",tokens[i].str);
       printf("\n");
     }//print the expr after regex*/
+   /*	  
+   for (int i=0; i<nr_tokens; i++){
+      switch(tokens[i].str[0]){
+	default : break; 
+	case "+" : { if (tokens[i+1].type == TK_FIG ||)
+		   }
+      }
+   }
+   */
    int p = 0, q = nr_token-1;
    eval(p,q);   
   }
