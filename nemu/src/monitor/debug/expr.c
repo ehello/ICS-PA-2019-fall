@@ -168,6 +168,11 @@ bool check_parentheses(int p,int q){// examing parentheses
 }
 
 int find_main_op(int p, int q){
+  int prio[32];
+  for (int j=0; j<32; j++){
+    prio[j] = -1;
+  }
+  int i = 0;
   for (int t = q-1; t>p; ){
    if (tokens[t].type == (int)')'){
      int flag = 1;
@@ -181,11 +186,15 @@ int find_main_op(int p, int q){
 	  continue;     
      }
    }
-   else if(tokens[t].type == (int)'+'||tokens[t].type == (int)'-'||tokens[t].type == (int)'*'||tokens[t].type == (int)'/')
+   else if(tokens[t].type == (int)'+'||tokens[t].type == (int)'-')
      return t;
-   else 
+   else if(tokens[t].type == (int)'*'||tokens[t].type == (int)'/'){
+     prio[i] = t;
+     i+=1;
      t-=1;
    }
+  return prio[0];
+ }
   return -1;
 }
 
