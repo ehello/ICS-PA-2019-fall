@@ -144,34 +144,27 @@ static bool make_token(char *e) {
 }
 
 
-int check_parentheses(int p,int q){// examing parentheses
-  int sign = 0;
+bool check_parentheses(int p,int q){// examing parentheses
   if(tokens[p].type !=(int)'(' || tokens[q].type !=(int)')')
-    return sign;
+    return false;
   else{
     int count = 0, flag = 0;
     for (int j = p+1; j<q; j++){
-      if (count>=1){
-       if (count == -1)
-         flag = 1;
-       if (tokens[j].type == (int)'(')
-         count += 1;
-       else if (tokens[j].type == (int)')')
-         count -= 1;
-      }
-      else
-       return -1;
+      assert(count >= -1);
+      if (count == -1)
+        flag = 1;
+      if (tokens[j].type == (int)'(')
+        count += 1;
+      else if (tokens[j].type == (int)')')
+        count -= 1;
     }
-    if (count == 0){
-     if (flag ==0){
-      sign = 1;
-      return sign;
-     }
-     else if (flag == 1)
-      return sign;
-    }   
+    assert(count == 0);
+    if (flag ==0)
+      return true;
+    else if (flag == 1)
+      return false;   
   }
-  return -1;
+  return false;
 }
 
 int find_main_op(int p, int q){
@@ -217,9 +210,9 @@ uint32_t  eval(int head, int tail){
     sscanf(tokens[head].str, "%d", &number);
     return number;
   }
-  else if (check_parentheses(head, tail) == 1)
+  else if (check_parentheses(head, tail) == true)
     return eval(head+1, tail-1);  
-  else if (check_parentheses(head, tail) == 0){
+  else{
     int op = find_main_op(head, tail);
     uint32_t val1 = eval(head, op-1);
     uint32_t val2 = eval(op+1,tail);
