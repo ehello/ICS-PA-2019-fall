@@ -151,13 +151,16 @@ int check_parentheses(int p,int q){// examing parentheses
   else{
     int count = 0, flag = 0;
     for (int j = p+1; j<q; j++){
-      assert(count >= -1);
-      if (count == -1)
-        flag = 1;
-      if (tokens[j].type == (int)'(')
-        count += 1;
-      else if (tokens[j].type == (int)')')
-        count -= 1;
+      if (count>=1){
+       if (count == -1)
+         flag = 1;
+       if (tokens[j].type == (int)'(')
+         count += 1;
+       else if (tokens[j].type == (int)')')
+         count -= 1;
+      }
+      else
+       return -1;
     }
     if (count == 0){
      if (flag ==0){
