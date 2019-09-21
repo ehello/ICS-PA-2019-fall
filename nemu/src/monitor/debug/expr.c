@@ -248,7 +248,7 @@ uint32_t expr(char *e, bool *success) {
 			     assert(0) ;
 			  else ;
 		   }break;
-       case TK_FIG: { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
+       case TK_FIG: { if (tokens[i+1].type == (int)'(' )
 			     assert(0) ;
 			  else ;
 		   }break;
@@ -256,7 +256,7 @@ uint32_t expr(char *e, bool *success) {
    }
    
    int p = 0, q = nr_token-1;
-   printf("%d", eval(p,q));   
+   printf("%d\n", eval(p,q));   
   }
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
