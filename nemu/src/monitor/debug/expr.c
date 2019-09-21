@@ -240,7 +240,7 @@ uint32_t expr(char *e, bool *success) {
       printf("%s",tokens[i].str);
       printf("\n");
     }//print the expr after regex*/
-   	  
+  /* 	  
    for (int i=0; i<nr_token-1; i++){// whether legal
       switch(tokens[i].type){
 	default : break; 
@@ -273,7 +273,7 @@ uint32_t expr(char *e, bool *success) {
 			  else ;
 		   }break;
       }
-   }
+   }*/
    int p = 0, q = nr_token-1;
    printf("%d\n", eval(p,q));   
   }
