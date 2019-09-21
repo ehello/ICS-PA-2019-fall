@@ -167,6 +167,28 @@ bool check_parentheses(int p,int q){// examing parentheses
   return false;
 }
 
+int find_main_op(int p, int q){
+  for (int t = q-1; t>p; ){
+   if (tokens[t].type == (int)')'){
+     int flag = 1;
+     while (flag != 0){
+        t-=1;
+	if (tokens[t].type == (int)')')
+	  flag +=1;
+	else if (tokens[t].type == (int)'(')
+          flag -=1;
+	else 
+	  continue;     
+     }
+   }
+   else if(tokens[t].type == (int)'+'||tokens[t].type == (int)'-'||tokens[t].type == (int)'*'||tokens[t].type == (int)'/')
+     return t;
+   else 
+     t-=1;
+   }
+  return -1;
+}
+
 
 uint32_t  eval(int head, int tail){
   if (head > tail){
@@ -181,22 +203,10 @@ uint32_t  eval(int head, int tail){
   else if (check_parentheses(head, tail) == true)
     return eval(head+1, tail-1);  
   else{
-    /*if (tokens[tail].str[0] != ')'){
-	    
-    }    
-    int t = tail - 1;
-    for (t; t>head; t--){
-     if (t != ")" &&(t == ""))
-    }*/
-    int op = 0;
-    for (int t = tail-1; t>head ; t--){
-      if (tokens[t].type==(int)'+'||tokens[t].type==(int)'-'){
-	op = t;
-	break;
-      }
-    }
+    int op = find_main_op(head, tail);
     uint32_t val1 = eval(head, op-1);
     uint32_t val2 = eval(op+1,tail);
+
     switch (tokens[op].type){
       case (int)'+' : return val1 + val2;break;
       case (int)'-' : return val1 - val2;break;
@@ -254,7 +264,6 @@ uint32_t expr(char *e, bool *success) {
 		   }break;
       }
    }
-   
    int p = 0, q = nr_token-1;
    printf("%d\n", eval(p,q));   
   }
