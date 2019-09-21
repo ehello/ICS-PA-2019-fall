@@ -193,9 +193,10 @@ int find_main_op(int p, int q){
      i+=1;
      t-=1;
    }
-  return prio[0];
+   else
+     t-=1;
  }
-  return -1;
+ return prio[0];
 }
 
 
