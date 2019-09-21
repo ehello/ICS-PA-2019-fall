@@ -173,7 +173,7 @@ int find_main_op(int p, int q){
     prio[j] = -1;
   }
   int i = 0;
-  for (int t = q-1; t>p; ){
+  for (int t = q; t>p; ){
    if (tokens[t].type == (int)')'){
      int flag = 1;
      while (flag != 0){
