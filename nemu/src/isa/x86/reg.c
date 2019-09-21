@@ -44,19 +44,19 @@ void reg_test() {
 void isa_reg_display() {
   int i;
   for (i = R_EAX; i <= R_EDI; i++){
-    printf("%s %d\n",regsl[i],reg_l(i));
+    printf("%s %x\n",regsl[i],reg_l(i));
   }
   for (i = R_EAX; i <= R_EDI; i++){
-    printf("%s %d\n",regsw[i],reg_w(i));
+    printf("%s %x\n",regsw[i],reg_w(i));
   }
-  printf("al %d\n",reg_b(R_AL));
-  printf("ah %d\n",reg_b(R_AH));
-  printf("bl %d\n",reg_b(R_BL));
-  printf("bh %d\n",reg_b(R_BH));
-  printf("cl %d\n",reg_b(R_CL));
-  printf("ch %d\n",reg_b(R_CH));
-  printf("dl %d\n",reg_b(R_DL));
-  printf("dh %d\n",reg_b(R_DH));
+  printf("al %x\n",reg_b(R_AL));
+  printf("ah %x\n",reg_b(R_AH));
+  printf("bl %x\n",reg_b(R_BL));
+  printf("bh %x\n",reg_b(R_BH));
+  printf("cl %x\n",reg_b(R_CL));
+  printf("ch %x\n",reg_b(R_CH));
+  printf("dl %x\n",reg_b(R_DL));
+  printf("dh %x\n",reg_b(R_DH));
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
