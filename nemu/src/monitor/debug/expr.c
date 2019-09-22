@@ -248,8 +248,8 @@ uint32_t expr(char *e, bool *success) {
 
    /* check whether legal*/
    int legal = 0;
-   //if (tokens[0].type != (int)'(' || tokens[0].type != TK_FIG)
-     //legal = -1; 
+   if (tokens[0].type != (int)'(' || tokens[0].type != TK_FIG)
+     legal = -1; 
    for (int i=0; i<q; i++){
       switch(tokens[i].type){
 	default : break; 
@@ -261,7 +261,7 @@ uint32_t expr(char *e, bool *success) {
         case (int)')' : { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
 			    legal = -1;
 			  else ;
-			}
+			}break; 
         case TK_FIG: { if (tokens[i+1].type == (int)'(' )
 		        legal = -1;
 		       else ;
@@ -270,8 +270,8 @@ uint32_t expr(char *e, bool *success) {
       if (legal == -1)
 	break;
    }
-   //if (tokens[q].type != (int)')'|| tokens[q].type != TK_FIG)
-     //legal = -1;
+   if (tokens[q].type != (int)')'|| tokens[q].type != TK_FIG)
+     legal = -1;
 
    if (legal == -1){
      printf("Illegal expr");
