@@ -208,8 +208,10 @@ int find_main_op(int p, int q){
 
 
 uint32_t  eval(int head, int tail){
-  if (head > tail)
+  if (head > tail){
     printf("invalid expr\n");
+    return -1;
+  }
   else if (head == tail){
     uint32_t  number; 
     sscanf(tokens[head].str, "%d", &number);
@@ -229,9 +231,10 @@ uint32_t  eval(int head, int tail){
       default : break;
     }
   }
-  else if(check_parentheses(head, tail) == 1)
+  else if(check_parentheses(head, tail) == 1){
     printf("wrong parentheses");
-  
+    return -1;
+  }
   return -1;
 }
 
