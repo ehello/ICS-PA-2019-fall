@@ -10,9 +10,6 @@ uint32_t expr(char *, bool *);
 int main(int argc, char *argv[]) {
   /* Initialize the monitor. */
   int is_batch_mode = init_monitor(argc, argv);
-
-  /* Receive commands from user. */
-  ui_mainloop(is_batch_mode);
   FILE *fp = fopen("../tools/gen-expr/input","r");
   while(fp != NULL){
    char e[65536];
@@ -23,6 +20,9 @@ int main(int argc, char *argv[]) {
    uint32_t result = expr(e,b);
    printf("%s %d %s\n", n, result, e);
   }
+  /* Receive commands from user. */
+  ui_mainloop(is_batch_mode);
+
   
   return 0;
 }
