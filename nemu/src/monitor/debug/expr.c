@@ -256,14 +256,18 @@ uint32_t expr(char *e, bool *success) {
    for (int i=0; i<nr_token-1; i++){// whether legal
       switch(tokens[i].type){
 	default : break; 
-	case (int)'+' : case (int)'-': case (int)'*': case (int)'/': case (int)'(': case (int)')':
+	case (int)'+' : case (int)'-': case (int)'*': case (int)'/': case (int)'(':
 		  { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
 	            else 
 		      legal = -1;
 		   }break;
+        case (int)')' : { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
+			    legal = -1;
+			  else ;
+			}
         case TK_FIG: { if (tokens[i+1].type == (int)'(' )
-		       legal = -1;
-		      else ;
+		        legal = -1;
+		       else ;
 		   }break;
       }
       if (legal == -1)
