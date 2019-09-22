@@ -17,7 +17,8 @@ int main(int argc, char *argv[]) {
   while (!feof(fp)){
    char e[65536];
    //char n[10];
-   fscanf(fp,"%s",e);
+   //fscanf(fp,"%s %s",n,e);
+   fgets(e, sizeof(e)-1, fp);
    printf("%s\n", e);
    //bool t = true;
    //bool *b = &t;
