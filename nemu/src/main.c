@@ -12,10 +12,10 @@ int main(int argc, char *argv[]) {
  // FILE *fp = fopen("home/james/ics2019/nemu/tools/gen-expr/input","r");
   FILE *fp = fopen("input","r");
   assert(fp != NULL);
-  while(fp != NULL){
+  while(!feof(fp)){
    char e[65536];
-   char n[10];
-   fscanf(fp,"%s %s",n,e);
+   //char n[10];
+   fscanf(fp,"%s",e);
    printf("%s", e);
    //bool t = true;
    //bool *b = &t;
