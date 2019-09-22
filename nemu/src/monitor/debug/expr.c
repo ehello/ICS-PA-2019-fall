@@ -251,8 +251,8 @@ uint32_t expr(char *e, bool *success) {
     }//print the expr after regex*/
 
    int legal = 1;
-   //if (tokens[0].type != '('|| tokens[0].type != TK_FIG)
-     //legal = -1;
+   if (tokens[0].type != (int)'('|| tokens[0].type != TK_FIG)
+     legal = -1;
    for (int i=0; i<nr_token-1; i++){// whether legal
       switch(tokens[i].type){
 	default : break; 
@@ -273,8 +273,8 @@ uint32_t expr(char *e, bool *success) {
       if (legal == -1)
 	break;
    }
-   //if (tokens[nr_token-1].type != ')'|| tokens[nr_token-1].type != TK_FIG)
-     //legal = -1;
+   if (tokens[nr_token-1].type != (int)')'|| tokens[nr_token-1].type != TK_FIG)
+     legal = -1;
 
    if (legal == -1){
      printf("Illegal expr");
