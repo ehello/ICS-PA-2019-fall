@@ -249,12 +249,13 @@ uint32_t expr(char *e, bool *success) {
       printf("%s",tokens[i].str);
       printf("\n");
     }//print the expr after regex*/
+   int p = 0, q = nr_token-1;
 
    int legal = 0;
-   if (tokens[0].type != (int)'('|| tokens[0].type != TK_FIG){
+   if (tokens[0].type != (int)'(' || tokens[0].type != TK_FIG)
      legal = -1;
-   }
-   for (int i=0; i<nr_token-1; i++){// whether legal
+   
+   for (int i=0; i<q; i++){// whether legal
       switch(tokens[i].type){
 	default : break; 
 	case (int)'+' : case (int)'-': case (int)'*': case (int)'/': case (int)'(':
@@ -274,7 +275,7 @@ uint32_t expr(char *e, bool *success) {
       if (legal == -1)
 	break;
    }
-   if (tokens[nr_token-1].type != (int)')'|| tokens[nr_token-1].type != TK_FIG){
+   if (tokens[q].type != (int)')'|| tokens[q].type != TK_FIG){
      legal = -1;
    }
 
@@ -285,8 +286,7 @@ uint32_t expr(char *e, bool *success) {
    else{
      int match = check_parentheses(0,nr_token-1);
      if (match == 1|| match == 0){
-      int p = 0, q = nr_token-1;
-      //printf("%d\n", eval(p,q));  
+            //printf("%d\n", eval(p,q));  
       uint32_t result = eval(p,q);
       return result; 
      }
