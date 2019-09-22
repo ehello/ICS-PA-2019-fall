@@ -244,18 +244,14 @@ uint32_t expr(char *e, bool *success) {
     return 0;
   }
   else{
-    /*
-     for (int i=0; i<nr_token ; i++){
-      printf("%s",tokens[i].str);
-      printf("\n");
-    }//print the expr after regex*/
    int p = 0, q = nr_token-1;
 
+   /* check whether legal*/
    int legal = 0;
    if (tokens[0].type != (int)'(' || tokens[0].type != TK_FIG)
      legal = -1;
-   
-   for (int i=0; i<q; i++){// whether legal
+   else; 
+   for (int i=0; i<q; i++){
       switch(tokens[i].type){
 	default : break; 
 	case (int)'+' : case (int)'-': case (int)'*': case (int)'/': case (int)'(':
@@ -275,9 +271,9 @@ uint32_t expr(char *e, bool *success) {
       if (legal == -1)
 	break;
    }
-   if (tokens[q].type != (int)')'|| tokens[q].type != TK_FIG){
+   if (tokens[q].type != (int)')'|| tokens[q].type != TK_FIG)
      legal = -1;
-   }
+   else ;
 
    if (legal == -1){
      printf("Illegal expr");
