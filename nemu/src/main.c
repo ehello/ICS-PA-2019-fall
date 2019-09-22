@@ -14,16 +14,17 @@ int main(int argc, char *argv[]) {
  // FILE *fp = fopen("home/james/ics2019/nemu/tools/gen-expr/input","r");
   FILE *fp = fopen("input","r");
   assert(fp != NULL);
-  while(!feof(fp)){
+  while (!feof(fp)){
    char e[65536];
    //char n[10];
    fscanf(fp,"%s",e);
-   printf("%s", e);
+   printf("%s\n", e);
    //bool t = true;
    //bool *b = &t;
    //uint32_t result = expr(e,b);
    //printf("%s %d %s\n", n, result, e);
   }
+  fclose(fp);
 
      /* Receive commands from user. */
   ui_mainloop(is_batch_mode);
