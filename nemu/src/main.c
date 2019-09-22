@@ -9,8 +9,7 @@ void ui_mainloop(int);
 uint32_t expr(char *, bool *);
 
 int main(int argc, char *argv[]) {
- // FILE *fp = fopen("home/james/ics2019/nemu/tools/gen-expr/input","r");
-  FILE *fp = fopen("input","r");
+   FILE *fp = fopen("home/james/ics2019/nemu/tools/gen-expr/input","r");
   assert(fp != NULL);
   while(fp != NULL){
    char e[65536];
