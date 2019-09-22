@@ -59,7 +59,8 @@ typedef struct token {
   char str[32];
 } Token;
 
-static Token tokens[32] __attribute__((used)) = {};
+#define tokens_len  65536
+static Token tokens[tokens_len] __attribute__((used)) = {};
 static int nr_token __attribute__((used))  = 0;
 
 static bool make_token(char *e) {
@@ -68,7 +69,7 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-  for (int i = 0; i<32; i++){
+  for (int i = 0; i<tokens_len; i++){
    memset(tokens[i].str,'\0',sizeof(tokens[i].str)-1);
 	  // char src[32] = "";
    // strcpy(tokens[i].str,src);	   
@@ -121,6 +122,8 @@ static bool make_token(char *e) {
 		        } break;
 	  case TK_FIG : {tokens[nr_token].type = rules[i].token_type;
 			   int t = position - substr_len;
+			   if (substr_len> 31 )
+			     assert(0);
 			   for (int j = 0; j< substr_len; j++){
 			      tokens[nr_token].str[j] = e[t];
 			      t+=1;
@@ -275,10 +278,11 @@ uint32_t expr(char *e, bool *success) {
       }
    }*/
    int p = 0, q = nr_token-1;
-   printf("%d\n", eval(p,q));   
+  // printf("%d\n", eval(p,q));  
+   uint32_t result = eval(p,q);
+   return result; 
   }
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-
   return 0;
 }

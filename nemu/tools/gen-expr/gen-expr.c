@@ -6,9 +6,47 @@
 #include <string.h>
 
 // this should be enough
+uint32_t  choose(uint32_t n){
+  uint32_t a = rand()%n;
+  return a;
+}
+
 static char buf[65536];
+
+void gen_num(){
+// int seed = time(0);
+// srand(seed);
+ uint32_t num = rand()%9;
+ char str[10];
+ sprintf(str, "%d",num); memset(buf,'\0',sizeof(buf)-1);
+
+ strcat(buf,str);
+}
+
+void gen(char par){
+ if (par == '('){
+  strcat(buf,"(");
+ }
+ else if( par == ')'){
+  strcat(buf,")");
+ }
+}
+
+void gen_rand_op(){
+ switch (choose(4)){
+  case 0 : strcat(buf,"+");break;
+  case 1 : strcat(buf,"-");break;
+  case 2 : strcat(buf,"*");break;
+  case 3 : strcat(buf,"/");break;
+ }
+}
 static inline void gen_rand_expr() {
-  buf[0] = '\0';
+  switch (choose(4)){
+   case 0 : case 2: gen_num(); break;
+   case 1 : gen('(');gen_rand_expr();gen(')');break;
+   default : gen_rand_expr();gen_rand_op();gen_rand_expr();break;
+  }	
+  //buf[0] = '\0';
 }
 
 static char code_buf[65536];
@@ -29,6 +67,7 @@ int main(int argc, char *argv[]) {
   }
   int i;
   for (i = 0; i < loop; i ++) {
+    memset(buf,'\0',sizeof(buf)-1);
     gen_rand_expr();
 
     sprintf(code_buf, code_format, buf);
