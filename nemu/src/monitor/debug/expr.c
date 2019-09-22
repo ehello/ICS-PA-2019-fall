@@ -231,7 +231,7 @@ uint32_t  eval(int head, int tail){
       default : break;
     }
   }
-  else if(check_parentheses(head, tail) == 1){
+  else if(check_parentheses(head, tail) == -1){
     printf("wrong parentheses");
     return -1;
   }
@@ -249,46 +249,48 @@ uint32_t expr(char *e, bool *success) {
       printf("%s",tokens[i].str);
       printf("\n");
     }//print the expr after regex*/
-  /* 	  
+
+   int legal = 1;
+   if (tokens[0].type != '('|| tokens[0].type != TK_FIG)
+     legal = -1;
    for (int i=0; i<nr_token-1; i++){// whether legal
       switch(tokens[i].type){
 	default : break; 
-	case (int)'+' : { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
-			  else 
-			    assert(0);
+	case (int)'+' : case (int)'-': case (int)'*': case (int)'/': case (int)'(': case (int)')':
+		  { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
+	            else 
+		      legal = -1;
 		   }break;
-       case (int)'-': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
-			  else 
-			    assert(0);
-		   }break;
-       case (int)'*': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
-			  else 
-			    assert(0);
-		   }break;
-       case (int)'/': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
-			  else 
-			    assert(0);
-		   }break;
-       case (int)'(': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
-			  else 
-			    assert(0);
-		   }break;
-       case (int)')': { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
-			     assert(0) ;
-			  else ;
-		   }break;
-       case TK_FIG: { if (tokens[i+1].type == (int)'(' )
-			     assert(0) ;
-			  else ;
+        case TK_FIG: { if (tokens[i+1].type == (int)'(' )
+		       legal = -1;
+		      else ;
 		   }break;
       }
-   }*/
-   int p = 0, q = nr_token-1;
-  // printf("%d\n", eval(p,q));  
-   uint32_t result = eval(p,q);
-   return result; 
+      if (legal == -1)
+	break;
+   }
+   if (tokens[nr_token-1].type != ')'|| tokens[nr_token-1].type != TK_FIG)
+     legal = -1;
+
+   if (legal == -1){
+     printf("Illegal expr");
+     return -1;
+   }
+   else{
+     int match = check_parentheses(0,nr_token-1);
+     if (match == 1|| match == 0){
+      int p = 0, q = nr_token-1;
+      //printf("%d\n", eval(p,q));  
+      uint32_t result = eval(p,q);
+      return result; 
+     }
+     else{
+      printf("Not Match");
+      return -1;
+     }
   }
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
+ }
   return 0;
 }
