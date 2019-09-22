@@ -2,13 +2,16 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <assert.h>
 
 int init_monitor(int, char *[]);
 void ui_mainloop(int);
 uint32_t expr(char *, bool *);
 
 int main(int argc, char *argv[]) {
-  FILE *fp = fopen("../tools/gen-expr/input","r");
+ // FILE *fp = fopen("home/james/ics2019/nemu/tools/gen-expr/input","r");
+  FILE *fp = fopen("input","r");
+  assert(fp != NULL);
   while(fp != NULL){
    char e[65536];
    char n[10];
