@@ -18,10 +18,10 @@ int main(int argc, char *argv[]) {
    char e[65536];
    char n[10];
    fscanf(fp,"%s %s",n,e);
-   //bool t = true;
-   //bool *b = &t;
-   //uint32_t result = expr(e,b);
-   printf("%s %s\n", n,e);
+   bool t = true;
+   bool *b = &t;
+   uint32_t result = expr(e,b);
+   printf("%s %d  %s\n",n,result,e);
   }
   fclose(fp);
 
