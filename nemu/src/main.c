@@ -18,6 +18,7 @@ int main(int argc, char *argv[]) {
   char e[65536];
   while (!feof(fp)){ 
    memset(e,'\0',sizeof(e)-1);
+   printf("aaa\n");
    //char n[10];
    fscanf(fp,"%s\n",e);
    printf("%s\n", e);
