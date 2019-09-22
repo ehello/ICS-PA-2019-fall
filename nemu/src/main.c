@@ -16,13 +16,12 @@ int main(int argc, char *argv[]) {
   assert(fp != NULL);
   while (!feof(fp)){ 
    char e[65536];
-   //char n[10];
-   fscanf(fp,"%s\n",e);
-   printf("%s\n", e);
+   char n[10];
+   fscanf(fp,"%s %s",n,e);
    //bool t = true;
    //bool *b = &t;
    //uint32_t result = expr(e,b);
-   //printf("%s %d %s\n", n, result, e);
+   printf("%s %s\n", n,e);
   }
   fclose(fp);
 
