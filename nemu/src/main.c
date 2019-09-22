@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <assert.h>
+#include <string.h>
 
 int init_monitor(int, char *[]);
 void ui_mainloop(int);
@@ -14,11 +15,11 @@ int main(int argc, char *argv[]) {
  // FILE *fp = fopen("home/james/ics2019/nemu/tools/gen-expr/input","r");
   FILE *fp = fopen("input","r");
   assert(fp != NULL);
-  while (!feof(fp)){
-   char e[65536];
+  char e[65536];
+  while (!feof(fp)){ 
+   memset(e,'\0',sizeof(e)-1);
    //char n[10];
-   //fscanf(fp,"%s %s",n,e);
-   fgets(e, sizeof(e)-1, fp);
+   fscanf(fp,"%s\n",e);
    printf("%s\n", e);
    //bool t = true;
    //bool *b = &t;
