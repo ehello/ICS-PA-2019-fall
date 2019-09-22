@@ -80,7 +80,7 @@ static int compute_EXPR(char *args){
     return -1;*/
   bool p = true;
   bool *success = &p;
-  expr(args, success);
+  printf("%d",expr(args, success));
   return 0;
 }
 static int scan_memory(char *args){

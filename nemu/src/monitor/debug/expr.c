@@ -70,9 +70,7 @@ static bool make_token(char *e) {
 
   nr_token = 0;
   for (int i = 0; i<tokens_len; i++){
-   memset(tokens[i].str,'\0',sizeof(tokens[i].str)-1);
-	  // char src[32] = "";
-   // strcpy(tokens[i].str,src);	   
+   memset(tokens[i].str,'\0',sizeof(tokens[i].str)-1);	   
   }
   while (e[position] != '\0') {
     /* Try all rules one by one. */
@@ -147,27 +145,33 @@ static bool make_token(char *e) {
 }
 
 
-bool check_parentheses(int p,int q){// examing parentheses
+int check_parentheses(int p,int q){// examing parentheses
   if(tokens[p].type !=(int)'(' || tokens[q].type !=(int)')')
-    return false;
+    return 1;
   else{
     int count = 0, flag = 0;
     for (int j = p+1; j<q; j++){
-      assert(count >= -1);
-      if (count == -1)
-        flag = 1;
-      if (tokens[j].type == (int)'(')
-        count += 1;
-      else if (tokens[j].type == (int)')')
-        count -= 1;
+      //assert(count >= -1);
+      if (count >=-1){
+        if (count == -1)
+          flag = 1;
+        if (tokens[j].type == (int)'(')
+          count += 1;
+        else if (tokens[j].type == (int)')')
+          count -= 1;
+      }
+      else
+        return -1;
     }
-    assert(count == 0);
-    if (flag ==0)
-      return true;
-    else if (flag == 1)
-      return false;   
+    //assert(count == 0);
+    if (count == 0){
+      switch (flag){
+       case 0 : return 0;
+       case 1 : return 1;
+      }
+    }   
   }
-  return false;
+  return -1;
 }
 
 int find_main_op(int p, int q){
@@ -204,22 +208,19 @@ int find_main_op(int p, int q){
 
 
 uint32_t  eval(int head, int tail){
-  if (head > tail){
-    assert(0);
-    return -1;
-  }
+  if (head > tail)
+    printf("invalid expr\n");
   else if (head == tail){
     uint32_t  number; 
     sscanf(tokens[head].str, "%d", &number);
     return number;
   }
-  else if (check_parentheses(head, tail) == true)
+  else if (check_parentheses(head, tail) == 0)
     return eval(head+1, tail-1);  
-  else{
+  else if (check_parentheses(head, tail) == 1){
     int op = find_main_op(head, tail);
     uint32_t val1 = eval(head, op-1);
     uint32_t val2 = eval(op+1,tail);
-
     switch (tokens[op].type){
       case (int)'+' : return val1 + val2;break;
       case (int)'-' : return val1 - val2;break;
@@ -228,8 +229,10 @@ uint32_t  eval(int head, int tail){
       default : break;
     }
   }
+  else if(check_parentheses(head, tail) == 1)
+    printf("wrong parentheses");
+  
   return -1;
-
 }
 
 uint32_t expr(char *e, bool *success) {
