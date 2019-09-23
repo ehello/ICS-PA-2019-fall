@@ -192,6 +192,7 @@ int find_main_op(int p, int q){
 uint32_t eval(int head, int tail){
   if (head > tail){
     printf("invalid expr\n");
+    return false;
   }
   else if (head == tail){
     uint32_t  number; 
