@@ -154,6 +154,18 @@ bool check_parentheses(int p,int q){// examing parentheses
   }
   return false;// 左括号多了
   */
+  else{
+    int count = 0;//count用来判断两头匹配情况，出现-1说明内部匹配，两头不匹配
+    for (int j = p+1; j<q; j++){
+      if (count >-1){
+        if (tokens[j].type == (int)'(')
+          count += 1;
+        else if (tokens[j].type == (int)')')
+          count -= 1;
+      }
+      else  return false;
+     }
+   }
   return true;
 }
 
