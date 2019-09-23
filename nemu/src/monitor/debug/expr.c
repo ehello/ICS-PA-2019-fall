@@ -189,10 +189,10 @@ int find_main_op(int p, int q){
 }
 
 
-uint32_t eval(int head, int tail){
+uint32_t eval(int head, int tail, bool *p){
   if (head > tail){
-    printf("invalid expr\n");
-    abort();
+    p = false;
+    //printf("invalid expr\n");
   }
   else if (head == tail){
     uint32_t  number; 
@@ -200,11 +200,11 @@ uint32_t eval(int head, int tail){
     return number;
   }
   else if (check_parentheses(head, tail) == true)
-    return eval(head+1, tail-1);  
+    return eval(head+1, tail-1, p);  
   else {
     int op = find_main_op(head, tail);
-    uint32_t val1 = eval(head, op-1);
-    uint32_t val2 = eval(op+1,tail);
+    uint32_t val1 = eval(head, op-1, p);
+    uint32_t val2 = eval(op+1,tail, p);
     switch (tokens[op].type){
       case (int)'+' : return val1 + val2;break;
       case (int)'-' : return val1 - val2;break;
@@ -212,6 +212,9 @@ uint32_t eval(int head, int tail){
       case (int)'/' : return val1 / val2; break;
       default : printf("invalid expr\n");return false;
     }
+  }
+  if(p == false){
+    printf("invalid expr\n");
   }
   return 0;
 }
@@ -223,7 +226,7 @@ uint32_t expr(char *e, bool *success) {
   }
   else{
    int p = 0, q = nr_token-1;
-   return eval(p, q);
+   return eval(p, q, success);
    
   
   /* TODO: Insert codes to evaluate the expression. */
