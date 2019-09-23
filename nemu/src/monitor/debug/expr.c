@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <regex.h>
 #include "monitor/expr.h"
+#include <stdlib.h>
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_FIG
 
@@ -190,7 +191,8 @@ int find_main_op(int p, int q){
 
 uint32_t eval(int head, int tail){
   if (head > tail){
-    return false;
+    printf("invalid expr\n");
+    abort();
   }
   else if (head == tail){
     uint32_t  number; 
@@ -223,51 +225,7 @@ uint32_t expr(char *e, bool *success) {
    int p = 0, q = nr_token-1;
    return eval(p, q);
    
-   /* 
-   int legal = 0;
-   //if (tokens[0].type != (int)'(' || tokens[0].type != TK_FIG)
-     //legal = -1; 
-   for (int i=0; i<q; i++){
-      switch(tokens[i].type){
-	default : break; 
-	case (int)'+' : case (int)'-': case (int)'*': case (int)'/': case (int)'(':
-		  { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' );
-	            else 
-		      legal = -1;
-		   }break;
-        case (int)')' : { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
-			    legal = -1;
-			  else ;
-			}break; 
-        case TK_FIG: { if (tokens[i+1].type == (int)'(' )
-		        legal = -1;
-		       else ;
-		   }break;
-      }
-      if (legal == -1)
-	break;
-   }
-   //if (tokens[q].type != (int)')'|| tokens[q].type != TK_FIG)
-     //legal = -1;
-
-   if (legal == -1){
-     printf("Illegal expr");
-     return -1;
-   }
-   else{
-     int match = check_parentheses(0,nr_token-1);
-     if (match == 1|| match == 0){
-            //printf("%d\n", eval(p,q));  
-      uint32_t result = eval(p,q,success);
-      return result; 
-     }
-     else{
-      printf("Not Match");
-      return -1;
-     }
-  }
-   */
-
+  
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
  }
