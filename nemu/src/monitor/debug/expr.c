@@ -90,27 +90,8 @@ static bool make_token(char *e) {
 
         switch (rules[i].token_type) {
 	  case TK_NOTYPE : break;
-	  case (int)'(' : {tokens[nr_token].type = rules[i].token_type;
-			   tokens[nr_token].str[0] = e[position - substr_len];
-			   nr_token += 1;
-		          } break;
-	  case (int)')' : {tokens[nr_token].type = rules[i].token_type;
-			   tokens[nr_token].str[0] = e[position - substr_len];
-			   nr_token += 1;
-		          } break;
-	  case (int)'*' : {tokens[nr_token].type = rules[i].token_type;
-			   tokens[nr_token].str[0] = e[position - substr_len];
-			   nr_token += 1;
-		          } break;
-	  case (int)'/' : {tokens[nr_token].type = rules[i].token_type;
-			   tokens[nr_token].str[0] = e[position - substr_len];
-			   nr_token += 1;
-		          } break;
-	  case (int)'+' : {tokens[nr_token].type = rules[i].token_type;
-			   tokens[nr_token].str[0] = e[position - substr_len];
-			   nr_token += 1;
-		          } break;
-	  case (int)'-' : {tokens[nr_token].type = rules[i].token_type;
+	  case (int)'(' : case (int)')' : case (int)'*': case (int)'/' : case (int)'+' : case (int)'-' :
+			   {tokens[nr_token].type = rules[i].token_type;
 			   tokens[nr_token].str[0] = e[position - substr_len];
 			   nr_token += 1;
 		          } break;
@@ -145,9 +126,9 @@ static bool make_token(char *e) {
 }
 
 
-int check_parentheses(int p,int q){// examing parentheses
-  if(tokens[p].type !=(int)'(' || tokens[q].type !=(int)')')
-    return 1;
+bool check_parentheses(int p,int q){// examing parentheses
+  if(tokens[p].type !=(int)'(' || tokens[q].type !=(int)')')    
+    return false;
   else{
     int count = 0, flag = 0;
     for (int j = p+1; j<q; j++){
@@ -161,17 +142,17 @@ int check_parentheses(int p,int q){// examing parentheses
           count -= 1;
       }
       else
-        return -1;
+        return false;
     }
     //assert(count == 0);
     if (count == 0){
       switch (flag){
-       case 0 : return 0;
-       case 1 : return 1;
+       case 0 : return true;
+       case 1 : return false;
       }
     }   
   }
-  return -1;
+  return false;
 }
 
 int find_main_op(int p, int q){
@@ -207,19 +188,18 @@ int find_main_op(int p, int q){
 }
 
 
-uint32_t  eval(int head, int tail){
+uint32_t eval(int head, int tail){
   if (head > tail){
-    printf("invalid expr\n");
-    return -1;
+    return false;
   }
   else if (head == tail){
     uint32_t  number; 
     sscanf(tokens[head].str, "%d", &number);
     return number;
   }
-  else if (check_parentheses(head, tail) == 0)
+  else if (check_parentheses(head, tail) == true)
     return eval(head+1, tail-1);  
-  else if (check_parentheses(head, tail) == 1){
+  else {
     int op = find_main_op(head, tail);
     uint32_t val1 = eval(head, op-1);
     uint32_t val2 = eval(op+1,tail);
@@ -228,14 +208,10 @@ uint32_t  eval(int head, int tail){
       case (int)'-' : return val1 - val2;break;
       case (int)'*' : return val1 * val2;break;
       case (int)'/' : return val1 / val2; break;
-      default : break;
+      default : printf("invalid expr\n");return false;
     }
   }
-  else if(check_parentheses(head, tail) == -1){
-    printf("wrong parentheses");
-    return -1;
-  }
-  return -1;
+  return 0;
 }
 
 uint32_t expr(char *e, bool *success) {
@@ -245,8 +221,9 @@ uint32_t expr(char *e, bool *success) {
   }
   else{
    int p = 0, q = nr_token-1;
-
-   /* check whether legal*/
+   return eval(p, q);
+   
+   /* 
    int legal = 0;
    //if (tokens[0].type != (int)'(' || tokens[0].type != TK_FIG)
      //legal = -1; 
@@ -281,7 +258,7 @@ uint32_t expr(char *e, bool *success) {
      int match = check_parentheses(0,nr_token-1);
      if (match == 1|| match == 0){
             //printf("%d\n", eval(p,q));  
-      uint32_t result = eval(p,q);
+      uint32_t result = eval(p,q,success);
       return result; 
      }
      else{
@@ -289,6 +266,8 @@ uint32_t expr(char *e, bool *success) {
       return -1;
      }
   }
+   */
+
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
  }

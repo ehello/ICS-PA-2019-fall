@@ -65,19 +65,7 @@ static int print_reg(char *args){
 }
 
 
-static int compute_EXPR(char *args){
-  /*if (make_token(args)){
-    int l = sizeof(tokens)/sizeof(tokens[0]);
-    for (int i=0; i<l;i++){
-      int str_l = sizeof(tokens[i].str)/sizeof(tokens[i].str[0]);
-      for (int j=0; j<str_l; j++)
-	printf("%s",tokens[i].str[j]);
-      printf("\n");
-    }
-    return 0;
-  } 
-  else
-    return -1;*/
+static int compute_EXPR(char *args){  
   bool p = true;
   bool *success = &p;
   printf("%d\n",expr(args, success));
