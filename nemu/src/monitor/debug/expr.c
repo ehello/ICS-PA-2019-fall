@@ -159,32 +159,28 @@ bool check_parentheses(int p,int q){// examing parentheses
 
 int find_main_op(int p, int q){
   int prio[32];
-  for (int j=0; j<32; j++)  prio[j] = -1;
+  //for (int j=0; j<32; j++)  prio[j] = -1;
   int i = 0;
   for (int t = q; t>p; ){
-   if (tokens[t].type == (int)')'){
+    if (tokens[t].type == (int)')'){
      int flag = 1;
      while (flag != 0){
         t-=1;
-	 if (tokens[t].type == (int)')')
-	  flag +=1;
-	 else if (tokens[t].type == (int)'(')
-          flag -=1;
-	else 
-	  continue;     
+	      if (tokens[t].type == (int)')')
+	        flag +=1;
+	      else if (tokens[t].type == (int)'(')
+          flag -=1;  
      }
    }
-   else if(tokens[t].type == (int)'+'||tokens[t].type == (int)'-')
-     return t;
-   else if(tokens[t].type == (int)'*'||tokens[t].type == (int)'/'){
-     prio[i] = t;
-     i+=1;
-     t-=1;
-   }
-   else
-     t-=1;
+    else if(tokens[t].type == (int)'+'||tokens[t].type == (int)'-')
+      return t;
+    else if(tokens[t].type == (int)'*'||tokens[t].type == (int)'/'){
+      prio[i] = t;
+      i+=1;
+    }
+    t-=1;
  }
- return prio[0];
+  return prio[0];
 }
 
 
@@ -250,7 +246,7 @@ uint32_t expr(char *e, bool *success) {
     for (int i=0; i<=q; i++){
       if (tokens[i].type == (int)'(') par+=1;
       else if (tokens[i].type == (int)')') par-=1;
-      if (par < 0)  v = 0;
+      if (par < 0)  v = 0;//右括号多了
     }
     if ( par > 0) v = 0;
 
