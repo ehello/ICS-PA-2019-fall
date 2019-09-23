@@ -131,7 +131,7 @@ static bool make_token(char *e) {
 bool check_parentheses(int p,int q){// examing parentheses
   if(tokens[p].type !=(int)'(' || tokens[q].type !=(int)')') //整个表达式左右两头是否都有括号   
     return false;
-  else{
+  /*else{
     int count = 0;//count用来计数左右匹配情况，低于-1说明右括号多了
     int flag = 0; //flag用来判断整个表达式两边的括号是否匹配，如果count在某一位置时值为-1，则说明括号内部配对但两头不配对
     for (int j = p+1; j<q; j++){
@@ -153,6 +153,8 @@ bool check_parentheses(int p,int q){// examing parentheses
     }   
   }
   return false;// 左括号多了
+  */
+  return true;
 }
 
 int find_main_op(int p, int q){
@@ -246,10 +248,17 @@ uint32_t expr(char *e, bool *success) {
       }
       if ( v == 0)  break;
     }
-    
+    int par = 0;//括号匹配情况
+    for (int i=0; i<=q; i++){
+      if (tokens[i].type == (int)'(') par+=1;
+      else if (tokens[i].type == (int)')') par-=1;
+      if (par < 0)  v = 0;
+    }
+    if ( par > 0) v = 0;
+
     if (v == 1)  return eval(p, q);
     else{
-      printf("invalid expr\n");
+      printf("invalid expr. return:\n");
       return false;
     }
 
