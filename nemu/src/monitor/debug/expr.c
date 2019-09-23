@@ -90,29 +90,30 @@ static bool make_token(char *e) {
          */
 
         switch (rules[i].token_type) {
-	  case TK_NOTYPE : break;
-	  case (int)'(' : case (int)')' : case (int)'*': case (int)'/' : case (int)'+' : case (int)'-' :
-			   {tokens[nr_token].type = rules[i].token_type;
-			   tokens[nr_token].str[0] = e[position - substr_len];
-			   nr_token += 1;
-		          } break;
-	  case TK_EQ : {tokens[nr_token].type = rules[i].token_type;
-			tokens[nr_token].str[0] = e[position - substr_len];
-			tokens[nr_token].str[1] = e[position - substr_len + 1];
-		        } break;
-	  case TK_FIG : {tokens[nr_token].type = rules[i].token_type;
-			   int t = position - substr_len;
-			   if (substr_len> 31 )
-			     assert(0);
-			   for (int j = 0; j< substr_len; j++){
-			      tokens[nr_token].str[j] = e[t];
-			      t+=1;
-			   }
-			   nr_token += 1;
-		          } break;
+          case TK_NOTYPE : break;
+          case (int)'(' : case (int)')' : case (int)'*': case (int)'/' : case (int)'+' : case (int)'-' :
+              {tokens[nr_token].type = rules[i].token_type;
+               tokens[nr_token].str[0] = e[position - substr_len];
+               nr_token += 1;
+              } break;
+          case TK_EQ : 
+              {tokens[nr_token].type = rules[i].token_type;
+               tokens[nr_token].str[0] = e[position - substr_len];
+               tokens[nr_token].str[1] = e[position - substr_len + 1];
+              } break;
+          case TK_FIG : 
+              {tokens[nr_token].type = rules[i].token_type;
+               int t = position - substr_len;
+               if (substr_len> 31 )
+                assert(0);
+               for (int j = 0; j< substr_len; j++){
+                tokens[nr_token].str[j] = e[t];
+                t+=1;
+               }
+               nr_token += 1;
+              } break;
           default: TODO();
         }
-
         break;
       }
     }
@@ -128,32 +129,30 @@ static bool make_token(char *e) {
 
 
 bool check_parentheses(int p,int q){// examing parentheses
-  if(tokens[p].type !=(int)'(' || tokens[q].type !=(int)')')    
+  if(tokens[p].type !=(int)'(' || tokens[q].type !=(int)')') //整个表达式左右两头是否都有括号   
     return false;
   else{
-    int count = 0, flag = 0;
+    int count = 0;//count用来计数左右匹配情况，低于-1说明右括号多了
+    int flag = 0; //flag用来判断整个表达式两边的括号是否匹配，如果count在某一位置时值为-1，则说明括号内部配对但两头不配对
     for (int j = p+1; j<q; j++){
-      //assert(count >= -1);
       if (count >=-1){
-        if (count == -1)
-          flag = 1;
+        if (count == -1)  flag = 1;
         if (tokens[j].type == (int)'(')
           count += 1;
         else if (tokens[j].type == (int)')')
           count -= 1;
       }
       else
-        return false;
+        return false;//右括号多了
     }
-    //assert(count == 0);
     if (count == 0){
       switch (flag){
-       case 0 : return true;
-       case 1 : return false;
+       case 0 : return true;//两头配对
+       case 1 : return false;//两头不配对，中间配对
       }
     }   
   }
-  return false;
+  return false;// 左括号多了
 }
 
 int find_main_op(int p, int q){
@@ -223,8 +222,36 @@ uint32_t expr(char *e, bool *success) {
   else{
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
-   int p = 0, q = nr_token-1;
-   return eval(p, q);
+    int p = 0, q = nr_token-1;
+
+  /*check validity of expr*/
+    int v = 1;
+    if(!(tokens[p].type == (int)'('||tokens[p].type == TK_FIG))  v = 0;
+    if (!(tokens[q].type == (int)')'||tokens[q].type == TK_FIG)) v = 0;
+    for (int i=0; i<q; i++){
+      switch(tokens[i].type){
+        case (int)'+' : case (int)'-': case (int)'*': case (int)'/': case (int)'(':
+            { if (!(tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' ))
+                v = 0;
+            }break;
+        case (int)')' : 
+            { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
+                v = 0;
+            }break; 
+        case TK_FIG: 
+            { if (tokens[i+1].type == (int)'(' )
+                v = 0;
+            }break;
+        default : break;
+      }
+      if ( v == 0)  break;
+    }
+    
+    if (v == 1)  return eval(p, q);
+    else{
+      printf("invalid expr\n");
+      return false;
+    }
 
  }
   return 0;
