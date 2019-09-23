@@ -191,7 +191,6 @@ int find_main_op(int p, int q){
 
 uint32_t eval(int head, int tail){
   if (head > tail){
-    printf("invalid expr\n");
     return false;
   }
   else if (head == tail){
@@ -210,7 +209,7 @@ uint32_t eval(int head, int tail){
       case (int)'-' : return val1 - val2;break;
       case (int)'*' : return val1 * val2;break;
       case (int)'/' : return val1 / val2; break;
-      default : printf("invalid expr\n");return false;
+      default : return false;
     }
   }
   return 0;
