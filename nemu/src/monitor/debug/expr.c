@@ -196,10 +196,7 @@ int find_main_op(int p, int q){
 
 
 uint32_t eval(int head, int tail){
-  if (head > tail){
-    return false;
-  }
-  else if (head == tail){
+  if (head == tail){
     uint32_t  number; 
     sscanf(tokens[head].str, "%d", &number);
     return number;
