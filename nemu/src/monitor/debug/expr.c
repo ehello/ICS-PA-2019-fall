@@ -129,7 +129,7 @@ static bool make_token(char *e) {
 
 
 bool check_parentheses(int p,int q){// examing parentheses
-  if(tokens[p].type !=(int)'(' || tokens[q].type !=(int)')') //整个表达式左右两头是否都有括号   
+  if(!(tokens[p].type ==(int)'(' && tokens[q].type ==(int)')')) //整个表达式左右两头是否都有括号   
     return false;
   /*else{
     int count = 0;//count用来计数左右匹配情况，低于-1说明右括号多了
@@ -159,18 +159,16 @@ bool check_parentheses(int p,int q){// examing parentheses
 
 int find_main_op(int p, int q){
   int prio[32];
-  for (int j=0; j<32; j++){
-    prio[j] = -1;
-  }
+  for (int j=0; j<32; j++)  prio[j] = -1;
   int i = 0;
   for (int t = q; t>p; ){
    if (tokens[t].type == (int)')'){
      int flag = 1;
      while (flag != 0){
         t-=1;
-	if (tokens[t].type == (int)')')
+	 if (tokens[t].type == (int)')')
 	  flag +=1;
-	else if (tokens[t].type == (int)'(')
+	 else if (tokens[t].type == (int)'(')
           flag -=1;
 	else 
 	  continue;     
@@ -210,7 +208,7 @@ uint32_t eval(int head, int tail){
       case (int)'-' : return val1 - val2;break;
       case (int)'*' : return val1 * val2;break;
       case (int)'/' : return val1 / val2; break;
-      default : return false;
+      default : break;
     }
   }
   return 0;
