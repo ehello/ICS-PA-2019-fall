@@ -258,7 +258,7 @@ uint32_t expr(char *e, bool *success) {
 
     if (v == 1)  return eval(p, q);
     else{
-      printf("invalid expr. return:\n");
+      printf("invalid expr. return:");
       return false;
     }
 
