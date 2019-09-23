@@ -170,8 +170,7 @@ bool check_parentheses(int p,int q){// examing parentheses
 }
 
 int find_main_op(int p, int q){
-  int prio[32];
-  //for (int j=0; j<32; j++)  prio[j] = -1;
+  int prio[32];//用来存储*, /号，第一个是最靠右的
   int i = 0;
   for (int t = q; t>p; ){
     if (tokens[t].type == (int)')'){
