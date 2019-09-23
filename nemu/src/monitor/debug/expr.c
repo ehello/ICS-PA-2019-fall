@@ -221,12 +221,11 @@ uint32_t expr(char *e, bool *success) {
     return 0;
   }
   else{
-   int p = 0, q = nr_token-1;
-   return eval(p, q);
-   
-  
   /* TODO: Insert codes to evaluate the expression. */
   //TODO();
+   int p = 0, q = nr_token-1;
+   return eval(p, q);
+
  }
   return 0;
 }
