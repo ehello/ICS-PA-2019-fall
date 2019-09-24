@@ -294,7 +294,7 @@ uint32_t expr(char *e, bool *success) {
       switch(tokens[i].type){
         case (int)'+' : case (int)'-': case (int)'*' : case (int)'/': case (int)'(':
             {if (!(tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' 
-                     || tokens[i+1].type == DEREF || tokens[i+1].type == TK_REG))
+                 || tokens[i+1].type == DEREF || tokens[i+1].type == TK_REG ||tokens[i+1].type == TK_HEX))
               v = 0;
             }break;
         case DEREF :
@@ -302,15 +302,17 @@ uint32_t expr(char *e, bool *success) {
               v = 0;
             }break;
         case (int)')' : 
-            {if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' ||tokens[i+1].type == TK_REG )
+            {if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' 
+                 ||tokens[i+1].type == TK_REG||tokens[i+1].type == TK_HEX )
               v = 0;
             }break; 
-        case TK_FIG: 
+        case TK_FIG: case TK_HEX : case TK_REG :  
             {if (tokens[i+1].type == (int)'(' )
               v = 0;
             }break;
         case TK_EQ : case TK_INEQ : case TK_AND :
-            {if(!(tokens[i+1].type == TK_FIG || tokens[i+1].type == DEREF))
+            {if(!(tokens[i+1].type == TK_FIG || tokens[i+1].type == DEREF
+                ||tokens[i+1].type == TK_REG||tokens[i+1].type == TK_HEX))
               v = 0;
             }break;
         default : v = 0; break;
