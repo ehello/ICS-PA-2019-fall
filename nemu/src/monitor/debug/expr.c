@@ -7,6 +7,7 @@
 #include <regex.h>
 #include "monitor/expr.h"
 #include <stdlib.h>
+#include <reg.h>
 enum {
   TK_NOTYPE = 256, TK_EQ, TK_INEQ, TK_HEX, TK_FIG, TK_AND, TK_SHFT, TK_REG, DEREF, NEGA
 
@@ -215,10 +216,24 @@ int find_main_op(int p, int q){
 
 
 uint32_t eval(int head, int tail){
-  if (head == tail){
-    uint32_t  number; 
-    sscanf(tokens[head].str, "%d", &number);
-    return number;
+  if (head == tail ){
+    if (tokens[head].type == TK_FIG){
+      uint32_t  number; 
+      sscanf(tokens[head].str, "%d", &number);
+      return number;
+    }
+    else if (tokens[head].type == TK_REG){
+      char s[4] = "reg";
+      int i = 1,j = 0;
+      while (tokens[head].str[i] != '\0' && s[j] != '\0'){
+        s[j] = tokens[head].str[i];
+        j += 1;
+        i += 1;
+      }
+      bool p = true;
+      bool *success = &p;
+      return isa_reg_str2val(s,success);
+    }
   }
   else if (check_parentheses(head, tail) == true)
     return eval(head+1, tail-1); 

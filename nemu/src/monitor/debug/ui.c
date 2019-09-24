@@ -77,8 +77,7 @@ static int scan_memory(char *args){
   int n;
   if ((num != NULL)&&(add != NULL)){
     sscanf(num,"%d",&n);
-    char *temp;
-    vaddr_t addr = strtol(add,&temp,16);
+    vaddr_t addr = strtol(add,NULL,16);
     for(int i=0;i<n;i++){
        vaddr_t data = vaddr_read(addr+i*4,4);
        printf("%d\n",data);

@@ -60,5 +60,12 @@ void isa_reg_display() {
 }
 
 uint32_t isa_reg_str2val(const char *s, bool *success) {
+  assert(s != NULL);
+  int i;
+  for (i = R_EAX; i<=R_EDI; i++){
+    if (strcmp(s,regsl[i]) == 0)
+      return reg_l(i);
+  }
+  assert(0);
   return 0;
 }
