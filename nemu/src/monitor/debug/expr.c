@@ -190,28 +190,38 @@ bool check_parentheses(int p,int q){// examing parentheses
 }
 
 int find_main_op(int p, int q){
-  int prio[32];//用来存储*, /号，第一个是最靠右的
-  int i = 0;
+  int mul_div[32];//用来存储*, /号，第一个是最靠右的
+  int dual[32];
+  int i = 0,j = 0;
+  bool flag = false;
   for (int t = q; t>p; ){
     if (tokens[t].type == (int)')'){
      int flag = 1;
      while (flag != 0){
-        t-=1;
+        t-= 1;
 	      if (tokens[t].type == (int)')')
-	        flag +=1;
+	        flag += 1;
 	      else if (tokens[t].type == (int)'(')
-          flag -=1;  
+          flag -= 1;  
      }
    }
     else if(tokens[t].type == (int)'+'||tokens[t].type == (int)'-')
       return t;
     else if(tokens[t].type == (int)'*'||tokens[t].type == (int)'/'){
-      prio[i] = t;
-      i+=1;
+      mul_div[i] = t;
+      flag = true;
+      i += 1;
     }
-    t-=1;
+    else if(tokens[t].type == TK_EQ 
+        || tokens[t].type == TK_INEQ || tokens[t].type == TK_AND){
+      dual[j] = t;
+      j += 1;
+    }
+    t -= 1;
  }
-  return prio[0];
+  if (flag == true)
+    return mul_div[0];
+  else return dual[0];
 }
 
 
@@ -252,6 +262,10 @@ uint32_t eval(int head, int tail){
       case (int)'-' : return val1 - val2;break;
       case (int)'*' : return val1 * val2;break;
       case (int)'/' : return val1 / val2; break;
+      case TK_EQ : return val1 == val2;break;
+      case TK_INEQ : return val1 != val2;break;
+      case TK_AND : return val1 && val2;break;
+      case TK_SHFT : break;
       default : break;
     }
   }
