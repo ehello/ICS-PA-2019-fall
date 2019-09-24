@@ -224,8 +224,7 @@ uint32_t eval(int head, int tail){
     return eval(head+1, tail-1); 
   else if (tokens[head].type == DEREF && tail - head == 1){
     int add;
-    char *stop;
-    add = strtol(tokens[tail].str,&stop,0);
+    add = strtol(tokens[tail].str,NULL,0);
     vaddr_t data = vaddr_read(add,32);
     return data;
   }
