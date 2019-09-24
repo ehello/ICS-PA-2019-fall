@@ -321,13 +321,17 @@ uint32_t expr(char *e, bool *success) {
     for (int i=0; i<=q; i++){
       if (tokens[i].type == (int)'(') par+=1;
       else if (tokens[i].type == (int)')') par-=1;
-      if (par < 0)  v = 0;//右括号多了
+      if (par < 0)  v = 2;//右括号多了
     }
-    if ( par > 0) v = 0;
+    if ( par > 0) v = 2;
 
     if (v == 1)  return eval(p, q);
-    else{
+    else if( v == 0){
       printf("invalid expr. return:");
+      return false;
+    }
+    else{
+      printf("Not match. return:");
       return false;
     }
   }
