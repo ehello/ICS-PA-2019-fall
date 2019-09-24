@@ -32,7 +32,7 @@ static struct rule {
   {"/", '/'},           // divide
   {"==", TK_EQ},        // equal
   {"!=", TK_INEQ},      // inequal
-  {"\\b0[xX][0-9a-fA-F]+\\b", TK_HEX},    // figures
+  {"\\b0[xX][0-9a-fA-F]+\\b", TK_HEX},    // hexnumber
   {"[0-9]+", TK_FIG},    //figures
   {"&&", TK_AND},         // and
   {"<=", TK_SHFT},        //shift
@@ -224,7 +224,7 @@ uint32_t eval(int head, int tail){
     return eval(head+1, tail-1); 
   else if (tokens[head].type == DEREF && tail - head == 1){
     int add;
-    add = strtol(tokens[tail].str,NULL,0);
+    add = strtol(tokens[tail].str,NULL,16);
     vaddr_t data = vaddr_read(add,32);
     return data;
   }
