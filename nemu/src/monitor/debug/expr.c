@@ -8,7 +8,7 @@
 #include "monitor/expr.h"
 #include <stdlib.h>
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_INEQ, TK_FIG, TK_HEX, TK_AND, TK_SHFT, TK_REG
+  TK_NOTYPE = 256, TK_EQ, TK_INEQ, TK_HEX, TK_FIG, TK_AND, TK_SHFT, TK_REG
 
   /* TODO: Add more token types */
 
@@ -26,14 +26,14 @@ static struct rule {
   {" +", TK_NOTYPE},    // spaces
   {"\\(", '('},         // left parenthesis
   {"\\)", ')'},         // right parenthesis
-  {"\\*", '*'},         // multiply
-  {"/", '/'},           // divide
   {"\\+", '+'},         // plus
   {"-", '-'},           // minus
+  {"\\*", '*'},         // multiply
+  {"/", '/'},           // divide
   {"==", TK_EQ},        // equal
   {"!=", TK_INEQ},      // inequal
-  {"[0-9]+", TK_FIG}, 
   {"\\b0[xX][0-9a-fA-F]+\\b", TK_HEX},    // figures
+  {"[0-9]+", TK_FIG},    //figures
   {"&&", TK_AND},         // and
   {"<=", TK_SHFT},        //shift
   {"\\$[a-zA-Z_]+", TK_REG}       //register
