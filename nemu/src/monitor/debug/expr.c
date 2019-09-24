@@ -224,7 +224,7 @@ uint32_t eval(int head, int tail){
     return eval(head+1, tail-1); 
   else if (tokens[head].type == DEREF && tail - head == 1){
     int add;
-    add = strtol(tokens[tail].str,NULL,16);
+    add = strtol(tokens[tail].str,NULL,0);
     vaddr_t data = vaddr_read(add,32);
     return data;
   }
@@ -255,9 +255,12 @@ uint32_t expr(char *e, bool *success) {
 
    /*check validity of expr*/
     int v = 1;
-    if(!(tokens[p].type == (int)'('||tokens[p].type == TK_FIG||tokens[p].type == DEREF))  
+    if(!(tokens[p].type == (int)'('||tokens[p].type == TK_FIG
+          ||tokens[p].type == DEREF||tokens[p].type == TK_REG||tokens[p].type == TK_HEX))  
        v = 0;
-    if (!(tokens[q].type == (int)')'||tokens[q].type == TK_FIG)) v = 0;
+    if (!(tokens[q].type == (int)')'||tokens[q].type == TK_FIG
+          ||tokens[q].type == TK_HEX || tokens[q].type == TK_REG)) 
+       v = 0;
     for (int i=0; i<q; i++){
       switch(tokens[i].type){
         case (int)'+' : case (int)'-': case (int)'*' : case (int)'/': case (int)'(':
