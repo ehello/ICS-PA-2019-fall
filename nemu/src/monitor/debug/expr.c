@@ -290,7 +290,7 @@ uint32_t expr(char *e, bool *success) {
     if (!(tokens[q].type == (int)')'||tokens[q].type == TK_FIG
           ||tokens[q].type == TK_HEX || tokens[q].type == TK_REG)) 
        v = 0;
-    for (int i=0; i<q; i++){
+    for (int i=0; i<q; i++){ //判断中间的token组成方式是否合法
       switch(tokens[i].type){
         case (int)'+' : case (int)'-': case (int)'*' : case (int)'/': case (int)'(':
             {if (!(tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' || tokens[i+1].type == DEREF))
