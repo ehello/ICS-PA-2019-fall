@@ -224,11 +224,11 @@ uint32_t expr(char *e, bool *success) {
     return 0;
   }
   else{
-  /* TODO: Insert codes to evaluate the expression. */
-  //TODO();
+   /* TODO: Insert codes to evaluate the expression. */
+   //TODO();
     int p = 0, q = nr_token-1;
 
-  /*check validity of expr*/
+   /*check validity of expr*/
     int v = 1;
     if(!(tokens[p].type == (int)'('||tokens[p].type == TK_FIG))  v = 0;
     if (!(tokens[q].type == (int)')'||tokens[q].type == TK_FIG)) v = 0;
@@ -263,7 +263,6 @@ uint32_t expr(char *e, bool *success) {
       printf("invalid expr. return:");
       return false;
     }
-
- }
+  }
   return 0;
 }
