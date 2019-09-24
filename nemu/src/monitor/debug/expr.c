@@ -8,7 +8,7 @@
 #include "monitor/expr.h"
 #include <stdlib.h>
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_FIG
+  TK_NOTYPE = 256, TK_EQ, TK_INEQ, TK_FIG, TK_HEX, TK_AND, TK_SHFT, TK_REG
 
   /* TODO: Add more token types */
 
@@ -31,7 +31,12 @@ static struct rule {
   {"\\+", '+'},         // plus
   {"-", '-'},           // minus
   {"==", TK_EQ},        // equal
-  {"[0-9]+", TK_FIG}     // figures
+  {"!=", TK_INEQ},      // inequal
+  {"[0-9]+", TK_FIG}, 
+  {"0[xX][0-9a-fA-F]+", TK_HEX},    // figures
+  {"&&", TK_AND},         // and
+  {"<=", TK_SHFT},        //shift
+  {"\\$[a-zA-Z_]+", TK_REG}       //register
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -54,10 +59,10 @@ void init_regex() {
     }
   }
 }
-
+#define token_len 32
 typedef struct token {
   int type;
-  char str[32];
+  char str[token_len];
 } Token;
 
 #define tokens_len  65536
@@ -70,9 +75,9 @@ static bool make_token(char *e) {
   regmatch_t pmatch;
 
   nr_token = 0;
-  for (int i = 0; i<tokens_len; i++){
-   memset(tokens[i].str,'\0',sizeof(tokens[i].str)-1);	   
-  }
+  for (int i = 0; i<tokens_len; i++)
+    memset(tokens[i].str,'\0',sizeof(tokens[i].str)-1);	   
+  
   while (e[position] != '\0') {
     /* Try all rules one by one. */
     for (i = 0; i < NR_REGEX; i ++) {
@@ -93,25 +98,34 @@ static bool make_token(char *e) {
           case TK_NOTYPE : break;
           case (int)'(' : case (int)')' : case (int)'*': case (int)'/' : case (int)'+' : case (int)'-' :
               {tokens[nr_token].type = rules[i].token_type;
-               tokens[nr_token].str[0] = e[position - substr_len];
+               //tokens[nr_token].str[0] = e[position - substr_len];
+               strncpy(tokens[nr_token].str, substr_start, substr_len);
                nr_token += 1;
               } break;
-          case TK_EQ : 
+          case TK_EQ : case TK_INEQ : case TK_SHFT : case TK_AND : 
               {tokens[nr_token].type = rules[i].token_type;
-               tokens[nr_token].str[0] = e[position - substr_len];
-               tokens[nr_token].str[1] = e[position - substr_len + 1];
+               /*tokens[nr_token].str[0] = e[position - substr_len];
+               tokens[nr_token].str[1] = e[position - substr_len + 1];*/
+               strncpy(tokens[nr_token].str, substr_start, substr_len);
+               nr_token += 1;
               } break;
-          case TK_FIG : 
+          case TK_FIG : case TK_HEX :
               {tokens[nr_token].type = rules[i].token_type;
-               int t = position - substr_len;
-               if (substr_len> 31 )
-                assert(0);
+               int l = token_len - 1;
+               if (substr_len > l )  assert(0);
+               /*int t = position - substr_len 
                for (int j = 0; j< substr_len; j++){
                 tokens[nr_token].str[j] = e[t];
                 t+=1;
-               }
+               }*/
+               strncpy(tokens[nr_token].str, substr_start, substr_len);
                nr_token += 1;
               } break;
+          case TK_REG :
+               {tokens[nr_token].type = rules[i].token_type;
+                strncpy(tokens[nr_token].str, substr_start, substr_len);
+                nr_token += 1;
+               }break;
           default: TODO();
         }
         break;
@@ -246,7 +260,7 @@ uint32_t expr(char *e, bool *success) {
             { if (tokens[i+1].type == (int)'(' )
                 v = 0;
             }break;
-        default : break;
+        default : v = 0; break;
       }
       if ( v == 0)  break;
     }
