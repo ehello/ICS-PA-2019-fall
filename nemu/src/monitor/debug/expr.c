@@ -33,7 +33,7 @@ static struct rule {
   {"==", TK_EQ},        // equal
   {"!=", TK_INEQ},      // inequal
   {"[0-9]+", TK_FIG}, 
-  {"0[xX][0-9a-fA-F]+", TK_HEX},    // figures
+  {"\\b0[xX][0-9a-fA-F]+\\b", TK_HEX},    // figures
   {"&&", TK_AND},         // and
   {"<=", TK_SHFT},        //shift
   {"\\$[a-zA-Z_]+", TK_REG}       //register
