@@ -293,15 +293,16 @@ uint32_t expr(char *e, bool *success) {
     for (int i=0; i<q; i++){ //判断中间的token组成方式是否合法
       switch(tokens[i].type){
         case (int)'+' : case (int)'-': case (int)'*' : case (int)'/': case (int)'(':
-            {if (!(tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' || tokens[i+1].type == DEREF))
+            {if (!(tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' 
+                     || tokens[i+1].type == DEREF || tokens[i+1].type == TK_REG))
               v = 0;
             }break;
         case DEREF :
-            {if(!(tokens[i+1].type == TK_FIG || tokens[i+1].type == TK_HEX))
+            {if(!(tokens[i+1].type == TK_FIG || tokens[i+1].type == TK_HEX ||tokens[i+1].type == TK_REG))
               v = 0;
             }break;
         case (int)')' : 
-            {if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
+            {if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' ||tokens[i+1].type == TK_REG )
               v = 0;
             }break; 
         case TK_FIG: 
