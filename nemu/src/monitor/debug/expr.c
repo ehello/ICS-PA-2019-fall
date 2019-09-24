@@ -8,7 +8,7 @@
 #include "monitor/expr.h"
 #include <stdlib.h>
 enum {
-  TK_NOTYPE = 256, TK_EQ, TK_INEQ, TK_HEX, TK_FIG, TK_AND, TK_SHFT, TK_REG
+  TK_NOTYPE = 256, TK_EQ, TK_INEQ, TK_HEX, TK_FIG, TK_AND, TK_SHFT, TK_REG, DEREF, NEGA
 
   /* TODO: Add more token types */
 
@@ -131,13 +131,18 @@ static bool make_token(char *e) {
         break;
       }
     }
-
     if (i == NR_REGEX) {
       printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
       return false;
     }
   }
 
+  for (int i = 0; i < nr_token; i++){
+    if(tokens[i].type == (int)'*' && (i == 0 || tokens[i-1].type==(int)'+'
+      || tokens[i-1].type==(int)'-' ||tokens[i-1].type==(int)'*'
+        ||tokens[i-1].type==(int)'/' || tokens[i-1].type==(int)'('))
+      tokens[i].type = DEREF;
+  }
   return true;
 }
 
@@ -216,7 +221,13 @@ uint32_t eval(int head, int tail){
     return number;
   }
   else if (check_parentheses(head, tail) == true)
-    return eval(head+1, tail-1);  
+    return eval(head+1, tail-1); 
+  else if (tokens[head].type == DEREF && tail - head == 1){
+    int add;
+    sscanf(tokens[tail].str, "%d", &add);
+    vaddr_t data = vaddr_read(add,32);
+    return data;
+  }
   else {
     int op = find_main_op(head, tail);
     uint32_t val1 = eval(head, op-1);
@@ -244,21 +255,26 @@ uint32_t expr(char *e, bool *success) {
 
    /*check validity of expr*/
     int v = 1;
-    if(!(tokens[p].type == (int)'('||tokens[p].type == TK_FIG))  v = 0;
+    if(!(tokens[p].type == (int)'('||tokens[p].type == TK_FIG||tokens[p].type == DEREF))  
+       v = 0;
     if (!(tokens[q].type == (int)')'||tokens[q].type == TK_FIG)) v = 0;
     for (int i=0; i<q; i++){
       switch(tokens[i].type){
-        case (int)'+' : case (int)'-': case (int)'*': case (int)'/': case (int)'(':
-            { if (!(tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' ))
-                v = 0;
+        case (int)'+' : case (int)'-': case (int)'*' : case (int)'/': case (int)'(':
+            {if (!(tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' || tokens[i+1].type == DEREF))
+              v = 0;
+            }break;
+        case DEREF :
+            {if(!(tokens[i+1].type == TK_FIG))
+              v = 0;
             }break;
         case (int)')' : 
-            { if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
-                v = 0;
+            {if (tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' )
+              v = 0;
             }break; 
         case TK_FIG: 
-            { if (tokens[i+1].type == (int)'(' )
-                v = 0;
+            {if (tokens[i+1].type == (int)'(' )
+              v = 0;
             }break;
         default : v = 0; break;
       }
