@@ -244,6 +244,11 @@ uint32_t eval(int head, int tail){
       bool *success = &p;
       return isa_reg_str2val(s,success);
     }
+    else if(tokens[head].type == TK_HEX ){
+      uint32_t number;
+      number = strtol(tokens[head].str,NULL,0);
+      return number;
+    }
   }
   else if (check_parentheses(head, tail) == true)
     return eval(head+1, tail-1); 
