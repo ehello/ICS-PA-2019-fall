@@ -308,6 +308,10 @@ uint32_t expr(char *e, bool *success) {
             {if (tokens[i+1].type == (int)'(' )
               v = 0;
             }break;
+        case TK_EQ : case TK_INEQ : case TK_AND :
+            {if(!(tokens[i+1].type == TK_FIG || tokens[i+1].type == DEREF))
+              v = 0;
+            }break;
         default : v = 0; break;
       }
       if ( v == 0)  break;
