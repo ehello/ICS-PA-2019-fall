@@ -265,7 +265,7 @@ uint32_t expr(char *e, bool *success) {
               v = 0;
             }break;
         case DEREF :
-            {if(!(tokens[i+1].type == TK_FIG))
+            {if(!(tokens[i+1].type == TK_FIG || tokens[i+1].type == TK_HEX))
               v = 0;
             }break;
         case (int)')' : 
