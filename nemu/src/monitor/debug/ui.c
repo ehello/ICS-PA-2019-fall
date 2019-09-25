@@ -59,16 +59,7 @@ static int info(char *args){
     return 0;
   }
   else if (strcmp(arg,"w") == 0){
-    WP* head = return_head();
-    if(head != NULL){
-      printf("No.   expr\n ");
-      WP* p = head;
-      while(p != NULL){
-        printf("%d  %s\n",p->NO,p->expr);
-        p = p->next;
-      }
-    }
-    else printf("No watchpoint\n");
+    print_all_wp();
     return 0; 
   }
   else

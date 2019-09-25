@@ -97,3 +97,15 @@ bool free_wp(int n){// 将wp归还到free_链表中
   return false;
 }
 
+void print_all_wp(){
+  if(head != NULL){
+      printf("No.   expr\n ");
+      WP* p = head;
+      while(p != NULL){
+        printf("%d  %s\n",p->NO,p->expr);
+        p = p->next;
+      }
+    }
+    else printf("No watchpoint\n");
+}
+
