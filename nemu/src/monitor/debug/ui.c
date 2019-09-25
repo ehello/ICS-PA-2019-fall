@@ -52,16 +52,27 @@ static int step_exec(char *args){
     return -1;
 };
 
-static int print_reg(char *args){
+static int info(char *args){
   char *arg = strtok(NULL," ");//参数设成NULL后，直接从第二个子串开始
   if (strcmp(arg, "r") == 0){
     isa_reg_display();
     return 0;
   }
+  else if (strcmp(arg,"w") == 0){
+    WP* head = return_head();
+    if(head != NULL){
+      printf("No.   expr\n ");
+      WP* p = head;
+      while(p != NULL){
+        printf("%d  %s\n",p->NO,p->expr);
+        p = p->next;
+      }
+    }
+    else printf("No watchpoint\n");
+    return 0; 
+  }
   else
      return -1;
-  /*else if (strcmp(arg,"w") == 0){
-  }*/
 }
 
 
@@ -88,19 +99,16 @@ static int scan_memory(char *args){
   else
     return -1;	  
 }
-/*
-static void watchpoint_list(WP* wp){
-   
-}
+
+
 static int set_watchpoint(char *args){
   WP* wp = new_wp();
   strcpy(wp->expr,args);
   bool b = true;
   bool* success = &b;
   wp->value = expr(wp->expr, success);
-  
-
-}*/
+  return 0;
+}
 static int delete_watchpoint(char *args){
   int n;
   sscanf(args,"%d",&n);
@@ -121,10 +129,10 @@ static struct {
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
   {"si","Step one instruction exactly",step_exec},
-  {"info","Print the state of registers",print_reg},
+  {"info","Print the state of registers",info},
   {"x","Memory address",scan_memory},
   {"p", "Compute the value of EXPR", compute_EXPR},
-  //{"w", "Set a watchpoint",set_watchpoint},
+  {"w", "Set a watchpoint",set_watchpoint},
   {"d", "Delete the watchpoint", delete_watchpoint}
 
   /* TODO: Add more commands */

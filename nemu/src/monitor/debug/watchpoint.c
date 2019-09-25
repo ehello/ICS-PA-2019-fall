@@ -19,6 +19,9 @@ void init_wp_pool() {
 }
 
 /* TODO: Implement the functionality of watchpoint */
+WP* return_head(){
+  return head;
+}
 WP* new_wp(){// 从free_链表中返回一个空闲的监视点结构，没有空闲时assert退出
   if (free_ == NULL)  assert(0);
   if (head == NULL){
