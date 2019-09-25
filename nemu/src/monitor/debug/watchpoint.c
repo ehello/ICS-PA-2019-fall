@@ -27,7 +27,7 @@ WP* new_wp(){// 从free_链表中返回一个空闲的监视点结构，没有�
   if (head == NULL){
     head = &free_[0];
     head->next = NULL;
-    free_ = free_[0].next;
+    free_ = free_->next;
     return head;
   }
   else{
