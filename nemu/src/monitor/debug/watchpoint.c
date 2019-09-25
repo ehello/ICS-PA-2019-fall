@@ -118,8 +118,8 @@ bool check_wp(){
      int new_value = expr(p->expr,success);
      if ( new_value != p->value){
       flag = 0;
-      printf("old value is %d\n",p->value);
-      printf("new value is %d\n",new_value);
+      printf("%d wp's old value is %d\n",p->NO,p->value);
+      printf("%d wp'snew value is %d\n",p->NO,new_value);
       p->value = new_value;
      }
      p = p->next;
