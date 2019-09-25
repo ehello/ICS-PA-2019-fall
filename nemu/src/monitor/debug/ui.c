@@ -71,6 +71,7 @@ static int compute_EXPR(char *args){
   printf("%d\n",expr(args, success));
   return 0;
 }
+
 static int scan_memory(char *args){
   char *num = strtok(args," ");
   char *add = strtok(NULL," ");
@@ -85,9 +86,31 @@ static int scan_memory(char *args){
     return 0;
   }
   else
-     return -1;
+    return -1;	  
+}
+/*
+static void watchpoint_list(WP* wp){
+   
+}
+static int set_watchpoint(char *args){
+  WP* wp = new_wp();
+  strcpy(wp->expr,args);
+  bool b = true;
+  bool* success = &b;
+  wp->value = expr(wp->expr, success);
+  
 
-	  
+}*/
+static int delete_watchpoint(char *args){
+  int n;
+  sscanf(args,"%d",&n);
+  if(free_wp(n)){
+    printf("Successfully delete the watchpoint");
+    return 1;
+  }
+  else return false;
+
+
 }
 static struct {
   char *name;
@@ -100,7 +123,9 @@ static struct {
   {"si","Step one instruction exactly",step_exec},
   {"info","Print the state of registers",print_reg},
   {"x","Memory address",scan_memory},
-  {"p", "Compute the value of EXPR", compute_EXPR}
+  {"p", "Compute the value of EXPR", compute_EXPR},
+  //{"w", "Set a watchpoint",set_watchpoint},
+  {"d", "Delete the watchpoint", delete_watchpoint}
 
   /* TODO: Add more commands */
 
