@@ -109,3 +109,22 @@ void print_all_wp(){
     else printf("No watchpoint\n");
 }
 
+bool check_wp(){
+   WP* p = head;
+   bool b = true;
+   bool *success = &b; 
+   int flag = 1;
+   while(p != NULL){
+     int new_value = expr(p->expr,success);
+     if ( new_value != p->value){
+      flag = 0;
+      printf("old value is %d\n",p->value);
+      printf("new value is %d\n",new_value);
+      p->value = new_value;
+     }
+     p = p->next;
+   } 
+   if (flag == 0) return false;
+   else return true;
+}
+
