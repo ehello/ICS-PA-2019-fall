@@ -45,7 +45,7 @@ bool free_wp(int n){// 将wp归还到free_链表中
   if (head == NULL) assert(0);
   WP* wp = head;
   int flag = 0;
-  while (wp->next != NULL){
+  while (wp != NULL){
     if (wp->NO == n){
       flag = 1;
       break;
