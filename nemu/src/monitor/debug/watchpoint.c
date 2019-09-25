@@ -25,7 +25,7 @@ WP* return_head(){
 WP* new_wp(){// 从free_链表中返回一个空闲的监视点结构，没有空闲时assert退出
   if (free_ == NULL)  assert(0);
   if (head == NULL){
-    head = &free_[0];
+    head = free_;
     head->next = NULL;
     free_ = free_->next;
     return head;
