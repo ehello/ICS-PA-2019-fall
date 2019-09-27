@@ -60,7 +60,7 @@ void init_regex() {
     }
   }
 }
-#define token_len 65536
+#define token_len 200
 typedef struct token {
   int type;
   char str[token_len];
