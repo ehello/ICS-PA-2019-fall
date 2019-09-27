@@ -60,7 +60,7 @@ void init_regex() {
     }
   }
 }
-#define token_len 32
+#define token_len 65536
 typedef struct token {
   int type;
   char str[token_len];
@@ -139,10 +139,14 @@ static bool make_token(char *e) {
   }
 
   for (int i = 0; i < nr_token; i++){
-    if(tokens[i].type == (int)'*' && (i == 0 || tokens[i-1].type==(int)'+'
+    if (tokens[i].type == (int)'*' && (i == 0 || tokens[i-1].type==(int)'+'
       || tokens[i-1].type==(int)'-' ||tokens[i-1].type==(int)'*'
         ||tokens[i-1].type==(int)'/' || tokens[i-1].type==(int)'('))
-      tokens[i].type = DEREF;
+      tokens[i].type = DEREF;//对于解引符号的判断
+    else if (tokens[i].type == (int)'-'&&(i == 0 || tokens[i-1].type==(int)'+'
+      || tokens[i-1].type==(int)'-' ||tokens[i-1].type==(int)'*'
+        ||tokens[i-1].type==(int)'/' || tokens[i-1].type==(int)'('))
+      tokens[i].type = NEGA;//对负号进行判断
   }
   return true;
 }
@@ -190,8 +194,8 @@ bool check_parentheses(int p,int q){// examing parentheses
 }
 
 int find_main_op(int p, int q){
-  int mul_div[32];//用来存储*, /号，第一个是最靠右的
-  int dual[32];
+  int mul_div[32];//用来存储*, /的位置，第一个是最靠右的
+  int dual[32];//用来存储==，!=, <=等运算符的位置
   int i = 0,j = 0;
   bool flag = false;
   for (int t = q; t>p; ){
@@ -226,7 +230,7 @@ int find_main_op(int p, int q){
 
 
 uint32_t eval(int head, int tail){
-  if (head == tail ){
+  if (head == tail ){//最简单的表达式形式，一个数字或寄存器
     if (tokens[head].type == TK_FIG){
       uint32_t  number; 
       sscanf(tokens[head].str, "%d", &number);
@@ -250,15 +254,21 @@ uint32_t eval(int head, int tail){
       return number;
     }
   }
-  else if (check_parentheses(head, tail) == true)
+  else if (check_parentheses(head, tail) == true)//两头都有括号且匹配
     return eval(head+1, tail-1); 
-  else if (tokens[head].type == DEREF && tail - head == 1){
+  else if (tokens[head].type == DEREF && tail - head == 1){//指针解引符时
     int add;
     add = strtol(tokens[tail].str,NULL,0);
     vaddr_t data = vaddr_read(add,32);
     return data;
   }
-  else {
+  else if (tokens[head].type == NEGA && tail - head == 1){//负号时
+    uint32_t  number; 
+    sscanf(tokens[tail].str, "%d", &number);
+    number = -number;
+    return number;
+  }
+  else {//主运算符处理法
     int op = find_main_op(head, tail);
     uint32_t val1 = eval(head, op-1);
     uint32_t val2 = eval(op+1,tail);
@@ -289,7 +299,7 @@ uint32_t expr(char *e, bool *success) {
 
    /*check validity of expr*/
     int v = 1;
-    if(!(tokens[p].type == (int)'('||tokens[p].type == TK_FIG
+    if(!(tokens[p].type == (int)'('||tokens[p].type == TK_FIG||tokens[p].type == NEGA
           ||tokens[p].type == DEREF||tokens[p].type == TK_REG||tokens[p].type == TK_HEX))  
        v = 0;
     if (!(tokens[q].type == (int)')'||tokens[q].type == TK_FIG
@@ -298,11 +308,11 @@ uint32_t expr(char *e, bool *success) {
     for (int i=0; i<q; i++){ //判断中间的token组成方式是否合法
       switch(tokens[i].type){
         case (int)'+' : case (int)'-': case (int)'*' : case (int)'/': case (int)'(':
-            {if (!(tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' 
+            {if (!(tokens[i+1].type == TK_FIG || tokens[i+1].type == (int)'(' ||tokens[i+1].type == NEGA
                  || tokens[i+1].type == DEREF || tokens[i+1].type == TK_REG ||tokens[i+1].type == TK_HEX))
               v = 0;
             }break;
-        case DEREF :
+        case DEREF : case NEGA :
             {if(!(tokens[i+1].type == TK_FIG || tokens[i+1].type == TK_HEX ||tokens[i+1].type == TK_REG))
               v = 0;
             }break;
@@ -316,7 +326,7 @@ uint32_t expr(char *e, bool *success) {
               v = 0;
             }break;
         case TK_EQ : case TK_INEQ : case TK_AND :
-            {if(!(tokens[i+1].type == TK_FIG || tokens[i+1].type == DEREF
+            {if(!(tokens[i+1].type == TK_FIG || tokens[i+1].type == DEREF||tokens[i+1].type == NEGA
                 ||tokens[i+1].type == TK_REG||tokens[i+1].type == TK_HEX))
               v = 0;
             }break;
