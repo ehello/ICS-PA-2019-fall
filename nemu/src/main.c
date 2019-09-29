@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
 
   /*Test the expr*/
-  /*FILE *fp = fopen("/home/james/ics2019/nemu/tools/gen-expr/input","r");
+  FILE *fp = fopen("/home/james/ics2019/nemu/tools/gen-expr/input","r");
   assert(fp != NULL);
   while (!feof(fp)){ 
    char e[65536];
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
    printf("%s %d  %s\n",n,result,e);
   }
   fclose(fp);
-  */
+  
 
   /* Receive commands from user. */
   ui_mainloop(is_batch_mode);
