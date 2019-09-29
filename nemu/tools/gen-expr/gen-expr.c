@@ -14,11 +14,7 @@ uint32_t  choose(uint32_t n){
 static char buf[65536];
 
 void gen_num(){
- uint32_t num = rand()%9;
- int i = 0;
- while(buf[i] != '\0') i += 1;
- i -= 1;
- if(buf[i] == '/' && num == 0) num += 1;
+ uint32_t num = rand()%9+1;
  char str[10];
  sprintf(str, "%d",num); 
  //memset(buf,'\0',sizeof(buf)-1);
