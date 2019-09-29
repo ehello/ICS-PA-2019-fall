@@ -14,12 +14,10 @@ uint32_t  choose(uint32_t n){
 static char buf[65536];
 
 void gen_num(){
-// int seed = time(0);
-// srand(seed);
  uint32_t num = rand()%9;
  char str[10];
- sprintf(str, "%d",num); memset(buf,'\0',sizeof(buf)-1);
-
+ sprintf(str, "%d",num); 
+ //memset(buf,'\0',sizeof(buf)-1);
  strcat(buf,str);
 }
 
@@ -43,7 +41,7 @@ void gen_rand_op(){
 static inline void gen_rand_expr() {
   switch (choose(4)){
    case 0 : case 2: gen_num(); break;
-   case 1 : gen('(');gen_rand_expr();gen(')');break;
+   case 1 : {gen('(');gen_rand_expr();gen(')');}break;
    default : gen_rand_expr();gen_rand_op();gen_rand_expr();break;
   }	
   //buf[0] = '\0';
