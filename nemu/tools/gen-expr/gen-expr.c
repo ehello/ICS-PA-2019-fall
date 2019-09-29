@@ -15,6 +15,10 @@ static char buf[65536];
 
 void gen_num(){
  uint32_t num = rand()%9;
+ int i = 0;
+ while(buf[i] != '\0') i += 1;
+ i -= 1;
+ if(buf[i] == '/' && num == 0) num += 1;
  char str[10];
  sprintf(str, "%d",num); 
  //memset(buf,'\0',sizeof(buf)-1);
@@ -51,7 +55,8 @@ static char code_buf[65536];
 static char *code_format =
 "#include <stdio.h>\n"
 "int main() { "
-"  unsigned result = %s; "
+"  //unsigned result = %s; "
+"  int result = %s; "
 "  printf(\"%%u\", result); "
 "  return 0; "
 "}";
