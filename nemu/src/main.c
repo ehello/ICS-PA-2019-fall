@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
   assert(fp != NULL);
   while (!feof(fp)){ 
    char e[65536];
-   char n[10];
+   char n[20];
    fscanf(fp,"%s %s",n,e);
    bool t = true;
    bool *b = &t;
