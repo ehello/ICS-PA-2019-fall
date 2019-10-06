@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
 
 
   /*Test the expr*/
-  FILE *fp = fopen("/home/james/ics2019/nemu/tools/gen-expr/input","r");
+  /*FILE *fp = fopen("/home/james/ics2019/nemu/tools/gen-expr/input","r");
   assert(fp != NULL);
   while (!feof(fp)){ 
    char e[65536];
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
    uint32_t result = expr(e,b);
    printf("%s %d  %s\n",n,result,e);
   }
-  fclose(fp);
+  fclose(fp);*/
   
 
   /* Receive commands from user. */
