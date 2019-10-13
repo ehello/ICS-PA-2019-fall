@@ -56,7 +56,6 @@ static inline long load_img() {
 
     fclose(fp);
 
-
     // mainargs
     strcpy(guest_to_host(0), mainargs);
   }
@@ -80,7 +79,6 @@ static inline void parse_args(int argc, char *argv[]) {
     }
   }
 }
-
 
 int init_monitor(int argc, char *argv[]) {
   /* Perform some global initialization. */
