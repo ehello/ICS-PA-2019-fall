@@ -26,7 +26,9 @@ make_EHelper(jmp_rm) {
 
 make_EHelper(call) {
   // the target address is calculated at the decode stage
-  TODO();
+  //TODO();
+  rtl_push(pc);
+  decinfo_set_jmp(true);
 
   print_asm("call %x", decinfo.jmp_pc);
 }

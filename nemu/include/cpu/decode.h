@@ -6,7 +6,7 @@
 #define make_DHelper(name) void concat(decode_, name) (vaddr_t *pc)
 typedef void (*DHelper) (vaddr_t *);
 
-#define OP_STR_SIZE 40
+#define OP_STR_SIZE 40 
 enum { OP_TYPE_REG, OP_TYPE_MEM, OP_TYPE_IMM };
 
 typedef struct {

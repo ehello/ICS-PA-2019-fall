@@ -21,6 +21,14 @@ static inline void interpret_rtl_mv(rtlreg_t* dest, const rtlreg_t *src1) {
   *dest = *src1;
 }
 
+//static inline void interpret_rtl_call(rtlreg_t* src1){
+//  rtl_push(cpu.pc);
+//  cpu.pc += *src1;
+//}
+
+//static inline void interpret_rtl_ret(){
+//}
+
 #define make_rtl_arith_logic(name) \
   static inline void concat(interpret_rtl_, name) (rtlreg_t* dest, const rtlreg_t* src1, const rtlreg_t* src2) { \
     *dest = concat(c_, name) (*src1, *src2); \
