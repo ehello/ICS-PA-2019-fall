@@ -1,4 +1,4 @@
-#include "cpu/exec.h"
+#include "cpu/exec.h" 
 
 CPU_state cpu;
 
@@ -15,7 +15,7 @@ void isa_exec(vaddr_t *pc);
 
 vaddr_t exec_once(void) {
   decinfo.seq_pc = cpu.pc;
-  isa_exec(&decinfo.seq_pc);
+  isa_exec(&decinfo.seq_pc); 
   update_pc();
 
   return decinfo.seq_pc;
