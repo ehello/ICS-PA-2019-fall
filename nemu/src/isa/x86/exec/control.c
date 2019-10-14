@@ -35,6 +35,10 @@ make_EHelper(call) {
   print_asm("call %x", decinfo.jmp_pc);
 }
 
+make_EHelper(push){
+  rtl_push(pc);
+  print_asm("push");
+}
 make_EHelper(ret) {
   //TODO();
   //rtl_pop(pc);
