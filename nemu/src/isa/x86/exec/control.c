@@ -29,8 +29,6 @@ make_EHelper(call) {
   //TODO();
   rtl_push(pc);
   interpret_rtl_j(decinfo.jmp_pc);
-  //decinfo_set_jmp(true);
-  //make_EHelper(ret);
 
   print_asm("call %x", decinfo.jmp_pc);
 }
