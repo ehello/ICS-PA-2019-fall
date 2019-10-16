@@ -51,7 +51,7 @@ make_group(gp7,
 
 /* TODO: Add more instructions!!! */
 
-static OpcodeEntry opcode_table [520] = {
+static OpcodeEntry opcode_table [512] = {
   /* 0x00 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x04 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x08 */	EMPTY, EMPTY, EMPTY, EMPTY,
@@ -73,8 +73,7 @@ static OpcodeEntry opcode_table [520] = {
   /* 0x48 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x4c */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x50 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x54 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  ///* 0x55 */	EX(push), EMPTY, EMPTY, EMPTY,
+  /* 0x54 */	EMPTY, EX(push), EMPTY, EMPTY,
   /* 0x58 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x5c */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x60 */	EMPTY, EMPTY, EMPTY, EMPTY,
@@ -117,7 +116,6 @@ static OpcodeEntry opcode_table [520] = {
   /* 0xf4 */	EMPTY, EMPTY, IDEXW(E, gp3, 1), IDEX(E, gp3),
   /* 0xf8 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0xfc */	EMPTY, EMPTY, IDEXW(E, gp4, 1), IDEX(E, gp5),
-  /* 0xc3 */  EXW(ret,1),EMPTY, EMPTY, EMPTY,
 
 /*2 byte_opcode_table */
 
