@@ -74,7 +74,7 @@ static OpcodeEntry opcode_table [520] = {
   /* 0x4c */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x50 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x54 */	EMPTY, EMPTY, EMPTY, EMPTY,
-  /* 0x55 */	EX(push), EMPTY, EMPTY, EMPTY,
+  ///* 0x55 */	EX(push), EMPTY, EMPTY, EMPTY,
   /* 0x58 */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x5c */	EMPTY, EMPTY, EMPTY, EMPTY,
   /* 0x60 */	EMPTY, EMPTY, EMPTY, EMPTY,
