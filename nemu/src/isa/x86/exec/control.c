@@ -35,8 +35,8 @@ make_EHelper(call) {
 
 make_EHelper(ret) {
   //TODO();
-  rtl_pop(&id_dest->addr);
-  interpret_rtl_j(id_dest->addr);
+  rtl_pop(pc);
+  interpret_rtl_jr(pc);
   print_asm("ret");
 }
 
