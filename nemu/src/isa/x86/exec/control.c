@@ -38,7 +38,7 @@ make_EHelper(call) {
 make_EHelper(ret) {
   //TODO();
    rtl_pop(&cpu.pc);
-  //interpret_rtl_j(decinfo.jmp_pc);
+  interpret_rtl_j(cpu.pc);
   print_asm("ret");
 }
 
