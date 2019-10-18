@@ -35,14 +35,14 @@ make_EHelper(call) {
 
 make_EHelper(ret) {
   //TODO();
-  rtl_pop(pc);
-  interpret_rtl_jr(pc);
+  rtl_pop(&cpu.pc);
+  //interpret_rtl_jr(pc);
   print_asm("ret");
 }
 
 make_EHelper(ret_imm) {
   TODO();
-
+ 
   print_asm("ret %s", id_dest->str);
 }
 
