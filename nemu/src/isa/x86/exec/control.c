@@ -36,7 +36,7 @@ make_EHelper(call) {
 make_EHelper(ret) {
   //TODO();
   rtl_pop(pc);
-  *pc+=4;
+  *pc+=1;
   //interpret_rtl_jr(pc);
   print_asm("ret");
 }
