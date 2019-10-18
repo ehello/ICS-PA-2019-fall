@@ -36,7 +36,7 @@ static inline void rtl_pop(rtlreg_t* dest) {
   // dest <- M[esp]
   // esp <- esp + 4
   //TODO();
-  vaddr_read(cpu.esp,*dest); 
+  *dest = vaddr_read(cpu.esp,4); 
   cpu.esp += 4;
 
 }
