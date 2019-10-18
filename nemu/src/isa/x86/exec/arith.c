@@ -1,8 +1,8 @@
 #include "cpu/exec.h"
 
 make_EHelper(add) {
-  TODO();
-  rtl_add(&id_dest->val,&id_dest->val,&id_src->val);
+  //TODO();
+  rtl_add(&id_dest->val, &id_dest->val, &id_src->val);
   print_asm_template2(add);
 }
 
