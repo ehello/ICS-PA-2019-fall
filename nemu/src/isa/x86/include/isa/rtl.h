@@ -52,7 +52,8 @@ static inline void rtl_is_sub_overflow(rtlreg_t* dest,
 static inline void rtl_is_sub_carry(rtlreg_t* dest,
     const rtlreg_t* res, const rtlreg_t* src1) {
   // dest <- is_carry(src1 - src2)
-  TODO();
+  //TODO();
+  
 }
 
 static inline void rtl_is_add_overflow(rtlreg_t* dest,
@@ -82,13 +83,17 @@ make_rtl_setget_eflags(SF)
 
 static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
-  TODO();
+  //TODO();
+  rtl_shli(&t1,result,32-width*8);
+  if (t1 == 0) cpu.eflags.ZF = 1;
+  else cpu.eflags.ZF = 0;
   //if (width*8-10000)
 }
 
 static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   // eflags.SF <- is_sign(result[width * 8 - 1 .. 0])
-  TODO();
+  //TODO();
+  rtl_msb(&cpu.eflags.SF,result,width);
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {

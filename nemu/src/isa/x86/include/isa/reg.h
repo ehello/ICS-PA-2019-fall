@@ -38,7 +38,7 @@ typedef struct {
 
   struct
   {
-    uint8_t CF, ZF, SF, IF, OF;
+    uint32_t CF, ZF, SF, IF, OF;
   } eflags;
 
   
