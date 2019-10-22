@@ -82,7 +82,7 @@ static inline void interpret_rtl_lm(rtlreg_t *dest, const rtlreg_t* addr, int le
 }
 
 static inline void interpret_rtl_sm(const rtlreg_t* addr, const rtlreg_t* src1, int len) {
-  vaddr_write(*addr, *src1, len);
+  vaddr_write(*addr, *src1, len); 
 }
 
 static inline void interpret_rtl_host_lm(rtlreg_t* dest, const void *addr, int len) {
