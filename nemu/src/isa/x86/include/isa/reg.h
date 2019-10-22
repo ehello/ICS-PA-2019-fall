@@ -35,7 +35,12 @@ typedef struct {
    };
   };
   vaddr_t pc;
-  uint32_t eflags;
+
+  struct 
+  {
+    uint8_t CF, ZF, SF, IF, OF;
+  } eflags;
+  
   
 
 } CPU_state;
