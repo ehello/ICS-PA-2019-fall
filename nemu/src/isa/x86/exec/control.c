@@ -35,7 +35,8 @@ make_EHelper(call) {
 
 make_EHelper(ret) {
   //TODO();
-  rtl_pop(pc);
+  rtl_pop(&decinfo.jmp_pc);
+  decinfo.is_jmp = true;
   print_asm("ret");
 }
 
