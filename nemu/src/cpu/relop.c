@@ -2,7 +2,7 @@
 #include "rtl/relop.h"
 
 bool interpret_relop(uint32_t relop, const rtlreg_t src1, const rtlreg_t src2) {
-  switch (relop) {
+  switch (relop) { 
     case RELOP_FALSE: return false;
     case RELOP_TRUE: return true;
     case RELOP_EQ: return src1 == src2;
