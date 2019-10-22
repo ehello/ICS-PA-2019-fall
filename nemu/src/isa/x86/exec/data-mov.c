@@ -7,7 +7,7 @@ make_EHelper(mov) {
 
 make_EHelper(push) {
   //TODO();
-  s0 = id_dest->imm + id_dest->reg;
+  s0 = id_dest->imm + id_dest->reg +id_dest->val;
   rtl_push(&s0);
   print_asm_template1(push);
 }
