@@ -36,10 +36,11 @@ typedef struct {
   };
   vaddr_t pc;
 
-  struct 
+  struct
   {
     uint8_t CF, ZF, SF, IF, OF;
   } eflags;
+
   
   
 
