@@ -67,7 +67,7 @@ static inline void interpret_rtl_idiv64_q(rtlreg_t* dest,
     const rtlreg_t* src1_hi, const rtlreg_t* src1_lo, const rtlreg_t* src2) {
   int64_t dividend = ((uint64_t)(*src1_hi) << 32) | (*src1_lo);
   int32_t divisor = (*src2);
-  *dest = dividend / divisor;
+  *dest = dividend / divisor; 
 }
 
 static inline void interpret_rtl_idiv64_r(rtlreg_t* dest,
