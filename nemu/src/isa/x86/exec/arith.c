@@ -30,8 +30,8 @@ make_EHelper(sub) {
 }
 
 make_EHelper(cmp) {
-  TODO();
-  
+  //TODO();
+  s0 = id_src - id_src2;
   print_asm_template2(cmp);
 }
 
