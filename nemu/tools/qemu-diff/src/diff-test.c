@@ -18,7 +18,7 @@ void difftest_memcpy_from_dut(paddr_t dest, void *src, size_t n) {
 }
 
 void difftest_getregs(void *r) {
-  union isa_gdb_regs qemu_r;
+  union isa_gdb_regs qemu_r; 
   gdb_getregs(&qemu_r);
   memcpy(r, &qemu_r, DIFFTEST_REG_SIZE);
 }
