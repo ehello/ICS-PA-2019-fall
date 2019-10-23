@@ -16,7 +16,7 @@ void rtl_setcc(rtlreg_t* dest, uint8_t subcode) {
   switch (subcode & 0xe) {
     case CC_O:
     case CC_B:
-    case CC_E:
+    case CC_E:{rtl_get_ZF(dest); break;}
     case CC_BE:
     case CC_S:
     case CC_L:
