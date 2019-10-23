@@ -143,7 +143,8 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   switch (width)
   {
   case 1: {
-    ;
+    temp <<= 24;
+    temp >>= 24;
   }break;
   case 2: {
     temp <<= 16;
@@ -152,7 +153,7 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   case 4: break;
   default: break;
   }
-  
+  *dest = temp;
 }
 
 static inline void rtl_setrelopi(uint32_t relop, rtlreg_t *dest,
