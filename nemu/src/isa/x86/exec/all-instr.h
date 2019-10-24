@@ -13,7 +13,6 @@ make_EHelper(and);
 make_EHelper(cmp);
 make_EHelper(test);
 make_EHelper(jcc);
-static make_EHelper(2byte_esc);
 make_EHelper(operand_size);
 
 make_EHelper(inv);
