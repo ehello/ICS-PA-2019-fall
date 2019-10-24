@@ -1,5 +1,5 @@
 #include "trap.h"
-
+ 
 char *s[] = {
 	"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 
 	"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
