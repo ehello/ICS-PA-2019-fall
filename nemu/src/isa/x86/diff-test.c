@@ -7,9 +7,8 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
       ||ref_r->esp != cpu.esp||ref_r->ebp != cpu.ebp
       ||ref_r->esi != cpu.esi|| ref_r->edi != cpu.edi
       ||pc != cpu.pc)
-    return true;
-  
-  return false;
+    return false;
+  return true;
 }
 
 void isa_difftest_attach(void) {
