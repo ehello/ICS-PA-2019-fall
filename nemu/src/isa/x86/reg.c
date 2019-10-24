@@ -44,7 +44,7 @@ void reg_test() {
 void isa_reg_display() {
   int i;
   for (i = R_EAX; i <= R_EDI; i++){
-    printf("%s %x\n",regsl[i],reg_l(i));
+    printf("%s 0x%x\n",regsl[i],reg_l(i));
   }
   /*for (i = R_EAX; i <= R_EDI; i++){
     printf("%s %x\n",regsw[i],reg_w(i));
