@@ -6,7 +6,7 @@ bool isa_difftest_checkregs(CPU_state *ref_r, vaddr_t pc) {
       ||ref_r->edx != cpu.edx||ref_r->ebx != cpu.ebx
       ||ref_r->esp != cpu.esp||ref_r->ebp != cpu.ebp
       ||ref_r->esi != cpu.esi|| ref_r->edi != cpu.edi
-      ||pc != cpu.pc){
+      ||ref_r->pc != cpu.pc){
         printf("ref's eax is 0x%x\n",ref_r->eax);
         printf("ref's ecx is 0x%x\n",ref_r->ecx);
         printf("ref's edx is 0x%x\n",ref_r->edx);
