@@ -3,8 +3,7 @@
 
 make_EHelper(test) {
   //TODO();
-  rtl_and(&s0,&id_src->val,&id_src2->val);
-  operand_write(id_dest,&s0);
+  rtl_and(&s0,&id_dest->val,&id_src->val);
   s1 = 0;
   rtl_update_ZFSF(&s0,id_dest->width);
   rtl_set_CF(&s1);
