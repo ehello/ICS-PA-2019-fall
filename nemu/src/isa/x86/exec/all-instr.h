@@ -20,6 +20,7 @@ make_EHelper(movzx);
 make_EHelper(pop);
 make_EHelper(nop);
 make_EHelper(adc);
+make_EHelper(or);
 
 make_EHelper(operand_size);
 
