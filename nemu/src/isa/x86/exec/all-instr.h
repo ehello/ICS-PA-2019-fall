@@ -17,6 +17,7 @@ make_EHelper(setcc);
 make_EHelper(leave);
 make_EHelper(inc);
 make_EHelper(movzx);
+make_EHelper(pop);
 make_EHelper(operand_size);
 
 make_EHelper(inv);
