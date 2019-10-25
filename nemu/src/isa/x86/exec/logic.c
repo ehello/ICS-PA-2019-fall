@@ -46,14 +46,15 @@ make_EHelper(sar) {
   //TODO();
   // unnecessary to update CF and OF in NEMU
   rtl_shr(&s0,&id_dest->val,&id_src->val);// check later
-
+  operand_write(id_dest,&s0);
   print_asm_template2(sar);
 }
 
 make_EHelper(shl) {
-  TODO();
+  //TODO();
   // unnecessary to update CF and OF in NEMU
-
+  rtl_shl(&s0,&id_dest->val,&id_src->val);// check later
+  operand_write(id_dest,&s0);
   print_asm_template2(shl);
 }
 
