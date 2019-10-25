@@ -1,0 +1,123 @@
+
+./build/x86-nemu/tests/add-longlong.o:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000000 <nemu_assert>:
+
+#include <am.h>
+#include <klib.h>
+
+__attribute__((noinline))
+void nemu_assert(int cond) {
+   0:	55                   	push   %ebp
+   1:	89 e5                	mov    %esp,%ebp
+   3:	83 ec 08             	sub    $0x8,%esp
+  if (!cond) _halt(1);
+   6:	8b 45 08             	mov    0x8(%ebp),%eax
+   9:	85 c0                	test   %eax,%eax
+   b:	74 02                	je     f <nemu_assert+0xf>
+}
+   d:	c9                   	leave  
+   e:	c3                   	ret    
+  if (!cond) _halt(1);
+   f:	83 ec 0c             	sub    $0xc,%esp
+  12:	6a 01                	push   $0x1
+  14:	e8 fc ff ff ff       	call   15 <nemu_assert+0x15>
+  19:	8d 76 00             	lea    0x0(%esi),%esi
+
+0000001c <add>:
+#include "trap.h"
+
+long long add(long long a, long long b) {
+  1c:	55                   	push   %ebp
+  1d:	89 e5                	mov    %esp,%ebp
+	long long c = a + b;
+  1f:	8b 45 10             	mov    0x10(%ebp),%eax
+  22:	8b 55 14             	mov    0x14(%ebp),%edx
+  25:	03 45 08             	add    0x8(%ebp),%eax
+  28:	13 55 0c             	adc    0xc(%ebp),%edx
+	return c;
+}
+  2b:	5d                   	pop    %ebp
+  2c:	c3                   	ret    
+
+Disassembly of section .text.startup:
+
+00000000 <main>:
+long long test_data[] = {0, 1, 2, 0x7fffffffffffffffLL, 0x8000000000000000LL, 0x8000000000000001LL, 0xfffffffffffffffeLL, 0xffffffffffffffffLL};
+long long ans[] = {0LL, 0x1LL, 0x2LL, 0x7fffffffffffffffLL, 0x8000000000000000LL, 0x8000000000000001LL, 0xfffffffffffffffeLL, 0xffffffffffffffffLL, 0x1LL, 0x2LL, 0x3LL, 0x8000000000000000LL, 0x8000000000000001LL, 0x8000000000000002LL, 0xffffffffffffffffLL, 0LL, 0x2LL, 0x3LL, 0x4LL, 0x8000000000000001LL, 0x8000000000000002LL, 0x8000000000000003LL, 0LL, 0x1LL, 0x7fffffffffffffffLL, 0x8000000000000000LL, 0x8000000000000001LL, 0xfffffffffffffffeLL, 0xffffffffffffffffLL, 0LL, 0x7ffffffffffffffdLL, 0x7ffffffffffffffeLL, 0x8000000000000000LL, 0x8000000000000001LL, 0x8000000000000002LL, 0xffffffffffffffffLL, 0LL, 0x1LL, 0x7ffffffffffffffeLL, 0x7fffffffffffffffLL, 0x8000000000000001LL, 0x8000000000000002LL, 0x8000000000000003LL, 0LL, 0x1LL, 0x2LL, 0x7fffffffffffffffLL, 0x8000000000000000LL, 0xfffffffffffffffeLL, 0xffffffffffffffffLL, 0LL, 0x7ffffffffffffffdLL, 0x7ffffffffffffffeLL, 0x7fffffffffffffffLL, 0xfffffffffffffffcLL, 0xfffffffffffffffdLL, 0xffffffffffffffffLL, 0LL, 0x1LL, 0x7ffffffffffffffeLL, 0x7fffffffffffffffLL, 0x8000000000000000LL, 0xfffffffffffffffdLL, 0xfffffffffffffffeLL};
+
+#define NR_DATA (sizeof(test_data) / sizeof(test_data[0]))
+
+int main() {
+   0:	8d 4c 24 04          	lea    0x4(%esp),%ecx
+   4:	83 e4 f0             	and    $0xfffffff0,%esp
+   7:	ff 71 fc             	pushl  -0x4(%ecx)
+   a:	55                   	push   %ebp
+   b:	89 e5                	mov    %esp,%ebp
+   d:	57                   	push   %edi
+   e:	56                   	push   %esi
+   f:	53                   	push   %ebx
+  10:	51                   	push   %ecx
+  11:	83 ec 18             	sub    $0x18,%esp
+	int i, j, ans_idx = 0;
+	for(i = 0; i < NR_DATA; i ++) {
+		for(j = 0; j < NR_DATA; j ++) {
+  14:	31 c9                	xor    %ecx,%ecx
+	int i, j, ans_idx = 0;
+  16:	c7 45 e0 00 00 00 00 	movl   $0x0,-0x20(%ebp)
+  1d:	89 4d e4             	mov    %ecx,-0x1c(%ebp)
+			nemu_assert(add(test_data[i], test_data[j]) == ans[ans_idx ++]);
+  20:	8b 45 e0             	mov    -0x20(%ebp),%eax
+  23:	8b b0 00 00 00 00    	mov    0x0(%eax),%esi
+  29:	8b b8 04 00 00 00    	mov    0x4(%eax),%edi
+		for(j = 0; j < NR_DATA; j ++) {
+  2f:	31 db                	xor    %ebx,%ebx
+  31:	89 75 d8             	mov    %esi,-0x28(%ebp)
+  34:	89 7d dc             	mov    %edi,-0x24(%ebp)
+  37:	90                   	nop
+			nemu_assert(add(test_data[i], test_data[j]) == ans[ans_idx ++]);
+  38:	83 ec 0c             	sub    $0xc,%esp
+	long long c = a + b;
+  3b:	8b 45 d8             	mov    -0x28(%ebp),%eax
+  3e:	8b 55 dc             	mov    -0x24(%ebp),%edx
+  41:	03 04 dd 00 00 00 00 	add    0x0(,%ebx,8),%eax
+  48:	13 14 dd 04 00 00 00 	adc    0x4(,%ebx,8),%edx
+			nemu_assert(add(test_data[i], test_data[j]) == ans[ans_idx ++]);
+  4f:	8b 7d e4             	mov    -0x1c(%ebp),%edi
+  52:	8b 8c df 00 00 00 00 	mov    0x0(%edi,%ebx,8),%ecx
+  59:	31 c1                	xor    %eax,%ecx
+  5b:	8b 84 df 04 00 00 00 	mov    0x4(%edi,%ebx,8),%eax
+  62:	31 d0                	xor    %edx,%eax
+  64:	09 c1                	or     %eax,%ecx
+  66:	0f 94 c0             	sete   %al
+  69:	0f b6 c0             	movzbl %al,%eax
+  6c:	50                   	push   %eax
+  6d:	e8 fc ff ff ff       	call   6e <main+0x6e>
+  72:	83 c4 10             	add    $0x10,%esp
+		for(j = 0; j < NR_DATA; j ++) {
+  75:	43                   	inc    %ebx
+  76:	83 fb 08             	cmp    $0x8,%ebx
+  79:	75 bd                	jne    38 <main+0x38>
+  7b:	83 45 e0 08          	addl   $0x8,-0x20(%ebp)
+  7f:	8b 45 e0             	mov    -0x20(%ebp),%eax
+  82:	83 45 e4 40          	addl   $0x40,-0x1c(%ebp)
+	for(i = 0; i < NR_DATA; i ++) {
+  86:	83 f8 40             	cmp    $0x40,%eax
+  89:	75 95                	jne    20 <main+0x20>
+		}
+	}
+
+	return 0;
+}
+  8b:	31 c0                	xor    %eax,%eax
+  8d:	8d 65 f0             	lea    -0x10(%ebp),%esp
+  90:	59                   	pop    %ecx
+  91:	5b                   	pop    %ebx
+  92:	5e                   	pop    %esi
+  93:	5f                   	pop    %edi
+  94:	5d                   	pop    %ebp
+  95:	8d 61 fc             	lea    -0x4(%ecx),%esp
+  98:	c3                   	ret    
