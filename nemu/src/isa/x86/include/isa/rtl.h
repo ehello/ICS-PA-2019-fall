@@ -48,10 +48,14 @@ static inline void rtl_is_sub_overflow(rtlreg_t* dest,
   // dest <- is_overflow(src1 - src2)
   //TODO();
   //判断无符号数进行减法后的差的最高位与被减数的最高位是否相同
-  rtl_msb(&t0,res,width);
-  rtl_msb(&t1,src1,width);
-  if (t0 != t1) *dest = 1;
-  else *dest = 0;
+  //rtl_msb(&t0,res,width);
+  //rtl_msb(&t1,src1,width);
+  //if (t0 != t1) *dest = 1;
+  //else *dest = 0;
+  rtl_xor(&t0,src1,src2);
+  rtl_xor(&t1,src1,res);
+  rtl_and(&t0,&t0,&t1);
+  rtl_msb(dest,&t0,width);
 }
 
 static inline void rtl_is_sub_carry(rtlreg_t* dest,
