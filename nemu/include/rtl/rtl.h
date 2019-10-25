@@ -140,10 +140,10 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
   // dest <- signext(src1[(width * 8 - 1) .. 0])
   //TODO();
   int32_t temp = (int32_t) *src1;
-  int n = width*8;
-  temp <<= 32-n;
-  temp >>= 32-n;
-  /*switch (width){
+  //int n = width*8;
+  //temp <<= 32-n;
+  //temp >>= 32-n;
+  switch (width){
     case 1: {
       temp <<= 24;
       temp >>= 24;
@@ -154,7 +154,7 @@ static inline void rtl_sext(rtlreg_t* dest, const rtlreg_t* src1, int width) {
     }break;
 
     default: break;
-  }*/
+  }
   *dest = temp;
 }
 
