@@ -13,7 +13,7 @@ bool interpret_relop(uint32_t relop, const rtlreg_t src1, const rtlreg_t src2) {
     case RELOP_GE: return (int32_t)src1 >= (int32_t)src2;
     case RELOP_LTU: return src1 < src2;
     case RELOP_LEU: return src1 <= src2;
-    case RELOP_GTU: return src1 > src2;
+    case RELOP_GTU: return src1 > src2; 
     case RELOP_GEU: return src1 >= src2;
     default: panic("unsupport relop = %d", relop);
   }
