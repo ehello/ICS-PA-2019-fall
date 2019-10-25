@@ -13,6 +13,7 @@ make_EHelper(and);
 make_EHelper(cmp);
 make_EHelper(test);
 make_EHelper(jcc);
+make_EHelper(setcc);
 make_EHelper(operand_size);
 
 make_EHelper(inv);
