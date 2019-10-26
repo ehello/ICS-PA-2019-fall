@@ -36,6 +36,7 @@ make_EHelper(call_rm);
 make_EHelper(jmp_rm);
 make_EHelper(shr);
 make_EHelper(mul);
+make_EHelper(sbb);
 
 make_EHelper(operand_size);
 
