@@ -48,7 +48,11 @@ int strcmp(const char* s1, const char* s2) {
     s1+=1;
     s2+=1;
   }
-  return *s1-*s2;
+  int ret = -2;
+  if (*s1-*s2<0) ret = -1;
+  else if (*s1-*s2>0) ret = 1;
+  else ret = 0; 
+  return ret;
 }
 
 int strncmp(const char* s1, const char* s2, size_t n) {
@@ -76,7 +80,11 @@ int memcmp(const void* s1, const void* s2, size_t n){
     s1 = (char*)s1+1;
     s2 = (char*)s2+1;
   }
-  return (*((unsigned char *)s1) - *((unsigned char *)s2));
+  int ret = -2;
+  if ((*((unsigned char *)s1) - *((unsigned char *)s2))<0) ret = -1;
+  else if((*((unsigned char *)s1) - *((unsigned char *)s2))>0) ret = 1;
+  else ret = 0;
+  return ret;
 }
 
 #endif
