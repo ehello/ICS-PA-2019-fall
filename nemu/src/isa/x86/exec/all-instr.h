@@ -38,6 +38,7 @@ make_EHelper(mul);
 make_EHelper(sbb);
 make_EHelper(cwtl);
 make_EHelper(div);
+make_EHelper(neg);
 
 make_EHelper(operand_size);
 
