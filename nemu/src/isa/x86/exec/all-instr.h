@@ -29,7 +29,6 @@ make_EHelper(imul1);
 make_EHelper(imul2);
 make_EHelper(imul3);
 make_EHelper(cltd);
-make_EHelper(cwtd);
 make_EHelper(idiv);
 make_EHelper(movsx);
 make_EHelper(call_rm);
@@ -37,6 +36,7 @@ make_EHelper(jmp_rm);
 make_EHelper(shr);
 make_EHelper(mul);
 make_EHelper(sbb);
+make_EHelper(cwtl);
 
 make_EHelper(operand_size);
 

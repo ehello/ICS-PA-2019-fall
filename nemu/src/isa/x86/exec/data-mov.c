@@ -43,7 +43,7 @@ make_EHelper(leave) {
 make_EHelper(cltd) {
   if (decinfo.isa.is_operand_size_16) {
     //TODO();
-    int ax = (int32_t)(int16_t)(uint16_t)reg_w(R_AX);//check later
+    int ax = (int32_t)(int16_t)reg_w(R_AX);//check later
     if (ax < 0)
       reg_w(R_DX) = 0xffff;
     else 
@@ -64,9 +64,15 @@ make_EHelper(cltd) {
 make_EHelper(cwtl) {
   if (decinfo.isa.is_operand_size_16) {
     //TODO();
+    s0 = reg_b(R_AL);
+    rtl_sext(&s0,&s0,1);
+    reg_w(R_AX) = s0;
   }
   else {
     //TODO();
+    s0 = reg_w(R_AX);
+    rtl_sext(&s0,&s0,2);
+    reg_l(R_EAX) = s0;
   }
 
   print_asm(decinfo.isa.is_operand_size_16 ? "cbtw" : "cwtl");
