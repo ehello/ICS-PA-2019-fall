@@ -4,7 +4,7 @@
 
 size_t strlen(const char *s) {
   size_t len = 0;
-  //assert(s != NULL);
+  assert(s != NULL);
   while(*s != '\0'){
     len+=1;
     s+=1;
@@ -19,9 +19,12 @@ char *strcpy(char* dst,const char* src) {
   return ret;
 }
 
-char* strncpy(char* dst, const char* src, size_t n) {
- 
-  return NULL;
+char* strncpy(char* dst, const char* src, size_t n) {//uncheck
+  char *ret = dst;
+  assert((dst != NULL)&&(src != NULL));
+  while (n-- && (*dst++ = *src++) !='\0');
+  if (*dst != '\0') *dst = '\0';
+  return ret;
 }
 
 char* strcat(char* dst, const char* src) {
@@ -47,7 +50,13 @@ int strcmp(const char* s1, const char* s2) {
 
 int strncmp(const char* s1, const char* s2, size_t n) {
   //TODO();
-  return 0;
+  if (!n) return 0;
+  while(--n && *s1 &&(*s1==*s2)){
+    s1++;
+    s2++;
+  }
+
+  return *(unsigned char*)s1 - *(unsigned char*)s2;
 }
 
 void* memset(void* v,int c,size_t n) {
