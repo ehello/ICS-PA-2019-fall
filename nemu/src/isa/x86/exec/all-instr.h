@@ -32,6 +32,7 @@ make_EHelper(cltd);
 make_EHelper(cwtd);
 make_EHelper(idiv);
 make_EHelper(movsx);
+make_EHelper(call_rm);
 
 make_EHelper(operand_size);
 
