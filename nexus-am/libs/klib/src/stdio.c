@@ -24,7 +24,7 @@ char *number(char *str,long num,int base){
     tmp[i++] = dig[(unsigned long)num % (unsigned)base];
     num /= base;
   }
-  while(i-- > 0) *str++ = tmp[i];
+  while(i-- >= 0) *str++ = tmp[i];
   return str;
 }
 int vsprintf(char *out, const char *fmt, va_list ap) {
@@ -36,6 +36,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       out++;
       continue;
     }
+
     fmt++;
     if('\0' == *fmt){
       assert(0);
@@ -46,7 +47,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     switch(*fmt){
       case '%':{
         *out = *fmt;
-        out++;
+        //out++;
         break;
       }
       case 'd':{
