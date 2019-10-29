@@ -15,16 +15,20 @@ char *number(char *str,long num,int base){
   char tmp[66];
   char* dig = digits;
   int i = 0;
-  if (num < 0) {
+  /*if (num < 0) {
     num = -num;
     tmp[0]='-';
     i++;
-  }
+  }*/
   while(num != 0){
     tmp[i++] = dig[(unsigned long)num % (unsigned)base];
     num /= base;
   }
-  while(i-- >= 0) *str++ = tmp[i];
+  while(i > 0){
+    *str = tmp[i];
+    str++;
+    i--;
+  } 
   return str;
 }
 int vsprintf(char *out, const char *fmt, va_list ap) {
