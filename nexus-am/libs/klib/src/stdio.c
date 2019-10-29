@@ -24,10 +24,10 @@ char *number(char *str,long num,int base){
     tmp[i++] = dig[(unsigned long)num % (unsigned)base];
     num /= base;
   }
-  while(i > 0){
-    *str = tmp[i];
-    str++;
-    i--;
+  while(i-- > 0){
+    *str ++= tmp[i];
+    //str++;
+    //i--;
   } 
   return str;
 }
