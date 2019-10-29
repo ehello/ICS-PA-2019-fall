@@ -16,9 +16,7 @@ char *number(char *str,long num,int base){
   char* dig = digits;
   int i = 0;
   if (num < 0) {
-    num = -num;
-    tmp[0]='-';
-    i++;
+    ;
   }
   while(num != 0){
     tmp[i++] = dig[(unsigned long)num % (unsigned)base];
