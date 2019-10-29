@@ -204,9 +204,9 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     }
     else if (qualifier == 'h'){
       if (flags & SIGN)
-        num = va_arg(ap, int);
+        num = va_arg(ap, int);//not unsigned short
       else
-        num = va_arg(ap, int);
+        num = va_arg(ap, int);//not short
     }
     else if (flags & SIGN){
       num = va_arg(ap, int);
