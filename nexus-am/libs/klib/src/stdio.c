@@ -21,7 +21,7 @@ char *number(char *str,long num,int base){
     i++;
   }
   while(num != 0){
-    tmp[i++] = dig[num % base];
+    tmp[i++] = dig[(unsigned long)num % (unsigned)base];
     num /= base;
   }
   while(i-- > 0) *str++ = tmp[i];
@@ -51,7 +51,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       }
       case 'd':{
         long num = va_arg(ap,int);
-        out = number(out,num,base);
+        number(out,num,base);
         out++;
         break;
       }
