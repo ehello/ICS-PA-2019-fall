@@ -41,6 +41,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       assert(0);
       break;
     }
+
     base = 10;
     switch(*fmt){
       case '%':{
@@ -50,7 +51,7 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       }
       case 'd':{
         long num = va_arg(ap,int);
-        number(out,num,base);
+        out = number(out,num,base);
         out++;
         break;
       }
