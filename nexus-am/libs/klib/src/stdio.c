@@ -7,12 +7,20 @@ int printf(const char *fmt, ...) {
   return 0;
 }
 
+
 int vsprintf(char *out, const char *fmt, va_list ap) {
   return 0;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  return 0;
+  va_list args;
+  int n;
+
+  va_start(args,fmt);
+  n = vsprintf(out,fmt,args);
+  va_end(args);
+
+  return n;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
