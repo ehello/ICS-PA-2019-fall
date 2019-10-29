@@ -52,13 +52,13 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
       case 'd':{
         long num = va_arg(ap,int);
         number(out,num,base);
-        out++;
+        //out++;
         break;
       }
       case 's':{
         char *s = va_arg(ap, char*);
         while(*s) *out++=*s++;
-        out++;
+        //out++;
         continue;
       }
       default: break;
