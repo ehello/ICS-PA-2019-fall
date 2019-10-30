@@ -12,7 +12,7 @@ int printf(const char *fmt, ...) {
   int n;
 
   va_start(args,fmt);
-  n = sprintf(buff,fmt,args);
+  n = vsprintf(buff,fmt,args);
   int i = 0;
   while(buff[i] !='\0') {
     _putc(buff[i]);
