@@ -1,12 +1,13 @@
 #include <am.h>
 #include <amdev.h>
 #include <nemu.h>
+#include <x86.h>
 
 size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
     case _DEVREG_TIMER_UPTIME: {
       _DEV_TIMER_UPTIME_t *uptime = (_DEV_TIMER_UPTIME_t *)buf;
-      uptime->hi = 0; 
+      uptime->hi = inl(uptime->hi); 
       uptime->lo = 0;
       //return sizeof(_DEV_TIMER_UPTIME_t);
       return uptime->hi-uptime->lo;
