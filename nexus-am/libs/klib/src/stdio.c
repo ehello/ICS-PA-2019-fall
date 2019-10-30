@@ -7,7 +7,21 @@
 
 
 int printf(const char *fmt, ...) {
-  return 0;
+  char buff[100];
+  va_list args;
+  int n;
+
+  va_start(args,fmt);
+  n = sprintf(buff,fmt,args);
+  int i = 0;
+  while(buff[i] !='\0') {
+    _putc(buff[i]);
+    i++;
+  }
+  va_end(args);
+
+  return n;
+  //return 0;
 }
 
 static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
@@ -24,11 +38,7 @@ char *number(char *str,long num,int base){
     tmp[i++] = dig[(unsigned long)num % (unsigned)base];
     num /= base;
   }
-  while(i-- > 0){
-    *str ++= tmp[i];
-    //str++;
-    //i--;
-  } 
+  while(i-- > 0) *str ++= tmp[i];
   return str;
 }
 int vsprintf(char *out, const char *fmt, va_list ap) {
@@ -51,19 +61,16 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     switch(*fmt){
       case '%':{
         *out = *fmt;
-        //out++;
         break;
       }
       case 'd':{
         long num = va_arg(ap,int);
         out = number(out,num,base);
-        //out++;
         break;
       }
       case 's':{
         char *s = va_arg(ap, char*);
         while(*s) *out++=*s++;
-        //out++;
         continue;
       }
       default: break;
