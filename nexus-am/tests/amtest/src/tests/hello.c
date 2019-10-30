@@ -6,7 +6,7 @@ static inline void putstr(const char *s) {
 
 void hello() {
   for (int i = 0; i < 10; i ++) {
-    //printf("my%s","hello world");
+    printf("my%s","hello world");
     putstr("Hello, AM World @ " __ISA__ "\n");
   }
 }
