@@ -156,7 +156,7 @@ static OpcodeEntry opcode_table [512] = {
   /* 0x88 */	IDEX(J,jcc), IDEX(J,jcc), IDEX(J,jcc), IDEX(J,jcc),
   /* 0x8c */	IDEX(J,jcc), IDEX(J,jcc), IDEX(J,jcc), IDEX(J,jcc),
   /* 0x90 */	IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1),
-  /* 0x94 */	IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1),
+  /* 0x94 */	IDEXW(E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1),
   /* 0x98 */	IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1),
   /* 0x9c */	IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1), IDEXW(setcc_E,setcc,1),
   /* 0xa0 */	EMPTY, EMPTY, EMPTY, EMPTY,
