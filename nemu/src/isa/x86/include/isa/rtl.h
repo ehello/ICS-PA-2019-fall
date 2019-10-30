@@ -100,8 +100,9 @@ static inline void rtl_update_ZF(const rtlreg_t* result, int width) {
   // eflags.ZF <- is_zero(result[width * 8 - 1 .. 0])
   //TODO();
   rtl_shli(&t1,result,32-width*8);
-  if (t1 == 0) cpu.eflags.ZF = 1;
-  else cpu.eflags.ZF = 0;
+  //if (t1 == 0) cpu.eflags.ZF = 1;
+  //else cpu.eflags.ZF = 0;
+  rtl_set_ZF(&t1);
   //if (width*8-10000)
 }
 
