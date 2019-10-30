@@ -12,7 +12,7 @@ int printf(const char *fmt, ...) {
   int n;
 
   va_start(args,fmt);
-  n = vsprintf(buff,fmt,args);//稍后实现精度和格式控制
+  n = vsprintf(buff,fmt,args);
   int i = 0;
   while(buff[i] !='\0') {
     _putc(buff[i]);
