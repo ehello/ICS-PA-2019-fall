@@ -111,8 +111,6 @@ static inline void rtl_update_SF(const rtlreg_t* result, int width) {
   //TODO();
   rtl_msb(&t0,result,width);
   cpu.eflags.SF = t0;
-  //rtl_shri(&t0,result,width*8-1);
-  //rtl_set_SF(&t0);
 }
 
 static inline void rtl_update_ZFSF(const rtlreg_t* result, int width) {
