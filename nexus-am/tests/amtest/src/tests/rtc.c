@@ -1,6 +1,6 @@
 #include <amtest.h>
 #include <amdev.h>
-
+ 
 void rtc_test() {
   _DEV_TIMER_DATE_t rtc;
   int sec = 1;

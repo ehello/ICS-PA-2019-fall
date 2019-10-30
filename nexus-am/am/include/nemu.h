@@ -12,7 +12,7 @@
 #elif
 # error unsupported ISA __ISA__
 #endif
-
+ 
 #ifdef __ARCH_X86_NEMU
 # define SERIAL_PORT  0x3f8
 # define KBD_ADDR     0x60

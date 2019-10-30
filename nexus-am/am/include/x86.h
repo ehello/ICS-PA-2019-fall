@@ -63,7 +63,7 @@
 #define EX_DIV         0
 #define EX_UD          6
 #define EX_NM          7
-#define EX_DF          8
+#define EX_DF          8 
 #define EX_TS          10
 #define EX_NP          11
 #define EX_SS          12
