@@ -55,7 +55,7 @@ make_EHelper(in) {
 
 make_EHelper(out) {
   //TODO();
-  printf("%x\n", id_dest->val);
+  printf("%x %x\n",id_dest->val,id_src->val);
   switch(id_dest->width){
     case 1: pio_write_b(id_dest->val, id_src->val); break;
     case 2: pio_write_w(id_dest->val, id_src->val); break;
