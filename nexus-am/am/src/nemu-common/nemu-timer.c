@@ -2,6 +2,7 @@
 #include <amdev.h>
 #include <nemu.h>
 //#include <x86.h>
+//#define RTC_ADDR 0xa1000048
 static int start;
 size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
@@ -11,7 +12,7 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
       //uptime->lo = 0;
       //int start = 0;
       //uptime->hi = inl(0xa1000048);
-      uptime->lo = inl(0xa1000048)-start;
+      uptime->lo = inl(RTC_ADDR)-start;
       return sizeof(_DEV_TIMER_UPTIME_t);
     }
     case _DEVREG_TIMER_DATE: {
@@ -29,5 +30,5 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
 }
 
 void __am_timer_init() {
-  start = inl(0xa1000048);
+  start = inl(RTC_ADDR);
 }
