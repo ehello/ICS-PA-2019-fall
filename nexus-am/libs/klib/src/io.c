@@ -35,7 +35,7 @@ void draw_sync() {
   ctl.sync = 1;
   _io_write(_DEV_VIDEO, _DEVREG_VIDEO_FBCTL, &ctl, sizeof(ctl));
 }
-
+ 
 int screen_width() {
   _DEV_VIDEO_INFO_t info;
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
