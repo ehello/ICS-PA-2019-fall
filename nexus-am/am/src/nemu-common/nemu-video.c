@@ -11,7 +11,7 @@ size_t __am_video_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
     case _DEVREG_VIDEO_INFO: {
       _DEV_VIDEO_INFO_t *info = (_DEV_VIDEO_INFO_t *)buf;
-      info->width = SCREEN_W;
+      info->width = SCREEN_W;//todo?
       info->height = SCREEN_H;
       return sizeof(_DEV_VIDEO_INFO_t);
     }
@@ -34,9 +34,9 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
 }
 
 void __am_vga_init() {
-  /*int i;
+  int i;
   int size = screen_width() * screen_height();
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < size; i ++) fb[i] = i;
-  draw_sync();*/
+  draw_sync();
 }
