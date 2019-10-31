@@ -1,7 +1,7 @@
 #include <am.h>
 #include <amdev.h>
 #include <nemu.h>
-#include "x86.h"
+//#include "x86.h"
 #include <klib.h>
 
 #define SCREEN_H 300
