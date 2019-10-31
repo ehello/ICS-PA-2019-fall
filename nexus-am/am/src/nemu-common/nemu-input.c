@@ -11,8 +11,8 @@ size_t __am_input_read(uintptr_t reg, void *buf, size_t size) {
       _DEV_INPUT_KBD_t *kbd = (_DEV_INPUT_KBD_t *)buf;
       //kbd->keydown = 0;
       //kbd->keycode = _KEY_NONE;
-      kbd->keycode = inl(0xa1000060);
-      kbd->keydown = inl(0xa1000060)|0x8000;
+      kbd->keycode = inl(KBD_ADDR);
+      kbd->keydown = inl(KBD_ADDR)|0x8000;
       return sizeof(_DEV_INPUT_KBD_t);
     }
   }
