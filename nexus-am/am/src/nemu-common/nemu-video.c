@@ -27,7 +27,10 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
       _DEV_VIDEO_FBCTL_t *ctl = (_DEV_VIDEO_FBCTL_t *)buf;
 
       if (ctl->sync) {
-        outl(SYNC_ADDR,ctl->h);//todo
+        outl(SYNC_ADDR,ctl->h);
+        outl(SYNC_ADDR,ctl->w);
+        outl(SYNC_ADDR,ctl->x);
+        outl(SYNC_ADDR,ctl->y);//todo
       }
       return size;
     }
