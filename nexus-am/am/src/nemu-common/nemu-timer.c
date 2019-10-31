@@ -3,6 +3,7 @@
 #include <nemu.h>
 
 static int start;
+
 size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
     case _DEVREG_TIMER_UPTIME: {
