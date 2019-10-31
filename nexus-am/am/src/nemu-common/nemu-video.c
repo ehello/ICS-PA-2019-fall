@@ -27,9 +27,6 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
       _DEV_VIDEO_FBCTL_t *ctl = (_DEV_VIDEO_FBCTL_t *)buf;
 
       if (ctl->sync) {
-        //outl(SYNC_ADDR,ctl->h);
-        //outl(SYNC_ADDR,ctl->w);
-        //outl(SYNC_ADDR,ctl->x);
         //outl(SYNC_ADDR,ctl->y);//todo
       }
       return size;
@@ -40,9 +37,9 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
 }
 
 void __am_vga_init() {
-  int i;
+  /*int i;
   int size = screen_width() * screen_height();
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < size; i ++) fb[i] = i;
-  draw_sync();
+  draw_sync();*/
 }
