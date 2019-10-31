@@ -15,7 +15,7 @@ size_t __am_video_read(uintptr_t reg, void *buf, size_t size) {
       //uint32_t vga_data = inl(SCREEN_ADDR);
       vga_data = inl(SCREEN_ADDR);
       info->width = vga_data >> 16;//todo?
-      info->height = vga_data ;
+      info->height = vga_data &0xffff;
       return sizeof(_DEV_VIDEO_INFO_t);
     }
     
