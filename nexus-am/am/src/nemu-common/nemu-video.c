@@ -34,9 +34,9 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
 }
 
 void __am_vga_init() {
-  /*int i;
+  int i;
   int size = screen_width() * screen_height();
   uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
   for (i = 0; i < size; i ++) fb[i] = i;
-  draw_sync();*/
+  draw_sync();
 }
