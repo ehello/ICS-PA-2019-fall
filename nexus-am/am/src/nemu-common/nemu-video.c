@@ -1,8 +1,8 @@
 #include <am.h>
 #include <amdev.h>
-#include <nemu.h>
-//#include "x86.h"
-#include <klib.h>
+#include "nemu.h"
+#include "x86.h"
+#include "klib.h"
 
 #define SCREEN_H 300
 #define SCREEN_W 400
@@ -15,6 +15,7 @@ size_t __am_video_read(uintptr_t reg, void *buf, size_t size) {
       info->height = SCREEN_H;
       return sizeof(_DEV_VIDEO_INFO_t);
     }
+    
   }
   return 0;
 }
