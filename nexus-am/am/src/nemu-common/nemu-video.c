@@ -12,7 +12,7 @@ size_t __am_video_read(uintptr_t reg, void *buf, size_t size) {
     case _DEVREG_VIDEO_INFO: {
       _DEV_VIDEO_INFO_t *info = (_DEV_VIDEO_INFO_t *)buf;
       info->width = inl(SCREEN_ADDR);//todo?
-      info->height = inl(SCREEN_ADDR)<<8;
+      info->height = inw(SCREEN_ADDR);
       //info->width = 0;
       //info->height = 0;
       return sizeof(_DEV_VIDEO_INFO_t);
