@@ -51,8 +51,8 @@ extern "C" {
 #define   MD5_M {  200000, 256 KB,     0, 0xd4f9bc6d}
 #define   MD5_L {10000000,  16 MB, 17239, 0x27286a42}
 
-#define BENCHMARK_LIST(def) def(  md5,   "md5",   MD5_S,   MD5_M,   MD5_L, "MD5 digest")\
-  /*def(qsort, "qsort", QSORT_S, QSORT_M, QSORT_L, "Quick sort") \
+#define BENCHMARK_LIST(def) \
+  def(qsort, "qsort", QSORT_S, QSORT_M, QSORT_L, "Quick sort") \
   def(queen, "queen", QUEEN_S, QUEEN_M, QUEEN_L, "Queen placement") \
   def(   bf,    "bf",    BF_S,    BF_M,    BF_L, "Brainf**k interpreter") \
   def(  fib,   "fib",   FIB_S,   FIB_M,   FIB_L, "Fibonacci number") \
@@ -61,7 +61,7 @@ extern "C" {
   def(dinic, "dinic", DINIC_S, DINIC_M, DINIC_L, "Dinic's maxflow algorithm") \
   def( lzip,  "lzip",  LZIP_S,  LZIP_M,  LZIP_L, "Lzip compression") \
   def(ssort, "ssort", SSORT_S, SSORT_M, SSORT_L, "Suffix sort") \
-  def(  md5,   "md5",   MD5_S,   MD5_M,   MD5_L, "MD5 digest") \*/
+  def(  md5,   "md5",   MD5_S,   MD5_M,   MD5_L, "MD5 digest") \
   
 
 // Each benchmark will run REPEAT times
