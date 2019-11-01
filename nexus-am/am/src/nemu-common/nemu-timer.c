@@ -27,6 +27,6 @@ size_t __am_timer_read(uintptr_t reg, void *buf, size_t size) {
 }
 
 void __am_timer_init() {
-  //start = inl(RTC_ADDR);
-  start = 0;
+  start = inl(RTC_ADDR);
+  //start = 0;
 }
