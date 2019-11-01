@@ -1,7 +1,7 @@
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
-volatile static int dummy;
+//volatile static int dummy;
 
 //#define DEBUG 
 //#define DIFF_TEST
@@ -35,3 +35,5 @@ typedef uint16_t ioaddr_t;
 #include "macro.h"
 
 #endif
+
+volatile static int dummy;
