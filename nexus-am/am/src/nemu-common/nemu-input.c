@@ -20,7 +20,7 @@ size_t __am_input_read(uintptr_t reg, void *buf, size_t size) {
       }
       else {
         kbd->keycode = 0;
-        kbd->keydown = 1;
+        kbd->keydown = 0;
       }
       
       //if(_KEY_NONE)
