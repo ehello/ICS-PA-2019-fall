@@ -17,7 +17,7 @@ size_t __am_input_read(uintptr_t reg, void *buf, size_t size) {
         //kbd->keydown = keydata>>8;//瞎jb试出来的
         kbd->keydown = keydata;
       }
-      else kbd->keydown = keydata;
+      else kbd->keydown = 0;
       //if(_KEY_NONE)
       return sizeof(_DEV_INPUT_KBD_t);
     }
