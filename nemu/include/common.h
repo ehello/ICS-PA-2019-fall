@@ -1,4 +1,3 @@
-//volatile static int dummy = 0;
 #ifndef __COMMON_H__
 #define __COMMON_H__
 
