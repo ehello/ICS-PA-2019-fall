@@ -19,8 +19,8 @@ size_t __am_input_read(uintptr_t reg, void *buf, size_t size) {
         //kbd->keydown = 1;
       }
       else {
-        kbd->keycode = 0 | KEYDOWN_MASK;
-        kbd->keydown = 0;
+        kbd->keycode = 0;
+        kbd->keydown = 1;
       }
       
       //if(_KEY_NONE)
