@@ -4,8 +4,8 @@
 #include "x86.h"
 #include "klib.h"
 
-//#define SCREEN_H 300
-//#define SCREEN_W 400
+#define SCREEN_H 300
+#define SCREEN_W 400
 
 size_t __am_video_read(uintptr_t reg, void *buf, size_t size) {
   switch (reg) {
@@ -14,8 +14,8 @@ size_t __am_video_read(uintptr_t reg, void *buf, size_t size) {
       //uint32_t vga_data = inl(SCREEN_ADDR);
       //info->width = vga_data >> 16;
       //info->height = vga_data &0xffff;
-      info->width = 400;
-      info->height = 300;
+      info->width = SCREEN_W;
+      info->height = SCREEN_H;
       return sizeof(_DEV_VIDEO_INFO_t);
     }
     
