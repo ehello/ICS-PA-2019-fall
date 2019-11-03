@@ -26,7 +26,7 @@ size_t __am_video_write(uintptr_t reg, void *buf, size_t size) {
       _DEV_VIDEO_FBCTL_t *ctl = (_DEV_VIDEO_FBCTL_t *)buf;
 
       uint32_t *fb = (uint32_t *)(uintptr_t)FB_ADDR;
-      uint32_t *base = fb + ctl->y * SCREEN_W + ctl->x*SCREEN_H;
+      uint32_t *base = fb + ctl->y + ctl->x;
       for(int dy = 0; dy < ctl->h; dy++) {
         for(int dx = 0; dx < ctl->w; dx++) {
           base[dy * SCREEN_W+ dx] = ctl->pixels[dy * ctl->w + dx];
