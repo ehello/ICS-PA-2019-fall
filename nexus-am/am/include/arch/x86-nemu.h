@@ -7,8 +7,8 @@ struct _Context {
   uintptr_t  edi,esi,ebp,esp,ebx,edx,ecx,eax;
   struct _AddressSpace *as;
   int irq;
-  //uintptr_t eip,cs,eflags;
-  uintptr_t eflags,cs,eip;
+  uintptr_t eip,cs,eflags;
+  //uintptr_t eflags,cs,eip;
 };
 
 #define GPR1 eax
