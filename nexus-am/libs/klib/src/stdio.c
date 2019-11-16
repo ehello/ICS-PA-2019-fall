@@ -5,7 +5,7 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-  char buff[1024];//原来设置为100，太小了，所以在PA3一开始报错了
+  char buff[100];//原来设置为100，太小了，所以在PA3一开始报错了
   va_list args;
   int n;
 
