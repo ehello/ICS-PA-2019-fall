@@ -2,12 +2,12 @@
 #define __ARCH_H__
 
 struct _Context { 
-  //uintptr_t  eip,cs,eflags,edi,esi,ebp,esp,ebx,edx,ecx,eax;
+  //根据trap.S,首先是存储通用寄存器，然后是地址空间，然后是事件号，然后是eflags、cs和eip
+  //所以要把通用寄存器和eflags等三个寄存器分开放置
   uintptr_t  edi,esi,ebp,esp,ebx,edx,ecx,eax;
-  uintptr_t eip,cs,eflags;
   struct _AddressSpace *as;
   int irq;
-  
+  uintptr_t eip,cs,eflags;
 };
 
 #define GPR1 eax
