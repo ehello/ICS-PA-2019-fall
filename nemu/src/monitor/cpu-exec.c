@@ -7,7 +7,7 @@
  * This is useful when you use the `si' command.
  * You can modify this value as you want.
  */
-#define MAX_INSTR_TO_PRINT 20
+#define MAX_INSTR_TO_PRINT 21
 
 /* restrict the size of log file */
 #define LOG_MAX (1024 * 1024)
