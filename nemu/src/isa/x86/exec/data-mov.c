@@ -20,7 +20,8 @@ make_EHelper(pop) {
 }
 
 make_EHelper(pusha) {
-  TODO();
+  //TODO();
+  
 
   print_asm("pusha");
 }
