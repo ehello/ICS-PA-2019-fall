@@ -5,7 +5,7 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-  /*char buff[100];
+  char buff[100];
   va_list args;
   int n;
 
@@ -18,13 +18,13 @@ int printf(const char *fmt, ...) {
   }
   va_end(args);
 
-  return n;*/
-  return 0;
+  return n;
+  //return 0;
   
 }
 
-//static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
-/*char *number(char *str,long num,int base){
+static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
+char *number(char *str,long num,int base){
   char tmp[66];
   char* dig = digits;
   int i = 0;
@@ -39,10 +39,10 @@ int printf(const char *fmt, ...) {
   }
   while(i-- > 0) *str ++= tmp[i];
   return str;
-}*/
+}
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  /*int base;
+  int base;
   char* tmp = out;
   for(;*fmt;++fmt){
     if(*fmt != '%'){
@@ -78,20 +78,18 @@ int vsprintf(char *out, const char *fmt, va_list ap) {
     
   }
   *out = '\0';
-  return out-tmp;*/
-  return 0;
+  return out-tmp;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
-  /*va_list args;
+  va_list args;
   int n;
 
   va_start(args,fmt);
   n = vsprintf(out,fmt,args);
   va_end(args);
 
-  return n;*/
-  return 0;
+  return n;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
