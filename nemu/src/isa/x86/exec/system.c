@@ -1,8 +1,10 @@
 #include "cpu/exec.h"
 
 make_EHelper(lidt) {
-  TODO();
-
+  //TODO();
+  rtl_li(&s0,id_dest->addr);
+  rtl_li(&cpu.idtr.limit,vaddr_read(s0,2));
+  rtl_li(&cpu.idtr.base,vaddr_read(s0+2,4));
   print_asm_template1(lidt);
 }
 
@@ -21,8 +23,13 @@ make_EHelper(mov_cr2r) {
 }
 
 make_EHelper(int) {
-  TODO();
-
+  //TODO();
+  switch (decinfo.opcode){
+    case 0xcc: raise_intr((uint32_t)0x3,decinfo.seq_pc);break;
+    case 0xcd: raise_intr(id_dest->val,decinfo.seq_pc);break;
+    case 0xce: raise_intr((uint32_t)0x4,decinfo.seq_pc);break;
+    default: raise_intr(id_dest->val,decinfo.seq_pc);break;
+  }
   print_asm("int %s", id_dest->str);
 
   difftest_skip_dut(1, 2);

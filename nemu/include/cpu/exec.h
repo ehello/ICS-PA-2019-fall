@@ -10,6 +10,8 @@ typedef void (*EHelper) (vaddr_t *);
 
 #include "cpu/decode.h"
 
+extern void raise_intr(uint32_t NO, vaddr_t ret_addr);
+
 typedef struct {
   DHelper decode;
   EHelper execute;
