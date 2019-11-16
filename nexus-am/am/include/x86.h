@@ -149,7 +149,7 @@ typedef struct GateDesc {
   uint32_t dpl : 2;         // Descriptor(meaning new) privilege level
   uint32_t p : 1;           // Present
   uint32_t off_31_16 : 16;  // High bits of offset in segment
-} GateDesc;
+} GateDesc; 
 
 #define GATE(type, cs, entry, dpl) (GateDesc)                \
 {  (uint32_t)(entry) & 0xffff, (cs), 0, 0, (type), 0, (dpl), \

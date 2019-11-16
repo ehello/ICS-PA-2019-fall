@@ -32,7 +32,7 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
   for (unsigned int i = 0; i < NR_IRQ; i ++) {
     idt[i] = GATE(STS_TG32, KSEL(SEG_KCODE), __am_vecnull, DPL_KERN);
   }
-
+ 
   // ----------------------- interrupts ----------------------------
   idt[32]   = GATE(STS_IG32, KSEL(SEG_KCODE), __am_irq0,   DPL_KERN);
   // ---------------------- system call ----------------------------
