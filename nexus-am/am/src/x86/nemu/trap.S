@@ -4,7 +4,7 @@
 .globl __am_irq0;        __am_irq0: pushl   $32; jmp __am_asm_trap
 .globl __am_vecnull;  __am_vecnull: pushl   $-1; jmp __am_asm_trap
 
-__am_asm_trap:
+__am_asm_trap: 
   pushal
 
   pushl $0
