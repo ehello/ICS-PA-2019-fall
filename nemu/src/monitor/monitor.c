@@ -66,7 +66,7 @@ static inline void parse_args(int argc, char *argv[]) {
   int o;
   while ( (o = getopt(argc, argv, "-bl:d:a:")) != -1) {
     switch (o) {
-      case 'b': is_batch_mode = false; break;
+      case 'b': is_batch_mode = true; break;
       case 'a': mainargs = optarg; break;
       case 'l': log_file = optarg; break;
       case 'd': diff_so_file = optarg; break;
