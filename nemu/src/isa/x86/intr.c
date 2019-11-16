@@ -9,7 +9,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
   rtl_push(&cpu.eflags.val);
   rtl_push(&cpu.cs);
   rtl_push(&ret_addr);
-
+  
   GateDesc gatedesc;
   gatedesc.offset_15_0= (vaddr_read(cpu.idtr.base+NO*8,4)& 0x0000ffff);//取低16位赋值给offset15_0
   gatedesc.offset_31_16 = ((vaddr_read(cpu.idtr.base+NO*8+4,4) & 0xffff0000)>>16);//取高16位赋值给offset31_16

@@ -24,7 +24,7 @@ int printf(const char *fmt, ...) {
 
 static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
 char *number(char *str,long num,int base){// TODO: 精度实现
-  char tmp[66];
+  char tmp[1024];
   char* dig = digits;
   int i = 0;
   if (num < 0) {
