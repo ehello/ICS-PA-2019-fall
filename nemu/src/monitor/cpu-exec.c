@@ -7,7 +7,7 @@
  * This is useful when you use the `si' command.
  * You can modify this value as you want.
  */
-#define MAX_INSTR_TO_PRINT 10
+#define MAX_INSTR_TO_PRINT 20
 
 /* restrict the size of log file */
 #define LOG_MAX (1024 * 1024)
@@ -36,7 +36,7 @@ void cpu_exec(uint64_t n) {
       return;
     default: nemu_state.state = NEMU_RUNNING;
   }
-
+ 
   for (; n > 0; n --) {
     __attribute__((unused)) vaddr_t ori_pc = cpu.pc;
 
