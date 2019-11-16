@@ -5,7 +5,7 @@
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
 
 int printf(const char *fmt, ...) {
-  char buff[100];
+  char buff[65536];
   va_list args;
   int n;
 
@@ -17,9 +17,7 @@ int printf(const char *fmt, ...) {
     i++;
   }
   va_end(args);
-
   return n;
-  //return 0;
   
 }
 
