@@ -38,6 +38,7 @@ make_EHelper(int) {
 make_EHelper(iret) {
   //TODO();
   rtl_pop(&decinfo.seq_pc);
+  rtl_j(decinfo.seq_pc);
   rtl_pop(&cpu.cs);
   rtl_pop(&cpu.eflags.val);
 
