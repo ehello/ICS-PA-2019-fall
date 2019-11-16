@@ -16,6 +16,7 @@ int printf(const char *fmt, ...) {
     _putc(buff[i]);
     i++;
   }
+  _putc('p');
   va_end(args);
   return n;
   
