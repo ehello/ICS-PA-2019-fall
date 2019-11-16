@@ -12,12 +12,12 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
 
   GateDesc gatedesc;
   gatedesc.offset_15_0 = vaddr_read(cpu.idtr.base+NO*8,4)& 0x0000ffff;
-  gatedesc.offset_31_16 = (vaddr_read(cpu.idtr.base+NO*8+4,4) & 0xffff0000)<<16;
+  gatedesc.offset_31_16 = (vaddr_read(cpu.idtr.base+NO*8+4,4) & 0x0000ffff)<<16;
   //gatedesc.present = 1;
   //if (gatedesc.present == 0) panic("invalid");
   cpu.eflags.IF = 0;
   //gatedesc.val = (gatedesc.offset_15_0 & 0x0000ffff)+(gatedesc.offset_31_16 & 0xffff0000);
-  vaddr_t goalAddr = gatedesc.offset_15_0+gatedesc.offset_31_16;
+  vaddr_t goalAddr = gatedesc.offset_15_0|gatedesc.offset_31_16;
   rtl_j(goalAddr);
 }
 
