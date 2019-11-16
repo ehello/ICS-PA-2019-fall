@@ -16,7 +16,7 @@ extern "C" {
 
 // ===================== Constants and Structs =======================
 
-enum {
+enum { 
   _EVENT_NULL = 0,
   _EVENT_ERROR,
   _EVENT_IRQ_TIMER,
