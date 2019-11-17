@@ -5,8 +5,9 @@ make_EHelper(lidt) {
   rtl_li(&s0,id_dest->addr);
   rtl_li(&cpu.idtr.limit,vaddr_read(s0,2));
   if (decinfo.isa.is_operand_size_16){
-    rtl_li(&s1,vaddr_read(s0+2,4));
-    rtl_li(&cpu.idtr.base,s1&0x00ffffff);
+    //rtl_li(&s1,vaddr_read(s0+2,4));
+    //rtl_li(&cpu.idtr.base,s1&0x00ffffff);
+    panic("lidt is not implemented when oprand is 16 bit ");
   }
   else rtl_li(&cpu.idtr.base,vaddr_read(s0+2,4));
   print_asm_template1(lidt);
