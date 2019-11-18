@@ -80,7 +80,7 @@ void* memcpy(void* out, const void* in, size_t n) {
 
 int memcmp(const void* s1, const void* s2, size_t n){
   assert(s1 != NULL || s2 != NULL || n>0);
-  const char *str1 = (char*)s1;
+  /*const char *str1 = (char*)s1;
   const char *str2 = (char*)s2;
   while(--n && (*str1 == *str2)){
     str1+=1;
@@ -88,8 +88,14 @@ int memcmp(const void* s1, const void* s2, size_t n){
   }
   if (*str1>*str2) return 1;
   else if(*str1<*str2) return -1;
+  return 0;*/
+  unsigned char *csrc = (unsigned char*)s2, *cdest = (unsigned char*)s1;
+  for (int i = 0; i < n; i ++) {
+    if (csrc[i] < cdest[i]) return -1;
+    if (csrc[i] > cdest[i]) return 1;
+  }
   return 0;
-  //return *str1-*str2;
+  
 }
 
 #endif
