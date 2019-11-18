@@ -13,13 +13,12 @@ extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 extern size_t get_ramdisk_size();
 
-
+#define DEFAULT_ENTRY 0x3000000
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
-  //return 0;
-  uintptr_t entry = 0;
-  ramdisk_read((void*)entry,0,get_ramdisk_size());
-  return entry;
+  //return 0
+  ramdisk_read((void*)DEFAULT_ENTRY,0,get_ramdisk_size());
+  return DEFAULT_ENTRY;
 
 }
 
