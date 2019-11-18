@@ -13,7 +13,7 @@ extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 extern size_t get_ramdisk_size();
 
-//#define DEFAULT_ENTRY 0x100000
+#define DEFAULT_ENTRY 0x300000
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   //return 0
@@ -24,8 +24,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   ramdisk_read(ehdr,0,sizeof(Elf_Ehdr));
   printf("type is %d\n",temp.e_type);
   printf("entry is %d\n",temp.e_entry);
-  //qramdisk_read((void*)temp.e_entry,0,get_ramdisk_size());
-  return (uintptr_t)temp.e_entry;
+  ramdisk_read((void*)DEFAULT_ENTRY,temp.e_entry,get_ramdisk_size());
+  return DEFAULT_ENTRY;
 
 }
 
