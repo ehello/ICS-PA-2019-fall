@@ -24,9 +24,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   ramdisk_read(ehdr,0,sizeof(Elf_Ehdr));
   printf("type is %d\n",temp.e_type);
   printf("entry is %d\n",temp.e_entry);
-  ramdisk_read((void*)DEFAULT_ENTRY,temp.e_entry,get_ramdisk_size()-temp.e_entry);
-  return DEFAULT_ENTRY;
-
+  return (*ehdr).e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
