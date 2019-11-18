@@ -67,15 +67,15 @@ void* memset(void* v,int c,size_t n) {
 }
 
 void* memcpy(void* out, const void* in, size_t n) {
-  char *dst = (char*)out;
+  /*char *dst = (char*)out;
   char *src = (char*)in;
-  while(n>0) {*dst++ = *src++; n--;};
-  return out;
-  /*char *csrc = (char*)in, *cdest = (char*)out;
+  while(n--) {*dst++ = *src++;}
+  return out;*/
+  char *csrc = (char*)in, *cdest = (char*)out;
   for (int i = 0; i < n; i ++) {
     cdest[i] = csrc[i];
   }
-  return out;*/
+  return out;
 }
 
 int memcmp(const void* s1, const void* s2, size_t n){
