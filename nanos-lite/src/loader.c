@@ -18,8 +18,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   //return 0
   
-  printf("size is %d\n",get_ramdisk_size());
-  Elf_Ehdr temp;
+  //printf("size is %d\n",get_ramdisk_size());
+  Elf_Ehdr temp = {};
   Elf_Ehdr *ehdr = &temp;
   ramdisk_read((void*)ehdr,0,sizeof(Elf32_Ehdr));
   printf("entry is %d\n",temp.e_entry);
