@@ -21,7 +21,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   //printf("size is %d\n",get_ramdisk_size());
   Elf_Ehdr temp;
   Elf_Ehdr *ehdr = &temp;
-  ramdisk_read(ehdr,0,sizeof(Elf32_Ehdr));
+  ramdisk_read(ehdr,0,sizeof(Elf_Ehdr));
   printf("entry is %d\n",temp.e_entry);
   //qramdisk_read((void*)temp.e_entry,0,get_ramdisk_size());
   return (uintptr_t)temp.e_entry;
