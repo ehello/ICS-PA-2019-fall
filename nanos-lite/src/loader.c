@@ -22,7 +22,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr temp;
   Elf_Ehdr *ehdr = &temp;
   ramdisk_read(ehdr,0,sizeof(Elf_Ehdr));
-  
+
   //printf("type is %d\n",temp.e_type);
   //printf("entry is %d\n",temp.e_entry);
   //printf("pht num is %d\n",temp.e_phnum);
@@ -34,8 +34,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     printf("p_type is %d\n",pht[i].p_type);
     if(pht[i].p_type == PT_LOAD){
       printf("vaddr is %d,paddr is %d\n ",pht[i].p_vaddr,pht[i].p_paddr);
-      ramdisk_read((void*)pht[i].p_vaddr,pht[i].p_offset,pht[i].p_memsz);
-      memset((void*)(pht[i].p_paddr+pht[i].p_filesz),0,pht[i].p_memsz-pht[i].p_filesz);
+      ramdisk_read((void*)pht[i].p_vaddr, pht[i].p_offset, pht[i].p_memsz);
+      memset((void*)(pht[i].p_vaddr+pht[i].p_filesz),'\0',pht[i].p_memsz-pht[i].p_filesz);
     }
   }
   //ramdisk_write((void*)temp.e_entry,temp1.p_vaddr,ge);
