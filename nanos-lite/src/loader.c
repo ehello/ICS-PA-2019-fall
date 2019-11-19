@@ -29,7 +29,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   printf("e_entry is %d\n",temp.e_entry);
 
   Elf_Phdr pht[temp.e_phnum];
-  ramdisk_read(pht, 0, sizeof(Elf_Phdr)*temp.e_phnum);
+  ramdisk_read(pht, temp.e_ehsize, sizeof(Elf_Phdr)*temp.e_phnum);
   for(int i = 0; i<temp.e_phnum; i++){
     printf("p_type is %d\n", pht[i].p_type);
     
