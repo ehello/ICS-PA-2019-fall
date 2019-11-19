@@ -9,7 +9,7 @@ struct _Context {
   int irq;
   uintptr_t eip,cs,eflags;
   //uintptr_t eflags,cs,eip;
-  uint32_t GPR1,GPR2,GPR3,GPR4,GPRx;
+  uintptr_t GPR1,GPR2,GPR3,GPR4,GPRx;
 };
 
 #define GPR1 eax 
