@@ -11,7 +11,7 @@ struct _Context {
   //uintptr_t eflags,cs,eip;
 };
 
-#define GPR1 eax
+#define GPR1 eax 
 #define GPR2 ebx
 #define GPR3 ecx
 #define GPR4 edx
