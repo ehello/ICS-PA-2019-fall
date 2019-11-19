@@ -34,8 +34,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     printf("p_type is %d\n", pht[i].p_type);
     
     if(pht[i].p_type == PT_LOAD){
-      printf("vaddr is %d,paddr is %d\n ",pht[i].p_vaddr,pht[i].p_paddr);
-      printf("and memsize is %d\n",pht[i].p_memsz);
+      printf("vaddr is %d,paddr is %d ",pht[i].p_vaddr,pht[i].p_paddr);
+      printf(" and memsize is %d\n",pht[i].p_memsz);
       ramdisk_read((void*)pht[i].p_vaddr, pht[i].p_offset, pht[i].p_memsz);
       memset((void*)(pht[i].p_vaddr+pht[i].p_filesz),0,pht[i].p_memsz-pht[i].p_filesz);
     }
