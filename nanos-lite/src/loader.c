@@ -22,11 +22,12 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Elf_Ehdr temp;
   Elf_Ehdr *ehdr = &temp;
   ramdisk_read(ehdr,0,sizeof(Elf_Ehdr));
+  
   //printf("type is %d\n",temp.e_type);
   //printf("entry is %d\n",temp.e_entry);
-  
   //printf("pht num is %d\n",temp.e_phnum);
   printf("e_entry is %d\n",temp.e_entry);
+
   Elf_Phdr pht[temp.e_phnum];
   ramdisk_read(pht,temp.e_ehsize,sizeof(Elf_Phdr)*temp.e_phnum);
   for(int i = 0;i<temp.e_phnum;i++){
