@@ -4,6 +4,7 @@
 extern _Context* do_syscall(_Context*c);
 
 static _Context* do_event(_Event e, _Context* c) {
+  printf("c in do_event is %d",c->eax);
   switch (e.event) {
     case _EVENT_YIELD: printf("This is a yield event.\n"); break;
     case _EVENT_SYSCALL: return do_syscall(c); break;
