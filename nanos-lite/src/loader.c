@@ -15,9 +15,9 @@ extern size_t get_ramdisk_size();
 
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
-  TODO();
-  return 0;
-  /*Elf_Ehdr ehdr;
+  //TODO();
+  //return 0;
+  Elf_Ehdr ehdr;
   ramdisk_read(&ehdr,0,sizeof(Elf_Ehdr));
 
   Elf_Phdr pht[ehdr.e_phnum];
@@ -29,7 +29,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     }
   }
   
-  return ehdr.e_entry;*/
+  return ehdr.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
