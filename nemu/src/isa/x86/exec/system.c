@@ -48,7 +48,8 @@ make_EHelper(iret) {
   //TODO();
   rtl_pop(&decinfo.jmp_pc);
   rtl_pop(&cpu.cs);
-  rtl_j(decinfo.jmp_pc);
+  //rtl_j(decinfo.jmp_pc);
+  decinfo.is_jmp = 1;
   rtl_pop(&cpu.eflags.val);
   
 
