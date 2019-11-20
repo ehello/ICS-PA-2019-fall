@@ -7,7 +7,7 @@ extern void _exit(int status);
 
 _Context* do_syscall(_Context* c) {
   uintptr_t a[4];
-  //printf("GPR1 is %d\n",c->GPR1);
+  printf("GPR1 is %d\n",c->GPR1);
   a[0] = c->GPR1;
   a[1] = c->GPR2;
   a[2] = c->GPR3;
