@@ -23,7 +23,7 @@ int printf(const char *fmt, ...) {
 }
 
 static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
-char *number(char *str,long num,int base){// TODO: 精度实现
+char *number(char *str,long num,int base){// TODO: 精度实现。修复了不能打印0的问题。
   char tmp[65536];
   char* dig = digits;
   int i = 0;
