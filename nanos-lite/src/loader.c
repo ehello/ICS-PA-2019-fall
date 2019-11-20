@@ -28,7 +28,6 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       memset((void*)(pht[i].p_vaddr+pht[i].p_filesz),0,pht[i].p_memsz-pht[i].p_filesz);
     }
   }
-  
   return ehdr.e_entry;
 }
 
