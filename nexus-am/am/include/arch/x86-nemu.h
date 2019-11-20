@@ -6,9 +6,8 @@ struct _Context {
   //所以要把通用寄存器和eflags等三个寄存器分开放置
   uintptr_t  edi,esi,ebp,esp,ebx,edx,ecx,eax;
   struct _AddressSpace *as;
-  uintptr_t  eip,cs,eflags;
   int irq;
-  //uintptr_t eip,cs,eflags;
+  uintptr_t eip,cs,eflags;
 };
 
 #define GPR1 eax 
