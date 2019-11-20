@@ -29,13 +29,13 @@ make_EHelper(mov_cr2r) {
 
 make_EHelper(int) {
   //TODO();
-  switch (decinfo.opcode){
+  /*switch (decinfo.opcode){
     case 0xcc: raise_intr((uint32_t)0x3,decinfo.seq_pc);break;
     case 0xcd: raise_intr(id_dest->val,decinfo.seq_pc);break;
     case 0xce: raise_intr((uint32_t)0x4,decinfo.seq_pc);break;
     default: raise_intr(id_dest->val,decinfo.seq_pc);break;
-  }
-  //raise_intr(id_dest->val, decinfo.seq_pc);
+  }*/
+  raise_intr(id_dest->val, decinfo.seq_pc);
   print_asm("int %s", id_dest->str);
 
   difftest_skip_dut(1, 2);
