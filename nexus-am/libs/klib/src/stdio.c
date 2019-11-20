@@ -32,6 +32,9 @@ char *number(char *str,long num,int base){// TODO: 精度实现
     *str = '-';
     str++;
   }
+  else if(num == 0){
+    tmp[i] = dig[0];
+  }
   while(num != 0){
     tmp[i++] = dig[(unsigned long)num % (unsigned)base];
     num /= base;
