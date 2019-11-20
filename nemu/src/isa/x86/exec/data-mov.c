@@ -41,7 +41,7 @@ make_EHelper(popa) {
   rtl_pop(&cpu.edi);
   rtl_pop(&cpu.esi);
   rtl_pop(&cpu.ebp);
-  rtl_pop(&s1);
+  rtl_pop(&s0);
   rtl_pop(&cpu.ebx);
   rtl_pop(&cpu.edx);//之前多打了一个edx，要细心呐
   rtl_pop(&cpu.ecx);
