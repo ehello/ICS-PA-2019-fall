@@ -1,10 +1,11 @@
 #include "common.h"
 #include "syscall.h"
+#include "/home/james/ics2019/nexus-am/am/am.h"
 
 extern void _yield();
 extern void _exit(int status);
 
-_Context* do_syscall(_Context *c) {
+_Context* do_syscall(_Context* c) {
   uintptr_t a[4];
   printf("GPR1 is %d\n",c->GPR1);
   a[0] = c->GPR1;

@@ -1,6 +1,7 @@
 #include "common.h"
+#include "/home/james/ics2019/nexus-am/am/am.h"
 
-_Context* do_syscall(_Context*c);
+extern _Context* do_syscall(_Context*c);
 
 static _Context* do_event(_Event e, _Context* c) {
   switch (e.event) {
