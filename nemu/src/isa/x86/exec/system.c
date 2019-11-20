@@ -8,6 +8,7 @@ make_EHelper(lidt) {
     //rtl_li(&s1,vaddr_read(s0+2,4));
     //rtl_li(&cpu.idtr.base,s1&0x00ffffff);
     panic("lidt is not implemented when oprand is 16 bit ");
+    assert(0);
   }
   else {
     rtl_li(&cpu.idtr.limit,vaddr_read(s0,2));
@@ -32,13 +33,13 @@ make_EHelper(mov_cr2r) {
 
 make_EHelper(int) {
   //TODO();
-  /*switch (decinfo.opcode){
+  switch (decinfo.opcode){
     case 0xcc: raise_intr((uint32_t)0x3,decinfo.seq_pc);break;
     case 0xcd: raise_intr(id_dest->val,decinfo.seq_pc);break;
     case 0xce: raise_intr((uint32_t)0x4,decinfo.seq_pc);break;
     default: raise_intr(id_dest->val,decinfo.seq_pc);break;
-  }*/
-  raise_intr(id_dest->val, decinfo.seq_pc);
+  }
+  //raise_intr(id_dest->val, decinfo.seq_pc);
   print_asm("int %s", id_dest->str);
 
   difftest_skip_dut(1, 2);
@@ -47,9 +48,8 @@ make_EHelper(int) {
 make_EHelper(iret) {
   //TODO();
   rtl_pop(&decinfo.jmp_pc);
-  rtl_pop(&cpu.cs);
   rtl_j(decinfo.jmp_pc);
-  //decinfo.is_jmp = 1;
+  rtl_pop(&cpu.cs);
   rtl_pop(&cpu.eflags.val);
   
 
