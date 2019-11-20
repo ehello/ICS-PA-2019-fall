@@ -2,7 +2,7 @@
 #include "syscall.h"
 #include "/home/james/ics2019/nexus-am/am/am.h"
 
-extern void _yield();
+
 extern void _exit(int status);
 
 _Context* do_syscall(_Context* c) {
