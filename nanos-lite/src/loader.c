@@ -19,18 +19,17 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   //return 0
   
   //printf("size is %d\n",get_ramdisk_size());
-  Elf_Ehdr temp;
-  Elf_Ehdr *ehdr = &temp;
-  ramdisk_read(ehdr,0,sizeof(Elf_Ehdr));
+  Elf_Ehdr ehdr;
+  ramdisk_read(&ehdr,0,sizeof(Elf_Ehdr));
 
   //printf("type is %d\n",temp.e_type);
   //printf("entry is %d\n",temp.e_entry);
   //printf("pht num is %d\n",temp.e_phnum);
   //printf("e_entry is %d\n",temp.e_entry);
 
-  Elf_Phdr pht[temp.e_phnum];
-  ramdisk_read(pht, temp.e_ehsize, sizeof(Elf_Phdr)*temp.e_phnum);
-  for(int i = 0; i<temp.e_phnum; i++){
+  Elf_Phdr pht[ehdr.e_phnum];
+  ramdisk_read(pht, ehdr.e_ehsize, sizeof(Elf_Phdr)*ehdr.e_phnum);
+  for(int i = 0; i<ehdr.e_phnum; i++){
     //printf("p_type is %d\n", pht[i].p_type);
     
     if(pht[i].p_type == PT_LOAD){
@@ -40,7 +39,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     }
   }
   
-  return (uintptr_t)temp.e_entry;
+  return ehdr.e_entry;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
