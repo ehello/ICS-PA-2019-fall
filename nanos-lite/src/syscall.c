@@ -1,6 +1,6 @@
 #include "common.h"
 #include "syscall.h"
-#include "/home/james/ics2019/nexus-am/am/am.h"
+//#include "/home/james/ics2019/nexus-am/am/am.h"
 
 
 extern void _exit(int status);

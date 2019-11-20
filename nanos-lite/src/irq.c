@@ -1,5 +1,5 @@
 #include "common.h"
-#include "/home/james/ics2019/nexus-am/am/am.h"
+//#include "/home/james/ics2019/nexus-am/am/am.h"
 
 extern _Context* do_syscall(_Context*c);
 
