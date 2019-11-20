@@ -7,8 +7,9 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
    * That is, use ``NO'' to index the IDT.
    */
   rtl_push(&cpu.eflags.val);
-  //cpu.eflags.IF = 0;
-  rtl_push(&cpu.cs);
+  cpu.eflags.IF = 0;
+  t0 = cpu.cs;
+  rtl_push(&t0);
   rtl_push(&ret_addr);
   
   GateDesc gatedesc;
