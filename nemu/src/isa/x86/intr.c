@@ -12,7 +12,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
   rtl_push(&ret_addr);
   cpu.eflags.IF = 0;
   
-  union {
+  /*union {
 		GateDesc gd;
 		struct { uint32_t lo, hi; };
 	} item;
@@ -24,16 +24,16 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
 
 	t1 = (item.gd.offset_15_0 & 0xFFFF)
 	| ((item.gd.offset_31_16 & 0xFFFF) << 16);
-  rtl_j(t1);
+  rtl_j(t1);*/
 
-  /*GateDesc gatedesc;
+  GateDesc gatedesc;
   gatedesc.offset_15_0= (vaddr_read(cpu.idtr.base+NO*8,4)& 0x0000ffff);//取低16位赋值给offset15_0
   gatedesc.offset_31_16 = ((vaddr_read(cpu.idtr.base+NO*8+4,4) & 0xffff0000)>>16);//取高16位赋值给offset31_16
   //以上赋值的原因在于GateDesc联合体的结构
 
   
   vaddr_t goalAddr = gatedesc.offset_15_0|(gatedesc.offset_31_16 & 0x0000ffff)<<16;
-  rtl_j(goalAddr);*/
+  rtl_j(goalAddr);
 }
 
 bool isa_query_intr(void) {
