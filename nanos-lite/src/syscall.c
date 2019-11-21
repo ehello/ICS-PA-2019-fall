@@ -12,7 +12,7 @@ _Context* do_syscall(_Context* c) {
   a[3] = c->GPR4;
 
   switch (a[0]) {
-    case SYS_yield:_yield(); break;
+    case SYS_yield:_yield(); c->GPRx = 0; break;
     case SYS_exit:_halt(0); break;//may not correct
     //case SYS_write:{
     //    
