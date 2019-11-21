@@ -9,6 +9,7 @@ int write(int fd, void *buf, size_t count){
     size_t i = 0;
     while(i<count){
       _putc(s[i]);
+      i++;
     }
     return (int)i;
   }
