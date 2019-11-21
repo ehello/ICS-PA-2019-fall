@@ -66,16 +66,15 @@ int _write(int fd, void *buf, size_t count) {
   return ret;
   //return 0;
 }
-
+extern char _end;
+intptr_t program_break =(intptr_t) &_end;
 void *_sbrk(intptr_t increment) {
-  extern char _end;
-  void* program_break = &_end;
-  void * addr = program_break+increment;
-  int ret = _syscall_(SYS_brk,(uintptr_t)addr,0,0);
+  intptr_t addr = program_break+increment;
+  int ret = _syscall_(SYS_brk,addr,0,0);
   if (ret == 0){
-    void *previous_break = program_break;
-    program_break+=increment;
-    return previous_break;
+    intptr_t previous_break = program_break;
+    program_break = addr;
+    return (void*)previous_break;
   }
   return (void *)-1;
 }
