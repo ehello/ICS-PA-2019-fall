@@ -43,7 +43,7 @@ static char dispinfo[128] __attribute__((used)) = {};
 extern char* strncpy(char* dst, const char* src, size_t n);
 
 size_t dispinfo_read(void *buf, size_t offset, size_t len) {
-  strncpy(buf,dispinfo+offset,len);
+  memcpy(buf,(void*)dispinfo+offset,len);
   return len;
 }
 
