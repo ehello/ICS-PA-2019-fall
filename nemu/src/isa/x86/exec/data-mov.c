@@ -112,17 +112,18 @@ make_EHelper(movzx) {
 
 make_EHelper(movsb){//chenck later
   //TODO();
-  int incdec = 1;
-  rtl_lr(&s0,R_ESI,4);
-  rtl_lm(&s1,&s0,1);
-  s0+=incdec;
+  rtlreg_t incdec = 1;
+  rtl_lr(&s0,R_ESI,4);//esi存的地址
+  rtl_lm(&s1,&s0,1);//从内存中取数据
+  rtl_li(&s0,s0+incdec);
   rtl_sr(R_ESI,&s0,4);
+
   rtl_lr(&s0,R_EDI,4);
   rtl_sm(&s0,&s1,1);
-  s0+=incdec;
+  rtl_li(&s0,s0+incdec);
   rtl_sr(R_EDI,&s0,4);
 
-  print_asm("movsb");
+  print_asm_template2(movsb);
 }
 
 make_EHelper(lea) {
