@@ -95,7 +95,7 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
   }
   return len;*/
   int ret = 0;
-	Log("fs_read: fd = %d, name = %s, offset = %d, len = %d", fd, file_table[fd].name, file_table[fd].open_offset, len);
+	//Log("fs_read: fd = %d, name = %s, offset = %d, len = %d", fd, file_table[fd].name, file_table[fd].open_offset, len);
 	if(fd != FD_EVENTS && file_table[fd].open_offset + len > file_table[fd].size){
 		len = file_table[fd].size - file_table[fd].open_offset;
     }
@@ -150,7 +150,7 @@ __ssize_t fs_write(int fd, const void *buf, size_t len){
     return len;
 }
   
-}
+
 __off_t fs_lseek(int fd, __off_t offset, int whence){
   /*switch(whence){
     case SEEK_SET:{
