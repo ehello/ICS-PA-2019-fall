@@ -127,7 +127,6 @@ __ssize_t fs_write(int fd, const void *buf, size_t len){
   }
   return len;
 }
-
 __off_t fs_lseek(int fd, __off_t offset, int whence){
   switch(whence){
     case SEEK_SET:{
