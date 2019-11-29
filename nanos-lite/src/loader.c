@@ -36,6 +36,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   }
   
   fs_close(fd);
+  Log("Successfully loaded\n");
   return ehdr.e_entry;
 }
 
