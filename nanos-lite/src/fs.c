@@ -68,7 +68,7 @@ size_t fs_offset(int fd){//并没有要求实现这个，但是如果不实现�
 extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 
 __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
-  __ssize_t ret = 0;
+  /*__ssize_t ret = 0;
   switch(fd){
     case FD_STDIN:
     case FD_STDOUT:
@@ -76,7 +76,7 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
     case FD_FB:
       break;
     case FD_EVENTS: ret = file_table[fd].read(buf,file_table[fd].open_offset,len);break;
-    //case FD_FBSYNC: break;
+    case FD_FBSYNC: break;
     case FD_DISPINFO:{
       if(file_table[fd].open_offset >= file_table[fd].size) 
         return 0;
@@ -94,9 +94,9 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
       file_table[fd].open_offset += ret;
     }break;
   }
-  return ret;
-  /*int ret = 0;
-	//Log("fs_read: fd = %d, name = %s, offset = %d, len = %d", fd, file_table[fd].name, file_table[fd].open_offset, len);
+  return ret;*/
+  int ret = 0;
+	Log("fs_read: fd = %d, name = %s, offset = %d, len = %d", fd, file_table[fd].name, file_table[fd].open_offset, len);
 	if(fd != FD_EVENTS && file_table[fd].open_offset + len > file_table[fd].size){
 		len = file_table[fd].size - file_table[fd].open_offset;
     }
@@ -107,7 +107,7 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
 	else ret = file_table[fd].read(buf, file_table[fd].open_offset, len);
     file_table[fd].open_offset += ret;
     //Log("success!");
-return ret;*/
+return ret;
 }
 
 extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
