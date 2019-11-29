@@ -122,7 +122,7 @@ make_EHelper(movsb){
   s0+=incdec;
   rtl_sr(R_EDI,&s0,4);
 
-  print_asm_template2(movsb);
+  print_asm(movsb);
 }
 
 make_EHelper(lea) {
