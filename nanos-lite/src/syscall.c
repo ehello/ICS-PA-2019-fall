@@ -2,19 +2,11 @@
 #include "syscall.h"
 //#include "/home/james/ics2019/nexus-am/am/am.h"
 
-extern void _putc(char ch);
-int write(int fd, void *buf, size_t count){
-  char *s = (char*)buf;
-  if (fd == 1 || fd == 2){
-    size_t i = 0;
-    while(i<count){
-      _putc(s[i]);
-      i++;
-    }
-    return (int)i;
-  }
-  else return -1;
-}
+extern int fs_open(const char *pathname, int flags, int mode);
+extern __ssize_t fs_read(int fd, void *buf, size_t len);
+extern __ssize_t fs_write(int fd, const void *buf, size_t len);
+extern __off_t fs_lseek(int fd, __off_t offset, int whence);
+extern int fs_close(int fd);
 
 _Context* do_syscall(_Context* c) {
   uintptr_t a[4];
@@ -27,8 +19,12 @@ _Context* do_syscall(_Context* c) {
   switch (a[0]) {
     case SYS_yield:_yield(); c->GPRx = 0; break;
     case SYS_exit:_halt(a[1]); break;//may not correct
-    case SYS_write: /*Log("check the sys_write");*/c->GPRx = write(a[1],(void*)a[2],a[3]);break; 
+    case SYS_write: /*Log("check the sys_write");c->GPRx = sys_write(a[1],(void*)a[2],a[3]);*/c->GPRx=fs_write(a[1],(void*)a[2],a[3]); break; 
     case SYS_brk: c->GPRx = 0;break;
+    case SYS_lseek: c->GPRx = fs_lseek(a[1],a[2],a[3]);break;
+    case SYS_open: c->GPRx = fs_open((char*)a[1],a[2],a[3]);break;
+    case SYS_close: c->GPRx = fs_close(a[1]);break;
+    case SYS_read: c->GPRx = fs_read(a[1],(void*)a[2],a[3]);break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 

@@ -21,17 +21,21 @@ extern int fs_close(int fd);
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   //return 0;
+  int fd = fs_open(filename,0,0);
   Elf_Ehdr ehdr;
-  ramdisk_read(&ehdr,0,sizeof(Elf_Ehdr));
+  fs_read(fd,&ehdr,sizeof(Elf_Ehdr));
 
   Elf_Phdr pht[ehdr.e_phnum];
-  ramdisk_read(pht, ehdr.e_ehsize, sizeof(Elf_Phdr)*ehdr.e_phnum);
+  fs_read(fd,pht,sizeof(Elf_Phdr)*ehdr.e_phnum);
+  size_t offset = fs_offset(fd);
   for(int i = 0; i<ehdr.e_phnum; i++){
     if(pht[i].p_type == PT_LOAD){
-      ramdisk_read((void*)pht[i].p_vaddr, pht[i].p_offset, pht[i].p_memsz);
+      ramdisk_read((void*)pht[i].p_vaddr, offset+pht[i].p_offset, pht[i].p_memsz);
       memset((void*)(pht[i].p_vaddr+pht[i].p_filesz), 0, pht[i].p_memsz-pht[i].p_filesz);
     }
   }
+  
+  fs_close(fd);
   return ehdr.e_entry;
 }
 
