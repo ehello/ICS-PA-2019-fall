@@ -28,7 +28,7 @@ int printf(const char *fmt, ...) {
 #define SPACE   8               // Space if plus
 #define LEFT    16              // Left justified
 #define SPECIAL 32              // 0x
-#define LARGE   64              // Use 'ABCDEF' instead of 'abcdef'
+//#define LARGE   64              // Use 'ABCDEF' instead of 'abcdef'
 static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
 char *number(char *str,long num,int base, int size, int precision, int type){
   char c, sign, tmp[1024];
