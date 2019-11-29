@@ -79,8 +79,8 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
     case FD_FBSYNC: break;
     case FD_DISPINFO:{
       if(file_table[fd].open_offset >= file_table[fd].size) 
-        return 0;
-     if(file_table[fd].open_offset+len >file_table[fd].size) 
+        return ret;
+      if(file_table[fd].open_offset+len >file_table[fd].size) 
         len = file_table[fd].size - file_table[fd].open_offset;
       ret = file_table[fd].read(buf,file_table[fd].open_offset,len);
       file_table[fd].open_offset+=ret;//草草草草草草草草草草草草草草草草草草草草
@@ -88,59 +88,48 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
 
     default:{
       if(file_table[fd].open_offset >= file_table[fd].size) 
-        return 0;
+        return ret;
       if(file_table[fd].open_offset+len >file_table[fd].size) 
         len = file_table[fd].size - file_table[fd].open_offset;
       ret = ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
       file_table[fd].open_offset += ret;
     }break;
   }
+  Log("Successfully read!!!\n");
   return ret;
-  /*int ret = 0;
-	Log("fs_read: fd = %d, name = %s, offset = %d, len = %d", fd, file_table[fd].name, file_table[fd].open_offset, len);
-	if(fd != FD_EVENTS && file_table[fd].open_offset + len > file_table[fd].size){
-		len = file_table[fd].size - file_table[fd].open_offset;
-    }
-
-	if(file_table[fd].read == NULL){
-  	ret = ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, len);
-	}
-	else ret = file_table[fd].read(buf, file_table[fd].open_offset, len);
-    file_table[fd].open_offset += ret;
-    //Log("success!");
-return ret;*/
 }
 
 extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
 
 __ssize_t fs_write(int fd, const void *buf, size_t len){
+  __ssize_t ret = 0;
   switch(fd){
     case FD_STDIN: break;
     case FD_STDOUT:
-    case FD_STDERR: file_table[fd].write(buf,0,len);break;
+    case FD_STDERR: ret = file_table[fd].write(buf,0,len);break;
     case FD_FB:{
       if(file_table[fd].open_offset >= file_table[fd].size)
-        return 0;
+        return ret;
       if(file_table[fd].open_offset + len > file_table[fd].size)
         len = file_table[fd].size - file_table[fd].open_offset;
-      file_table[fd].write(buf, file_table[fd].open_offset, len);
-      file_table[fd].open_offset += len;
+      ret = file_table[fd].write(buf, file_table[fd].open_offset, len);
+      file_table[fd].open_offset += ret;
     }break;
     case FD_EVENTS:
-    case FD_FBSYNC: file_table[fd].write(buf,0,len);break;
+    case FD_FBSYNC: ret = file_table[fd].write(buf,0,len);break;
     case FD_DISPINFO: break;
 
     default:{
       if(file_table[fd].open_offset >= file_table[fd].size) 
-        return 0;
+        return ret;
       if(file_table[fd].open_offset+len > file_table[fd].size)
         len = file_table[fd].size - file_table[fd].open_offset;
-      ramdisk_write(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
-      file_table[fd].open_offset += len;
+      ret = ramdisk_write(buf, file_table[fd].disk_offset+file_table[fd].open_offset, len);
+      file_table[fd].open_offset += ret;
     }break;
-    
   }
-  return len;
+  Log("Successfully write!!!\n");
+  return ret;
 }
   
 
