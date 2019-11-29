@@ -110,6 +110,21 @@ make_EHelper(movzx) {
   print_asm_template2(movzx);
 }
 
+make_EHelper(movsb){
+  //TODO();
+  int incdec = 1;
+  rtl_lr(&s0,R_ESI,4);
+  rtl_lm(&s1,&s0,1);
+  s0+=incdec;
+  rtl_sr(R_ESI,&s0,4);
+  rtl_lr(&s0,R_EDI,4);
+  rtl_sm(&s0,&s1,1);
+  s0+=incdec;
+  rtl_sr(R_EDI,&s0,4);
+
+  print_asm_template2(movsb);
+}
+
 make_EHelper(lea) {
   operand_write(id_dest, &id_src->addr);
   print_asm_template2(lea);

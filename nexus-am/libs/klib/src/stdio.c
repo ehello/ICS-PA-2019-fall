@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
+//试过几次后，目前比较稳定的版本，不能打印ld这类标识符，但可以有初步的格式
 int printf(const char *fmt, ...) {
   char buff[65536];//原来设置为100，太小了，所以在PA3一开始报错了
   va_list args;

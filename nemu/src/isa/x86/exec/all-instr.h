@@ -47,6 +47,7 @@ make_EHelper(lidt);
 make_EHelper(pusha);
 make_EHelper(popa);
 make_EHelper(iret);
+make_EHelper(movsb);
 
 
 make_EHelper(operand_size);
