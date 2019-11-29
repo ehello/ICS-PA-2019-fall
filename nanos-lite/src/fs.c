@@ -82,7 +82,7 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
         return 0;
       if(file_table[fd].open_offset+len >file_table[fd].size) 
         len = file_table[fd].size - file_table[fd].open_offset;
-      file_table[fd].read(buf,file_table[fd].open_offset,len);
+      ret = file_table[fd].read(buf,file_table[fd].open_offset,len);
     }break;
 
     default:{
@@ -90,8 +90,8 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
         return 0;
       if(file_table[fd].open_offset+len >file_table[fd].size) 
         len = file_table[fd].size - file_table[fd].open_offset;
-      ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
-      file_table[fd].open_offset += len;
+      ret = ramdisk_read(buf,file_table[fd].disk_offset+file_table[fd].open_offset,len);
+      file_table[fd].open_offset += ret;
     }break;
   }
   return ret;
