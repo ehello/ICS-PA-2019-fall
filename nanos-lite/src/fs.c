@@ -152,7 +152,7 @@ __ssize_t fs_write(int fd, const void *buf, size_t len){
   
 
 __off_t fs_lseek(int fd, __off_t offset, int whence){
-  /*switch(whence){
+  switch(whence){
     case SEEK_SET:{
       if(offset>=0&&offset<=file_table[fd].size){
         file_table[fd].open_offset = offset;
@@ -170,8 +170,8 @@ __off_t fs_lseek(int fd, __off_t offset, int whence){
   }
   if(file_table[fd].open_offset > file_table[fd].size)
     file_table[fd].open_offset = file_table[fd].size;
-  return file_table[fd].open_offset;*/
-  if(strcmp(file_table[fd].name, "/proc/dispinfo") == 0) assert(0);
+  return file_table[fd].open_offset;
+  /*if(strcmp(file_table[fd].name, "/proc/dispinfo") == 0) assert(0);
 	switch(whence){
 		case SEEK_SET: file_table[fd].open_offset = offset; break;
 		case SEEK_CUR: file_table[fd].open_offset += offset; break;
@@ -180,7 +180,7 @@ __off_t fs_lseek(int fd, __off_t offset, int whence){
 	}
 	if(file_table[fd].open_offset > file_table[fd].size)
 		file_table[fd].open_offset = file_table[fd].size;
-  return file_table[fd].open_offset;
+  return file_table[fd].open_offset;*/
 }
 
 int fs_close(int fd){
