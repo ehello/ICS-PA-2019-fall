@@ -3,102 +3,127 @@
 #include <stdbool.h>
 
 #if !defined(__ISA_NATIVE__) || defined(__NATIVE_USE_KLIB__)
-
 int printf(const char *fmt, ...) {
-  char buff[65536];//原来设置为100，太小了，所以在PA3一开始报错了
+  char buff[512];//原来设置为100，太小了，所以在PA3一开始报错了
+  //_putc('p');_putc('r');
   va_list args;
-  int n;
-
+  int i=0,n;
   va_start(args,fmt);
   n = vsprintf(buff,fmt,args);
-  int i = 0;
-  while(buff[i] !='\0') {
+  while(buff[i] != '\0'){
     _putc(buff[i]);
     i++;
   }
-  //_putc('p');
   va_end(args);
   return n;
   
 }
 
-static char *digits = "0123456789abcdefghijklmnopqrstuvwxyz";
-char *number(char *str,long num,int base){// TODO: 精度实现。修复了不能打印0的问题。
-  char tmp[65536];
-  char* dig = digits;
-  int i = 0;
-  if (num < 0) {
-    num = -num;
-    *str = '-';
-    str++;
-  }
-  else if(num == 0){
-    tmp[i] = dig[0];
-    *str ++= tmp[i];
-    return str;
-  }
-  while(num != 0){
-    tmp[i++] = dig[(unsigned long)num % (unsigned)base];
-    num /= base;
-  }
-  while(i-- > 0) *str ++= tmp[i];
-  return str;
-}
+#define ZEROPAD 1               // Pad with zero
+#define SPACE   8               // Space if plus
+#define is_digit(c) ((c) >= '0' && (c) <= '9')
 
 int vsprintf(char *out, const char *fmt, va_list ap) {
-  int base;
-  char* tmp = out;
-  for(;*fmt;++fmt){
+  //_putc('v');_putc('s');
+  char *str = out;
+  for(;*fmt; fmt++){
     if(*fmt != '%'){
-      *out = *fmt;
-      out++;
-      continue;
+    *str = *fmt;
+    str++;
+    continue;
     }
 
+    int flags = 0;
     fmt++;
-    if('\0' == *fmt){
-      assert(0);
-      break;
+    
+    while(*fmt == ' ' || *fmt == '0'){
+      if(*fmt == ' ')  flags |= SPACE;
+      else if(*fmt == '0') flags |= ZEROPAD;
+      fmt++;
     }
 
-    base = 10;
+    int field_width = 0;
+    if(is_digit(*fmt)){
+      while(is_digit(*fmt)){
+        field_width = field_width*10 + (*fmt -'0');
+        fmt++;
+      }
+    }
+    else if(*fmt == '*'){
+      field_width = va_arg(ap,int);
+      fmt++;
+    }
     switch(*fmt){
-      case '%':{
-        *out = *fmt;
-        break;
-      }
-      case 'd':{
-        long num = va_arg(ap,int);
-        out = number(out,num,base);
-        break;
-      }
       case 's':{
-        char *s = va_arg(ap, char*);
-        while(*s) *out++=*s++;
+        const char *tmp = va_arg(ap,char *);
+        size_t len = strlen(tmp);
+        for(int i = 0;i < len;i ++){
+          *str = *tmp;
+          str++;
+          tmp++;
+        }
         continue;
       }
-      default: break;
+      case 'd': {
+        int num = va_arg(ap,int);
+        char num_s[512];
+        int j = 0;
+        if(num == 0) {
+          num_s[j] = '0';
+          j++;
+        }
+        else{
+          if(num < 0){
+            *str = '-';
+            str++; 
+            num = -num;
+          }
+          while(num !=0 ){
+            num_s[j] = num % 10 + '0';
+            num /= 10;
+            j++;
+          }
+        }
+        
+        if(j < field_width){
+          int d = field_width - j;
+          char c = flags & ZEROPAD ? '0' : ' ';
+          while(d != 0) {
+            *str = c;
+            str++;
+            d--;
+          }
+        }
+        for (int i = j-1;i>=0;i--){
+          *str = num_s[i];
+          str++;
+        }
+      }break;
+      case '%': {
+        *str = '%'; 
+        str++;
+        *str = '%';
+        str++;
+      }break;
     }
-    
   }
-  *out = '\0';
-  return out-tmp;
+  *str = '\0';
+  return str-out;
 }
 
 int sprintf(char *out, const char *fmt, ...) {
   va_list args;
-  int n;
-
+  int  val;
   va_start(args,fmt);
-  n = vsprintf(out,fmt,args);
+  val = vsprintf(out,fmt,args);
   va_end(args);
-
-  return n;
+  return val;
 }
 
 int snprintf(char *out, size_t n, const char *fmt, ...) {
   return 0;
 }
+
 
 
 #endif
