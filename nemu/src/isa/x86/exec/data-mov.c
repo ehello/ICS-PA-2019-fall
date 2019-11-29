@@ -110,7 +110,7 @@ make_EHelper(movzx) {
   print_asm_template2(movzx);
 }
 
-make_EHelper(movsb){
+make_EHelper(movsb){//chenck later
   //TODO();
   int incdec = 1;
   rtl_lr(&s0,R_ESI,4);
@@ -122,7 +122,7 @@ make_EHelper(movsb){
   s0+=incdec;
   rtl_sr(R_EDI,&s0,4);
 
-  print_asm(movsb);
+  print_asm("movsb");
 }
 
 make_EHelper(lea) {
