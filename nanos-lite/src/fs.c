@@ -144,6 +144,8 @@ __off_t fs_lseek(int fd, __off_t offset, int whence){
       file_table[fd].open_offset =file_table[fd].size+offset; 
     }break;
   }
+  if(file_table[fd].open_offset > file_table[fd].size)
+    file_table[fd].open_offset = file_table[fd].size;
   return file_table[fd].open_offset;
 }
 
