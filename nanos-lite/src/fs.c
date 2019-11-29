@@ -95,7 +95,7 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
       file_table[fd].open_offset += ret;
     }break;
   }
-  Log("Successfully read!!!\n");
+  //Log("Successfully read!!!\n");
   return ret;
 }
 
@@ -128,7 +128,7 @@ __ssize_t fs_write(int fd, const void *buf, size_t len){
       file_table[fd].open_offset += ret;
     }break;
   }
-  Log("Successfully write!!!\n");
+  //Log("Successfully write!!!\n");
   return ret;
 }
   
