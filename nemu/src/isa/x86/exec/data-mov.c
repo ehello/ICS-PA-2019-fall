@@ -125,6 +125,34 @@ make_EHelper(movsb){//chenck later
 
   print_asm_template2(movsb);
 }
+make_EHelper(movs){
+  if(decinfo.isa.is_operand_size_16){
+    rtlreg_t incdec = 2;
+    rtl_lr(&s0,R_ESI,4);//esi存的地址
+    rtl_lm(&s1,&s0,2);//从内存中取数据
+    rtl_li(&s0,s0+incdec);
+    rtl_sr(R_ESI,&s0,4);
+
+    rtl_lr(&s0,R_EDI,4);
+    rtl_sm(&s0,&s1,2);
+    rtl_li(&s0,s0+incdec);
+    rtl_sr(R_EDI,&s0,4);
+  }
+  else{
+    rtlreg_t incdec = 4;
+    rtl_lr(&s0,R_ESI,4);//esi存的地址
+    rtl_lm(&s1,&s0,4);//从内存中取数据
+    rtl_li(&s0,s0+incdec);
+    rtl_sr(R_ESI,&s0,4);
+
+    rtl_lr(&s0,R_EDI,4);
+    rtl_sm(&s0,&s1,4);
+    rtl_li(&s0,s0+incdec);
+    rtl_sr(R_EDI,&s0,4);
+  }
+
+  print_asm_template2(movs);
+}
 
 make_EHelper(lea) {
   operand_write(id_dest, &id_src->addr);
