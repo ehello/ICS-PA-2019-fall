@@ -29,7 +29,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     key ^= 0x8000;
     down = 1;
   }
-  if (key != _KEY_NONE){//实际运行的输出中有点奇怪，check later
+  if (key != _KEY_NONE){
     sprintf(buf,"%s %s\n", down?"kd":"ku", keyname[key]);
   }
   else{
@@ -52,11 +52,9 @@ extern int screen_height();
 extern void draw_rect(uint32_t *pixels, int x, int y, int w, int h);
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  int row,col;
-  offset /= 4;
-  row = offset / screen_width();
-  col = offset % screen_width();
-
+  int w = screen_width();
+  int col = (offset/4) % w;
+  int row = (offset/4) / w;
   draw_rect((uint32_t*)buf,col,row,len/4,1);
   return len;
 }
@@ -74,5 +72,8 @@ void init_device() {
 
   // TODO: print the string to array `dispinfo` with the format
   // described in the Navy-apps convention
-  sprintf(dispinfo,"WIDTH:%d\nHEIGHT:%d\n",screen_width(),screen_height());
+  int width = screen_width();
+	int height = screen_height();
+	int x = sprintf(dispinfo, "WIDTH:%d\n", width);
+  sprintf(dispinfo + x, "HEIGHT:%d\n", height);
 }
