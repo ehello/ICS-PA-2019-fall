@@ -57,7 +57,7 @@ int fs_open(const char *pathname, int flags, int mode){
       return fd;
     }
   }
-  panic("shoul not reach here");
+  panic("Not Found!\n");
   return -1;
 }
 
