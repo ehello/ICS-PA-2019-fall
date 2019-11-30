@@ -3,7 +3,7 @@
 
 
 
-//#define DEBUG 
+#define DEBUG 
 //#define DIFF_TEST
  
 #if _SHARE
