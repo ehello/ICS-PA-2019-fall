@@ -86,7 +86,7 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
       ret = file_table[fd].read(buf,file_table[fd].open_offset,len);
       file_table[fd].open_offset+=ret;//草草草草草草草草草草草草草草草草草草草草
     }break;
-    case FD_TTY: break;
+    
 
     default:{
       if(file_table[fd].open_offset >= file_table[fd].size) 
@@ -120,7 +120,7 @@ __ssize_t fs_write(int fd, const void *buf, size_t len){
     case FD_EVENTS:
     case FD_FBSYNC: ret = file_table[fd].write(buf,0,len);break;
     case FD_DISPINFO: break;
-    case FD_TTY: ret = file_table[fd].write(buf,0,len);break;
+    case FD_TTY: {ret = file_table[fd].write(buf,0,len);break;}
 
     default:{
       if(file_table[fd].open_offset >= file_table[fd].size) 
