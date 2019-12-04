@@ -20,7 +20,7 @@ static const char *keyname[256] __attribute__((used)) = {
 };
 
 extern int read_key();
-extern uint32_t uptime();
+extern unsigned int uptime();
 
 size_t events_read(void *buf, size_t offset, size_t len) {
   int key = read_key();
@@ -33,7 +33,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     sprintf(buf,"%s %s\n", down?"kd":"ku", keyname[key]);
   }
   else{
-    uint32_t t = uptime();
+    unsigned int t = uptime();
     sprintf(buf,"t %d\n",t);
   }
   return strlen(buf);
@@ -50,13 +50,13 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 
 extern int screen_width();
 extern int screen_height();
-extern void draw_rect(uint32_t *pixels, int x, int y, int w, int h);
+extern void draw_rect(unsigned int *pixels, int x, int y, int w, int h);
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   int w = screen_width();
   int col = (offset/4) % w;
   int row = (offset/4) / w;
-  draw_rect((uint32_t*)buf,col,row,len/4,1);
+  draw_rect((unsigned int*)buf,col,row,len/4,1);
   return len;
 }
 
