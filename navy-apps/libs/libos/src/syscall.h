@@ -1,6 +1,6 @@
 #ifndef __SYSCALL_H__
 #define __SYSCALL_H__ 
-
+extern intptr_t _syscall_(intptr_t type, intptr_t a0, intptr_t a1, intptr_t a2);
 enum {
   SYS_exit,
   SYS_yield,
