@@ -157,7 +157,7 @@ _fread_r (struct _reent * ptr,
 
   CHECK_INIT(ptr, fp);
 
-  _newlib_flockfile_start (fp);
+  _newlib_flockfile_start (fp); 
   ORIENT (fp, -1);
   if (fp->_r < 0)
     fp->_r = 0;

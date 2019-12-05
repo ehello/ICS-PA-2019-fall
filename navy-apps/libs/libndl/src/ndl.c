@@ -79,7 +79,7 @@ int NDL_Render() {
     fflush(fbdev);
     putc(0, fbsyncdev);
     fflush(fbsyncdev);
-  }
+  } 
 }
 
 #define keyname(k) #k,
