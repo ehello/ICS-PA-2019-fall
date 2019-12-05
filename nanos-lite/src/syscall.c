@@ -27,7 +27,7 @@ _Context* do_syscall(_Context* c) {
     case SYS_open: c->GPRx = fs_open((const char*)a[1],a[2],a[3]);break;
     case SYS_close: c->GPRx = fs_close(a[1]);break;
     case SYS_read: c->GPRx = fs_read((int)a[1],(void*)a[2],a[3]);break;
-    case SYS_execve: naive_uload(NULL,(char*)a[1]); break;
+    case SYS_execve: naive_uload(NULL,(char*)a[1]); c->GPRx = 0; break;
     default: panic("Unhandled syscall ID = %d", a[0]);
   }
 
