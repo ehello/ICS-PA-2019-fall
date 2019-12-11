@@ -19,8 +19,8 @@ void hello_fun(void *arg) {
   }
 }
 
-extern void naive_uload(PCB *pcb, const char *filename);
-
+extern void naive_uload(PCB *, const char *);
+extern void context_kload(PCB *, void *);
 void init_proc() {
   switch_boot_pcb();
 
@@ -28,9 +28,18 @@ void init_proc() {
 
   // load program here
   naive_uload(NULL, "/bin/init");
-
+  context_kload(&pcb[0], (void *)hello_fun);
+  switch_boot_pcb();
 }
 
 _Context* schedule(_Context *prev) {
-  return NULL;
+  // save the context pointer
+current->cp = prev;
+
+// always select pcb[0] as the new process
+current = &pcb[0];
+
+// then return the new context
+return current->cp;
+//return NULL;
 }
