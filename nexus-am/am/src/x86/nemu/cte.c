@@ -53,7 +53,7 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 
 _Context *_kcontext(_Area stack, void (*entry)(void *), void *arg) {
   _Context* context = stack.end-sizeof(_Context);
-  memset(context,0,sizeof(_Context));
+  memset(context, 0, sizeof(_Context));
   context->eip = (uintptr_t)entry;
   context->cs = 0x8;
   return context;
