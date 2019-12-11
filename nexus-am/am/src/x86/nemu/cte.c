@@ -52,10 +52,11 @@ int _cte_init(_Context*(*handler)(_Event, _Context*)) {
 }
 
 _Context *_kcontext(_Area stack, void (*entry)(void *), void *arg) {
-  _Context context;
-  memcpy((void*)(stack.end-sizeof(_Context)),&context,sizeof(_Context));//应该是有问题的
-  entry = (void*)stack.end-sizeof(_Context);
-  return (_Context*)entry;
+  _Context* context = stack.end-sizeof(_Context);
+  memset(context,0,sizeof(_Context));
+  context->eip = (uintptr_t)entry;
+  context->cs = 0x8;
+  return context;
 }
 
 void _yield() {
