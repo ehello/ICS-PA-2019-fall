@@ -85,8 +85,16 @@ void __am_switch(_Context *c) {
 }
 
 int _map(_AddressSpace *as, void *va, void *pa, int prot) {
-  //uint32_t ptr = (uint32_t*)as->ptr;
-
+  uint32_t* ptr = (uint32_t*)as->ptr;
+  uint32_t shft = (uintptr_t)va >> 22;
+  if((uintptr_t)ptr[shft] == kpdirs[shft]){
+    PTE* uptab = (PTE*)(pgalloc_usr(1));
+    ptr[shft] = (uintptr_t)uptab | PTE_P;
+  }
+  uintptr_t tmp = ptr[shft];
+  shft = ((uintptr_t)va >> 12) & 0x3ff;
+  uint32_t* pgr = (uint32_t*)(tmp & 0xfffff000);
+  pgr[shft] = (uintptr_t)pa | PTE_P;
   return 0;
 }
 
