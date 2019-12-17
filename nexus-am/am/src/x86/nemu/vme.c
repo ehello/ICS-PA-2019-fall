@@ -66,6 +66,10 @@ int _protect(_AddressSpace *as) {
 }
 
 void _unprotect(_AddressSpace *as) {
+  pgfree_usr(as->ptr);
+  as->ptr = NULL;
+  as->area.start = NULL;
+  as->area.end = NULL;
 }
 
 static _AddressSpace *cur_as = NULL;
@@ -81,6 +85,8 @@ void __am_switch(_Context *c) {
 }
 
 int _map(_AddressSpace *as, void *va, void *pa, int prot) {
+  //uint32_t ptr = (uint32_t*)as->ptr;
+
   return 0;
 }
 
