@@ -28,7 +28,7 @@ typedef union CR3 {
     uint32_t page_cache_disable  : 1;
     uint32_t pad1                : 7;
     uint32_t page_directory_base : 20;
-  };
+  }; 
   uint32_t val;
 } CR3;
 

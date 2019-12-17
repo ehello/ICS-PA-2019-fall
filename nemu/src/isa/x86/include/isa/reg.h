@@ -2,6 +2,7 @@
 #define __X86_REG_H__
 
 #include "common.h"
+#include "mmu.h"
 
 #define PC_START IMAGE_START
 
@@ -59,6 +60,9 @@ typedef struct {
     uint32_t base;
     uint32_t limit;
   }idtr;
+  
+  CR0 cr0;
+  CR3 cr3;
 
 } CPU_state;
 
