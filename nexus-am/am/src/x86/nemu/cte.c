@@ -12,8 +12,8 @@ void __am_vecnull();
 extern void __am_get_cur_as(_Context *);
 extern void __am_switch(_Context *);
 _Context* __am_irq_handle(_Context *c) {
-  __am_get_cur_as(c);
   _Context *next = c;
+  __am_get_cur_as(c);
   //printf("c->irq in _am_irq_handle is %d\n",c->irq);
   if (user_handler) {
     _Event ev = {0};
@@ -28,7 +28,7 @@ _Context* __am_irq_handle(_Context *c) {
       next = c;
     }
   }
-  __am_switch(c);
+  __am_switch(next);
   return next;
 }
 
