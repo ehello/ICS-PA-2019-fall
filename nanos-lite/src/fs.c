@@ -66,6 +66,9 @@ size_t fs_offset(int fd){//并没有要求实现这个，但是如果不实现�
   return file_table[fd].disk_offset;
 }
 
+size_t fs_size(int fd){
+  return file_table[fd].size;
+}
 extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 
 __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
@@ -154,7 +157,7 @@ __off_t fs_lseek(int fd, __off_t offset, int whence){
       }
     }break;
     case SEEK_END:{
-      file_table[fd].open_offset =file_table[fd].size+offset; 
+      file_table[fd].open_offset = file_table[fd].size+offset; 
     }break;
   }
   if(file_table[fd].open_offset > file_table[fd].size)

@@ -9,19 +9,19 @@
 # define Elf_Phdr Elf32_Phdr
 #endif
 
-extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
-extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
-extern size_t get_ramdisk_size();
-extern int fs_open(const char *pathname, int flags, int mode);
-extern size_t fs_offset(int fd);
-extern __ssize_t fs_read(int fd, void *buf, size_t len);
-extern int fs_close(int fd);
+/*extern size_t ramdisk_read(void*, size_t, size_t);
+extern size_t ramdisk_write(const void*, size_t, size_t);
+extern size_t get_ramdisk_size();*/
 
+extern int fs_open(const char*, int, int);
+extern size_t fs_size(int);
+extern size_t fs_offset(int);
+extern __ssize_t fs_read(int, void*, size_t);
+extern int fs_close(int);
 
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
-  //return 0;
-  int fd = fs_open(filename,0,0);
+  /*int fd = fs_open(filename,0,0);
   Elf_Ehdr ehdr;
   fs_read(fd,&ehdr,sizeof(Elf_Ehdr));
 
@@ -37,6 +37,25 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   
   fs_close(fd);
   Log("Successfully loaded\n");
+  return ehdr.e_entry;*/
+  int fd = fs_open(filename, 0, 0);
+  size_t file_size = fs_size(fd);
+  size_t pg_cnt = (file_size + PGSIZE + - 1) / PGSIZE;
+  void* pa;
+  Elf_Ehdr ehdr;
+  fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
+  void* va = (void*)ehdr.e_entry;
+  for (int i = 0; i < pg_cnt; i++){
+    pa = new_page(1);
+    _map(&pcb->as, va, pa, 0);
+    if(file_size - PGSIZE * i < PGSIZE) 
+      fs_read(fd, pa, file_size - PGSIZE * i);
+    else  
+      fs_read(fd, pa, PGSIZE);
+    va += PGSIZE;
+  }
+  pcb->max_brk = (uintptr_t)va;
+  fs_close(fd);
   return ehdr.e_entry;
 }
 
