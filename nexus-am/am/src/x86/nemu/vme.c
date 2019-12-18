@@ -67,9 +67,10 @@ int _protect(_AddressSpace *as) {
 
 void _unprotect(_AddressSpace *as) {
   pgfree_usr(as->ptr);
-  as->ptr = NULL;
-  as->area.start = NULL;
-  as->area.end = NULL;
+  //as->ptr = NULL;
+  //as->area.start = NULL;
+  //as->area.end = NULL;
+  as->ptr = as->area.start = as->area.end = NULL;
 }
 
 static _AddressSpace *cur_as = NULL;
@@ -103,8 +104,8 @@ _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, 
   memset(context, 0, sizeof(_Context)+4*sizeof(uintptr_t));
   context->eip = (uintptr_t)entry;
   context->cs = 8;
-  context->eflags = 0x2 | (1 << 9);
-  *(uintptr_t *)(ustack.end-sizeof(sizeof(uintptr_t))) = 0;
+  //context->eflags = 0x2 | (1 << 9);
+  //*(uintptr_t *)(ustack.end-sizeof(sizeof(uintptr_t))) = 0;
 
   return context;
 }
