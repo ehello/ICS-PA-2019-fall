@@ -26,9 +26,10 @@ void init_proc() {
   //naive_uload(NULL, "/bin/init");
 
   //context_uload(&pcb[0], "/bin/hello");
-  context_kload(&pcb[0], (void *)hello_fun);
+  //context_kload(&pcb[0], (void *)hello_fun);
   
-  context_uload(&pcb[1], "/bin/init");
+  //context_uload(&pcb[1], "/bin/init");
+  context_uload(&pcb[1], "bin/dummy");
   switch_boot_pcb();
 
   Log("Initializing processes...");
