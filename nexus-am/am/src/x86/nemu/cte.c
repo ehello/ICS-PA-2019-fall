@@ -9,7 +9,10 @@ void __am_vecsys();
 void __am_vectrap();
 void __am_vecnull();
 
+extern void __am_get_cur_as(_Context *);
+extern void __am_switch(_Context *);
 _Context* __am_irq_handle(_Context *c) {
+  __am_get_cur_as(c);
   _Context *next = c;
   //printf("c->irq in _am_irq_handle is %d\n",c->irq);
   if (user_handler) {
@@ -25,7 +28,7 @@ _Context* __am_irq_handle(_Context *c) {
       next = c;
     }
   }
-
+  __am_switch(c);
   return next;
 }
 
