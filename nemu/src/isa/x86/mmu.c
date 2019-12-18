@@ -11,7 +11,7 @@ paddr_t page_translate(vaddr_t addr){
     uint32_t pg_tab = paddr_read((pg_dir_base << 12)+(dir << 2), 4);
     //assert(pg_tab & 0x1);//检查present位
     uint32_t pg_frame = paddr_read((pg_tab & 0xfffff000)+(page << 2),4);
-    //assert(pg_frame & 0x1);
+    assert(pg_frame & 0x1);
 
     return (pg_frame & 0xfffff000) + offset;
 
