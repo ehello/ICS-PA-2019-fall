@@ -85,7 +85,7 @@ void __am_switch(_Context *c) {
 }
 
 int _map(_AddressSpace *as, void *va, void *pa, int prot) {
-  uint32_t* ptr = (uint32_t*)as->ptr;
+  /*uint32_t* ptr = (uint32_t*)as->ptr;
   uint32_t shft = (uintptr_t)va >> 22;
   if((uintptr_t)ptr[shft] == kpdirs[shft]){
     PTE* uptab = (PTE*)(pgalloc_usr(1));
@@ -94,7 +94,7 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   uintptr_t tmp = ptr[shft];
   shft = ((uintptr_t)va >> 12) & 0x3ff;
   uint32_t* pgr = (uint32_t*)(tmp & 0xfffff000);
-  pgr[shft] = (uintptr_t)pa | PTE_P;
+  pgr[shft] = (uintptr_t)pa | PTE_P;*/
   return 0;
 }
 
@@ -103,8 +103,8 @@ _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, 
   memset(context, 0, sizeof(_Context)+4*sizeof(uintptr_t));
   context->eip = (uintptr_t)entry;
   context->cs = 8;
-  //context->eflags = 0x2 | (1 << 9);
-  //*(uintptr_t *)(ustack.end-sizeof(sizeof(uintptr_t))) = 0;
+  context->eflags = 0x2 | (1 << 9);
+  *(uintptr_t *)(ustack.end-sizeof(sizeof(uintptr_t))) = 0;
 
   return context;
 }
