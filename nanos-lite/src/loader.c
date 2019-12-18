@@ -19,6 +19,8 @@ extern size_t fs_offset(int);
 extern __ssize_t fs_read(int, void*, size_t);
 extern int fs_close(int);
 
+#define DEFAULT_ENTRY 0x40000000
+
 static uintptr_t loader(PCB *pcb, const char *filename) {
   //TODO();
   /*int fd = fs_open(filename,0,0);
@@ -42,9 +44,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   size_t file_size = fs_size(fd);
   size_t pg_cnt = (file_size + PGSIZE + - 1) / PGSIZE;
   void* pa;
-  Elf_Ehdr ehdr;
-  fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
-  void* va = (void*)ehdr.e_entry;
+  //Elf_Ehdr ehdr;
+  //fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
+  void* va = (void*)DEFAULT_ENTRY;
   for (int i = 0; i < pg_cnt; i++){
     pa = new_page(1);
     _map(&pcb->as, va, pa, 0);
@@ -56,7 +58,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   }
   pcb->max_brk = (uintptr_t)va;
   fs_close(fd);
-  return ehdr.e_entry;
+  return DEFAULT_ENTRY;
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
