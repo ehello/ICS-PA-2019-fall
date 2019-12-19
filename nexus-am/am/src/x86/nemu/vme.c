@@ -93,7 +93,7 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   // +----------------+----------------+---------------------+
   //  \--- PDX(va) --/ \--- PTX(va) --/\------ OFF(va) ------/
   
-  PDE *pg_dir = (PDE *)(as->ptr);
+  /*PDE *pg_dir = (PDE *)(as->ptr);
   PDE pde = pg_dir[PDX(va)];
 
   if(!(pde & PTE_P)){//present位为0时，即物理页不可用时
@@ -108,6 +108,18 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
     pte = (PTE)(PTE_ADDR(pa)) | PTE_P;
     pg_tab[PTX(va)] = pte;
   }
+  return 0;*/
+
+  PDE *updir = as->ptr;
+  if (!(updir[PDX(va)] & PTE_P)) {
+    uint32_t *pdir = (uint32_t *)pgalloc_usr(1);
+    updir[PDX(va)] = PTE_ADDR(pdir) | 0x001;
+  }
+  uint32_t ptable = updir[PDX(va)];
+  PTE *page = (PTE *)PTE_ADDR(ptable);
+
+  page[PTX(va)] = (PTE_ADDR(pa) | 0x001);
+  
   return 0;
 
 }
