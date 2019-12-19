@@ -45,7 +45,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Log("Successfully loaded\n");
   return ehdr.e_entry;*/
 
-  /*int fd = fs_open(filename, 0, 0);
+  int fd = fs_open(filename, 0, 0);
   Elf_Ehdr ehdr;
   fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
 
@@ -123,49 +123,8 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   }
 
   fs_close(fd);
-  return ehdr.e_entry;*/
-  int fd = fs_open(filename, 0, 0);
-  Elf_Ehdr elf;
-  fs_read(fd, &elf, sizeof(Elf_Ehdr));
-  //printf("%x\n", elf.e_entry);
-
-  Elf_Phdr segment[elf.e_phnum];
-  fs_lseek(fd, elf.e_phoff, SEEK_SET);
-  fs_read(fd, &segment, elf.e_phnum * elf.e_phentsize);
-  //printf("%x\n", elf.e_entry);
-
-  int nr_page = 0;
-  for (uint16_t i = 0; i < elf.e_phnum; i++)
-  {
-    if (segment[i].p_type == PT_LOAD)
-    {
-      fs_lseek(fd, segment[i].p_offset, SEEK_SET);
-
-      uint32_t off = 0;
-      while (off < segment[i].p_memsz){
-        void *pa = new_page(1);
-        nr_page++;
-        _map(&(pcb->as), (void *)segment[i].p_vaddr + off, (void *)pa, 1);
-        int len = segment[i].p_filesz - off >= PGSIZE ? PGSIZE : segment[i].p_filesz - off;
-        fs_read(fd, pa, len);
-        memset((void *)(pa + len), 0, PGSIZE - len);
-        off += PGSIZE;
-      }
-      if (segment[i].p_memsz - segment[i].p_filesz / PGSIZE > PGSIZE){
-        while (off < segment[i].p_memsz)
-        {
-          void *pa = new_page(1);
-          nr_page++;
-          _map(&(pcb->as), (void *)segment[i].p_vaddr + off, pa, 1);
-          memset(pa, 0, PGSIZE);
-          off += PGSIZE; 
-        }
-      }
-     
-    }
-  }
- 
-return elf.e_entry;
+  return ehdr.e_entry;
+  
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
