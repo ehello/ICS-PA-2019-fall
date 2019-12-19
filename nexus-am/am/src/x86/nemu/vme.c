@@ -99,20 +99,6 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   uint32_t* pgr = (uint32_t*)(tmp & 0xfffff000);
   pgr[shft] = (uintptr_t)pa | PTE_P;
   return 0;
-
-  /*PDE* pdir = (PDE*)as->ptr;
-  PDE pde = pdir[PDX(va)];
-
-  if((pde & PTE_P) == 0){
-    PTE* uptab = (PTE*)(pgalloc_usr(1));
-    pde = ((PDE)uptab & 0xfffff000) | PTE_P;
-    pdir[PDX(va)] = pde;
-  }
-  PTE* ptab = (PTE*)(((pde >> 12) & 0xfffff) << 12);
-  PTE pte = ptab[PTX(va)];
-  if((pte & PTE_P) == 0)
-    ptab[PTX(va)] = ((PTE)pa & 0xfffff000) | PTE_P;
-  return 0;*/
 }
 
 _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, void *args) {
