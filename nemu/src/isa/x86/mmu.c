@@ -1,30 +1,26 @@
 #include "nemu.h"
 
 paddr_t page_translate(vaddr_t addr){
+  // +--------10------+-------10-------+---------12----------+
+// | Page Directory |   Page Table   | Offset within Page  |
+// |      Index     |      Index     |                     |
+// +----------------+----------------+---------------------+
   //见手册图5.8
-  paddr_t dir = (addr >> 22) & 0x3ff;//vaddr的22-31位,共10位
-  paddr_t page = (addr >> 12) & 0x3ff;//vaddr的12-21位，共10位
-  paddr_t offset = addr & 0xfff;//vaddr的0-11位，共12位
+  paddr_t pg_dir_idx = (addr >> 22) & 0x3ff;//vaddr的22-31位,共10位
+  paddr_t pg_tab_idx = (addr >> 12) & 0x3ff;//vaddr的12-21位，共10位
+  paddr_t off_in_pg = addr & 0xfff;//vaddr的0-11位，共12位
 
   uint32_t pg_dir_base = cpu.cr3.page_directory_base;
-  uint32_t pg_tab = paddr_read((pg_dir_base << 12)+(dir << 2), 4);
-  assert(pg_tab & 0x1);//检查present位
-  uint32_t pg_frame = paddr_read((pg_tab & 0xfffff000)+(page << 2),4);
+  uint32_t pg_tab_base = paddr_read(pg_dir_base + pg_dir_idx * sizeof(PDE), sizeof(PDE));
+  //检查page table第一个entry的present位
+  assert(pg_tab_base & 0x1);
+
+  uint32_t pg_frame = paddr_read(pg_tab_base + pg_tab_idx * sizeof(PTE), sizeof(PTE));
+  //检查page_table第pg_tab_idx个entry的present位
   assert(pg_frame & 0x1);
 
-  return (pg_frame & 0xfffff000) + offset;
-
-  /*paddr_t dir = (addr >> 22) & 0x3ff;//vaddr的22-31位,共10位
-  paddr_t page = (addr >> 12) & 0x3ff;//vaddr的12-21位，共10位
-  paddr_t offset = addr & 0xfff;//vaddr的0-11位，共12位
- 
-  paddr_t ptab = paddr_read(cpu.cr3.val + sizeof(PDE) * dir, sizeof(PDE));
-  assert(ptab & 0x001);
-
-  paddr_t pg = paddr_read((ptab & 0xfffff000) + sizeof(PTE) * page, sizeof(PTE));
-  assert(pg & 0x001);
-
-  return ((pg & 0xfffff000) | offset);*/
+  //pg_frame的低三位为空，加（或）上页内offset即得到物理地址
+  return (pg_frame & 0xfffff000) | off_in_pg;
 }
 
 uint32_t isa_vaddr_read(vaddr_t addr, int len) {

@@ -101,7 +101,7 @@
 // |      Index     |      Index     |                     |
 // +----------------+----------------+---------------------+
 //  \--- PDX(va) --/ \--- PTX(va) --/\------ OFF(va) ------/
-typedef uint32_t PTE;
+typedef uint32_t PTE; 
 typedef uint32_t PDE;
 #define PDX(va)          (((uint32_t)(va) >> PDXSHFT) & 0x3ff)
 #define PTX(va)          (((uint32_t)(va) >> PTXSHFT) & 0x3ff)
