@@ -45,7 +45,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   Log("Successfully loaded\n");
   return ehdr.e_entry;*/
 
-  /*int fd = fs_open(filename, 0, 0);
+  int fd = fs_open(filename, 0, 0);
   size_t file_size = fs_size(fd);
   size_t pg_cnt = (file_size + PGSIZE + - 1) / PGSIZE;
   void* pa;
@@ -63,9 +63,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   }
   pcb->max_brk = (uintptr_t)va;
   fs_close(fd);
-  return ehdr.e_entry;*/
+  return ehdr.e_entry;
 
-  int fd = fs_open(filename, 0, 0);
+  /*int fd = fs_open(filename, 0, 0);
   if (fd == -1) {
     panic("loader: can't open file %s!", filename);
   }
@@ -129,7 +129,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
   fs_close(fd);
   printf("%s: %x\n", filename, elf_header.e_entry);
-  return elf_header.e_entry;
+  return elf_header.e_entry;*/
 }
 
 void naive_uload(PCB *pcb, const char *filename) {
