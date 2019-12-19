@@ -97,14 +97,14 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
 
   if(!(pde & PTE_P)){//present位为0时，即物理页不可用时
     PTE *new_pte = (PTE *)(pgalloc_usr(1));
-    pde = ((PDE)new_pte & 0xfffff000) | PTE_P;//重新设置pde
+    pde = (PDE)(PTE_ADDR(new_pte)) | PTE_P;//重新设置pde
     pg_dir[PDX(va)] = pde;
   }
 
-  PTE *pg_tab = (PTE *)(pde & 0xfffff000);
+  PTE *pg_tab = (PTE *)(PTE_ADDR(pde));
   PTE pte = pg_tab[PTX(va)];
   if(!(pte & PTE_P)){//present位为0
-    pte = ((PTE)pa & 0xfffff000) | PTE_P;
+    pte = (PTE)(PTE_ADDR(pa)) | PTE_P;
     pg_tab[PTX(va)] = pte;
   }
   return 0;
