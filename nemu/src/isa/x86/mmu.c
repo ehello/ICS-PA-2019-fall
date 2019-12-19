@@ -2,7 +2,7 @@
 
 paddr_t page_translate(vaddr_t addr){
   //见手册图5.8
-  paddr_t dir = (addr >> 22) & 0x3ff;//vaddr的22-31位,共10位
+  /*paddr_t dir = (addr >> 22) & 0x3ff;//vaddr的22-31位,共10位
   paddr_t page = (addr >> 12) & 0x3ff;//vaddr的12-21位，共10位
   paddr_t offset = addr & 0xfff;//vaddr的0-11位，共12位
 
@@ -16,7 +16,22 @@ paddr_t page_translate(vaddr_t addr){
     return (pg_frame & 0xfffff000) + offset;
 
   }
-  return addr;//未开启分页模式，直接返回虚拟地址
+  return addr;//未开启分页模式，直接返回虚拟地址*/
+  paddr_t dir = (addr >> 22) & 0x3ff;//vaddr的22-31位,共10位
+  paddr_t page = (addr >> 12) & 0x3ff;//vaddr的12-21位，共10位
+  paddr_t offset = addr & 0xfff;//vaddr的0-11位，共12位
+  if (cpu.cr0.paging){
+    uint32_t pg_dir_base = cpu.cr3.page_directory_base;
+    paddr_t ptab = paddr_read(pg_dir_base + sizeof(PDE) * dir, sizeof(PDE));
+    assert(ptab & 0x001);
+
+    paddr_t pg = paddr_read((ptab & 0xfffff000) + sizeof(PTE) * page, sizeof(PTE));
+    assert(pg & 0x001);
+
+    return ((pg & 0xfffff000) | offset);
+  }
+  return addr;
+  
 }
 
 uint32_t isa_vaddr_read(vaddr_t addr, int len) {
