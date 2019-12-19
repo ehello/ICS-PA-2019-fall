@@ -11,7 +11,7 @@ paddr_t page_translate(vaddr_t addr){
   paddr_t off_in_pg = addr & 0xfff;//vaddr的0-11位，共12位
 
   uint32_t pg_dir_base = cpu.cr3.page_directory_base;
-  uint32_t pg_tab_base = paddr_read(pg_dir_base | pg_dir_idx * sizeof(PDE), sizeof(PDE));
+  uint32_t pg_tab_base = paddr_read((pg_dir_base | off_in_pg) + pg_dir_idx * sizeof(PDE), sizeof(PDE));
   //检查page table第一个entry的present位
   assert(pg_tab_base & 0x1);
 
