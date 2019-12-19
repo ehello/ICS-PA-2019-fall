@@ -23,13 +23,15 @@ extern void naive_uload(PCB *, const char *);
 extern void context_kload(PCB *, void *);
 extern void context_uload(PCB *, const char *);
 void init_proc() {
+  //PA 3
   //naive_uload(NULL, "/bin/init");
 
-  //context_uload(&pcb[0], "/bin/hello");
-  //context_kload(&pcb[0], (void *)hello_fun);
+  //PA 4.1
+  context_kload(&pcb[0], (void *)hello_fun);
+  context_uload(&pcb[1], "/bin/init");
   
-  //context_uload(&pcb[1], "/bin/init");
-  context_uload(&pcb[0], "/bin/dummy");
+  //PA 4.2 TASK 2
+  //context_uload(&pcb[0], "/bin/dummy");
   switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -44,9 +46,9 @@ _Context* schedule(_Context *prev) {
   current->cp = prev;
 
   // always select pcb[0] as the new process
-  current = &pcb[0];
+  //current = &pcb[0];
 
-  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
   // then return the new context
   return current->cp;
