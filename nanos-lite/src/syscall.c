@@ -20,7 +20,7 @@ _Context* do_syscall(_Context* c) {
 
   switch (a[0]) {
     case SYS_yield: c->GPRx = 0;_yield();  break;
-    case SYS_exit: _halt(a[1]);/*naive_uload(NULL,"/bin/init");*/ break;//PA4.2暂时改回_halt()来退出
+    case SYS_exit: /*_halt(a[1]);*/naive_uload(NULL,"/bin/init"); break;//PA4.2暂时改回_halt()来退出
     case SYS_write: /*Log("check the sys_write");c->GPRx = sys_write(a[1],(void*)a[2],a[3]);*/c->GPRx=fs_write(a[1],(void*)a[2],a[3]); break; 
     case SYS_brk: c->GPRx = 0;break;
     case SYS_lseek: c->GPRx = fs_lseek(a[1],a[2],a[3]);break;
