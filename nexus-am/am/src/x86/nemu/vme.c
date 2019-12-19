@@ -85,6 +85,11 @@ void __am_switch(_Context *c) {
   }
 }
 
+static inline uint32_t get_cr3() {
+  volatile uint32_t val;
+  asm volatile ("movl %%cr3, %0" : "=r"(val));
+  return val;
+}
 int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   /*uint32_t* ptr = (uint32_t*)as->ptr;
   uint32_t shft = (uintptr_t)va >> 22;
@@ -99,7 +104,7 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   pgr[shft] = (uintptr_t)pa | PTE_P;
   return 0;*/
 
-  PDE* pdir = (PDE*)as->ptr;
+  /*PDE* pdir = (PDE*)as->ptr;
   PDE pde = pdir[PDX(va)];
 
   if((pde & PTE_P) == 0){
@@ -111,7 +116,25 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   PTE pte = ptab[PTX(va)];
   if((pte & PTE_P) == 0)
     ptab[PTX(va)] = ((PTE)pa & 0xfffff000) | PTE_P;
-  return 0;
+  return 0;*/
+
+  PTE *pdir = (as == NULL) ? (void *)get_cr3() : (void *)as->ptr;
+  PDE *pptab = &pdir[PDX(va)];
+
+  if (!(*pptab & PTE_P)) {  // 如果页表不存在则分配一个页目录
+    *pptab = (uint32_t)pgalloc_usr(1);
+    memset((void *)*pptab, 0, PGSIZE);
+    *pptab = *pptab | PTE_P;
+  }
+
+  PDE *ptab = &(((PDE *)PTE_ADDR(*pptab))[PTX(va)]);
+  if (*ptab & PTE_P) {  // 如果页已经存在则报错
+    printf("ERROR:vme _map(): page map already exists! %x\n", *ptab);
+    assert(0); 
+  }
+  *ptab = PTE_ADDR(pa) | PTE_P;
+
+return 0;
   
 }
 
