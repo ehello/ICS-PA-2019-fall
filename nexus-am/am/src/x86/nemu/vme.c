@@ -113,7 +113,7 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
 
 _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, void *args) {
   _Context* context = (ustack.end - sizeof(_Context) - 3 * sizeof(uintptr_t));//?????
-  memset(context, 0, sizeof(_Context) + 4*sizeof(uintptr_t));
+  memset(context, 0, sizeof(_Context) + 3 * sizeof(uintptr_t));
   context->as = as;
   context->eip = (uintptr_t)entry;
   context->cs = 0x8;
