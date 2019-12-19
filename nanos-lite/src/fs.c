@@ -69,8 +69,8 @@ size_t fs_offset(int fd){//并没有要求实现这个，但是如果不实现�
 size_t fs_size(int fd){
   return file_table[fd].size;
 }
-extern size_t ramdisk_read(void *buf, size_t offset, size_t len);
 
+extern size_t ramdisk_read(void *, size_t , size_t );
 __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
   __ssize_t ret = 0;
   switch(fd){
@@ -105,8 +105,7 @@ __ssize_t fs_read(int fd, void *buf, size_t len){//返回值类型？
   return ret;
 }
 
-extern size_t ramdisk_write(const void *buf, size_t offset, size_t len);
-
+extern size_t ramdisk_write(const void *, size_t, size_t);
 __ssize_t fs_write(int fd, const void *buf, size_t len){
   __ssize_t ret = 0;
   switch(fd){
