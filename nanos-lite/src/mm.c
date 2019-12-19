@@ -17,16 +17,17 @@ void free_page(void *p) {
 /* The brk() system call handler. */
 int mm_brk(uintptr_t brk, intptr_t increment) {
   //return 0;
+  uintptr_t new_brk = brk ;
   if (current->max_brk == 0){
-    current->max_brk = ((brk + increment) & 0xfff) ? (((brk + increment) & 0xfffff000) + PGSIZE) : (brk + increment);
+    current->max_brk = (new_brk & 0xfff) ? ((new_brk & 0xfffff000) + PGSIZE) : new_brk;
     return 0;
   }
 
-  while (current->max_brk < (brk + increment)){
+  while (current->max_brk < new_brk){
     _map(&current->as, (void*)current->max_brk, new_page(1), 0);
     current->max_brk += PGSIZE;
   }
-  
+
   return 0;
 }
 
