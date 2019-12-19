@@ -87,7 +87,7 @@ void __am_switch(_Context *c) {
 
 
 int _map(_AddressSpace *as, void *va, void *pa, int prot) {
-  uint32_t* ptr = (uint32_t*)as->ptr;
+  /*uint32_t* ptr = (uint32_t*)as->ptr;
   uint32_t shft = (uintptr_t)va >> 22;
   if((uintptr_t)ptr[shft] == kpdirs[shft]){
     PTE* uptab = (PTE*)(pgalloc_usr(1));
@@ -98,7 +98,30 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   //shft = (((uintptr_t)va) & 0x003ff000) >> 12;
   uint32_t* pgr = (uint32_t*)(tmp & 0xfffff000);
   pgr[shft] = (uintptr_t)pa | PTE_P;
+  return 0;*/
+
+  // +--------10------+-------10-------+---------12----------+
+  // | Page Directory |   Page Table   | Offset within Page  |
+  // |      Index     |      Index     |                     |
+  // +----------------+----------------+---------------------+
+  //  \--- PDX(va) --/ \--- PTX(va) --/\------ OFF(va) ------/
+  PDE *pg_dir = (PDE *)(as->ptr);
+  PDE pde = pg_dir[PDX(va)];
+
+  if(!(pde & PTE_P)){//present位为0时，即物理页不可用时
+    PTE *new_pte = (PTE *)(pgalloc_usr(1));
+    pde = ((PDE)new_pte & 0xfffff000) | PTE_P;//重新设置pde
+    pg_dir[PDX(va)] = pde;
+  }
+
+  PTE *pg_tab = (PTE *)(pde & 0xfffff000);
+  PTE pte = pg_tab[PTX(va)];
+  if(!(pte & PTE_P)){//present位为0
+    pte = ((PTE)pa & 0xfffff000) | PTE_P;
+    pg_tab[PTX(va)] = pte;
+  }
   return 0;
+
 }
 
 _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, void *args) {
