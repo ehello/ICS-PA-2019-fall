@@ -37,9 +37,7 @@ void init_proc() {
   context_uload(&pcb[0], "/bin/hello");
 
   context_uload(&pcb[1], "/bin/pal");
-  context_uload(&pcb[2], "/bin/pal");
-  context_uload(&pcb[3], "/bin/pal");
-
+ 
   switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -48,19 +46,17 @@ void init_proc() {
   
   
 }
-static uint32_t schedule_times = 0;
+
 _Context* schedule(_Context *prev) {
-  schedule_times ++;
+  
   // save the context pointer
   current->cp = prev;
 
   // always select pcb[0] as the new process
   //current = &pcb[0];
 
-  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
-  if (schedule_times % 1000 == 0) current = &pcb[0];
-  else current = &pcb[1];
   // then return the new context
   return current->cp;
 }
