@@ -98,7 +98,8 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   uint32_t* pgr = (uint32_t*)(tmp & 0xfffff000);
   pgr[shft] = (uintptr_t)pa | PTE_P;
   return 0;*/
-  /*PDE* pdir = (PDE*)as->ptr;
+
+  PDE* pdir = (PDE*)as->ptr;
   PDE pde = pdir[PDX(va)];
 
   if((pde & PTE_P) == 0){
@@ -110,24 +111,8 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   PTE pte = ptab[PTX(va)];
   if((pte & PTE_P) == 0)
     ptab[PTX(va)] = ((PTE)pa & 0xfffff000) | PTE_P;
-  return 0;*/
-  union {
-    struct{
-      uint32_t offset:12;
-      uint32_t page:10;
-      uint32_t dir:10;
-    };
-    uint32_t val;
-  } v_addr;
-  v_addr.val = (uint32_t)va;
-  PDE *updir = (PDE *)as->ptr;
-  
-  if ((updir[v_addr.dir] & PTE_P) == 0)
-    updir[v_addr.dir] = (uint32_t)(pgalloc_usr(1)) | 0x001;
-  PTE *uptabs = (PDE *)(updir[v_addr.dir] & ~0xfff);
-  if ((uptabs[v_addr.page] & PTE_P) == 0)
-    uptabs[v_addr.page] = (uint32_t)pa | 0x001;
   return 0;
+  
 }
 
 _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, void *args) {
