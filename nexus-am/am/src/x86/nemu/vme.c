@@ -87,19 +87,6 @@ void __am_switch(_Context *c) {
 
 
 int _map(_AddressSpace *as, void *va, void *pa, int prot) {
-  /*uint32_t* ptr = (uint32_t*)as->ptr;
-  uint32_t shft = (uintptr_t)va >> 22;
-  if((uintptr_t)ptr[shft] == kpdirs[shft]){
-    PTE* uptab = (PTE*)(pgalloc_usr(1));
-    ptr[shft] = (uintptr_t)uptab | PTE_P;
-  }
-  uintptr_t tmp = ptr[shft];
-  shft = ((uintptr_t)va >> 12) & 0x3ff;
-  //shft = (((uintptr_t)va) & 0x003ff000) >> 12;
-  uint32_t* pgr = (uint32_t*)(tmp & 0xfffff000);
-  pgr[shft] = (uintptr_t)pa | PTE_P;
-  return 0;*/
-
   // +--------10------+-------10-------+---------12----------+
   // | Page Directory |   Page Table   | Offset within Page  |
   // |      Index     |      Index     |                     |
@@ -125,11 +112,11 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
 }
 
 _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, void *args) {
-  _Context* context = (ustack.end - sizeof(_Context) - 4 * sizeof(uintptr_t));//?????
+  _Context* context = (ustack.end - sizeof(_Context) - 3 * sizeof(uintptr_t));//?????
   memset(context, 0, sizeof(_Context) + 4*sizeof(uintptr_t));
   context->as = as;
   context->eip = (uintptr_t)entry;
-  context->cs = 8;
+  context->cs = 0x8;
   //context->eflags = 0x2 | (0x1 << 9); //pre-set value | eflags.IF
   //*(uintptr_t *)(ustack.end-sizeof(sizeof(uintptr_t))) = 0;//main的参数
 
