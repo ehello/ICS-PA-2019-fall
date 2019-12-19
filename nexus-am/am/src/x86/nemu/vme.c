@@ -92,6 +92,7 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   // |      Index     |      Index     |                     |
   // +----------------+----------------+---------------------+
   //  \--- PDX(va) --/ \--- PTX(va) --/\------ OFF(va) ------/
+  //对于第一个页面没有对齐的问题，在loader中解决
   PDE *pg_dir = (PDE *)(as->ptr);
   PDE pde = pg_dir[PDX(va)];
 

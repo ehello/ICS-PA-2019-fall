@@ -54,9 +54,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
     Elf_Phdr phdr;
     fs_lseek(fd, ehdr.e_phoff + ehdr.e_phentsize * i, SEEK_SET);
     fs_read(fd, &phdr, ehdr.e_phentsize);
+
     if (phdr.p_type == PT_LOAD) {
       fs_lseek(fd, phdr.p_offset, SEEK_SET);
-
 #ifdef HAS_VME
       // 为用户进程申请虚存空间
       void *va = (void *)phdr.p_vaddr;
@@ -79,7 +79,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       filesz_left -= pg_write_size;
       va += pg_write_size;
 
-      //处理其他页
+      //处理其他页吧？
       while(filesz_left > 0){
         assert(!OFF(va));//判断是否对齐
         pa = new_page(1);
