@@ -67,16 +67,17 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
   int fd = fs_open(filename, 0, 0);
   Elf_Ehdr ehdr;
   fs_read(fd, &ehdr, sizeof(Elf_Ehdr));
-  //Elf32_Off phoff =  ehdr.e_phoff;//段头表的起始位置
+  Elf32_Off phoff =  ehdr.e_phoff;//段头表的起始位置
 
   Elf_Phdr pht[ehdr.e_phnum];
   fs_read(fd, pht, sizeof(Elf_Phdr) * ehdr.e_phnum);
 
   for (int i = 0; i < ehdr.e_phnum; i++){
+    phoff += fs_read(fd, &pht[i], ehdr.e_phentsize);
     if(pht[i].p_type == PT_LOAD){
       void* va = (void*)pht[i].p_vaddr;
       Elf32_Word ld_off = 0;
-      //fs_lseek(fd, pht[i].p_offset, SEEK_SET);
+      fs_lseek(fd, pht[i].p_offset, SEEK_SET);
 
       while (ld_off <= pht[i].p_memsz){
         void* pa = new_page(1);
@@ -100,7 +101,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         va += PGSIZE;
         ld_off += PGSIZE;
       }
-      
+      fs_lseek(fd, phoff, SEEK_SET);
     }
   }
   fs_close(fd);
