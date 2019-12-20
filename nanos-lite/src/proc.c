@@ -34,8 +34,8 @@ void init_proc() {
   //context_uload(&pcb[0], "/bin/dummy");
 
   //PA4.2 TASK 4
-  context_uload(&pcb[0], "/bin/hello");
-  //context_uload(&pcb[1], "/bin/pal");
+  //context_uload(&pcb[0], "/bin/hello");
+  context_uload(&pcb[1], "/bin/pal");
  
   switch_boot_pcb();
 
