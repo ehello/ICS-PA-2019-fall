@@ -113,8 +113,8 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
 }
 
 _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, void *args) {
-  _Context* context = (ustack.end - sizeof(_Context) - (2 * sizeof(int) + 2 * sizeof(uintptr_t)));//main有三个参数
-  memset(context, 0, sizeof(_Context) + (2 * sizeof(int) + 2 * sizeof(uintptr_t)));
+  _Context* context = (ustack.end - sizeof(_Context) - (1 * sizeof(int) + 2 * sizeof(uintptr_t)));//main有三个参数
+  memset(context, 0, sizeof(_Context) + (1 * sizeof(int) + 2 * sizeof(uintptr_t)));
   context->as = as;
   context->eip = (uintptr_t)entry;
   context->cs = 0x8;
