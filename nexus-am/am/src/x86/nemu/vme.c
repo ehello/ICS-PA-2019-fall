@@ -93,7 +93,7 @@ int _map(_AddressSpace *as, void *va, void *pa, int prot) {
   PDE *pg_dir = (PDE *)(as->ptr);
   PDE pde = pg_dir[PDX(va)];
 
-  if(!(pde & PTE_P)){//present位为0时，即物理页不可用时
+  if(!(pde & PTE_P)){//present位为0时
     PTE *new_pte = (PTE *)(pgalloc_usr(1));
     pde = (PDE)(PTE_ADDR(new_pte)) | PTE_P;//重新设置pde
     pg_dir[PDX(va)] = pde;
