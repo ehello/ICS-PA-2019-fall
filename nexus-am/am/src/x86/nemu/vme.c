@@ -66,11 +66,8 @@ int _protect(_AddressSpace *as) {
 }
 
 void _unprotect(_AddressSpace *as) {
-  pgfree_usr(as->ptr);
-  //as->ptr = NULL;
-  //as->area.start = NULL;
-  //as->area.end = NULL;
-  as->ptr = as->area.start = as->area.end = NULL;
+  //pgfree_usr(as->ptr);
+  //as->ptr = as->area.start = as->area.end = NULL;
 }
 
 static _AddressSpace *cur_as = NULL;
