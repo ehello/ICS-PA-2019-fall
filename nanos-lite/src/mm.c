@@ -23,7 +23,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
     return 0;
   }
   
-  if (current->max_brk < new_brk){
+  if (current->max_brk <= new_brk){
     uintptr_t va;
     if (!(current->max_brk % PGSIZE))
       va = current->max_brk;
