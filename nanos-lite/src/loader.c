@@ -21,7 +21,7 @@ extern __ssize_t fs_read(int, void*, size_t);
 extern __off_t fs_lseek(int , __off_t , int );
 extern int fs_close(int);
 
-#define min(x, y)         ((x) < (y) ? (x) : (y))
+
 #define PTE_ADDR(pte)     ((uint32_t)(pte) & ~0xfff)
 #define OFF(va) ((uint32_t)(va) & 0xfff)
 
@@ -56,7 +56,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
 
     if (phdr.p_type == PT_LOAD) {
       fs_lseek(fd, phdr.p_offset, SEEK_SET);
-#ifdef HAS_VME
+
       // 为用户进程申请虚存空间
       void *va = (void *)phdr.p_vaddr;
       void *pa;
@@ -115,10 +115,9 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         delt_size -= PGSIZE;
         va += PGSIZE;
       }
-#else
-      fs_read(fd, (void *)phdr.p_vaddr, phdr.p_filesz);
-      memset((void *)(phdr.p_vaddr + phdr.p_filesz), 0, phdr.p_memsz - phdr.p_filesz);
-#endif
+
+      //fs_read(fd, (void *)phdr.p_vaddr, phdr.p_filesz);
+      //memset((void *)(phdr.p_vaddr + phdr.p_filesz), 0, phdr.p_memsz - phdr.p_filesz);
     }
   }
 
