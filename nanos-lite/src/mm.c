@@ -28,7 +28,7 @@ int mm_brk(uintptr_t brk, intptr_t increment) {
     if (!(current->max_brk % PGSIZE))
       va = current->max_brk;
     else
-      va = (current->max_brk / PGSIZE +1) * PGSIZE;
+      va = (current->max_brk / PGSIZE + 1) * PGSIZE;
     while (va < new_brk){
       _map(&current->as, (void*)va, new_page(1), 0);
       va += PGSIZE;
