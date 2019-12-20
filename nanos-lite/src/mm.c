@@ -18,24 +18,25 @@ void free_page(void *p) {
 int mm_brk(uintptr_t brk, intptr_t increment) {
   //return 0;
   uintptr_t new_brk = brk + increment;
-  if ((brk & 0xfff) + increment < PGSIZE) 
+  if (current->max_brk == 0){
+    current->max_brk = brk;
     return 0;
-  void *va_brk = (void *)((brk + PGSIZE) & ~0xfff);
-  while ((uintptr_t)va_brk <= new_brk) {
-    _map(&current->as, va_brk, new_page(1), 0);
-    va_brk += PGSIZE;
   }
-  return 0;
-  /*current->max_brk = (brk & 0xfffff000) + PGSIZE;
-  if (new_brk < current->max_brk) 
-    return 0;
-  else{
-    while (current->max_brk <= new_brk){
-      _map(&current->as, (void*)current->max_brk, new_page(1), 0);
-      current->max_brk += PGSIZE;
+  
+  if (current->max_brk < new_brk){
+    uintptr_t va;
+    if (!(current->max_brk % PGSIZE))
+      va = current->max_brk;
+    else
+      va = (current->max_brk / PGSIZE +1) * PGSIZE;
+    while (va < new_brk){
+      _map(&current->as, (void*)va, new_page(1), 0);
+      va += PGSIZE;
     }
-    return 0;
-  }*/
+    current->max_brk = new_brk;
+  }
+
+  return 0;
 }
 
 void init_mm() {
