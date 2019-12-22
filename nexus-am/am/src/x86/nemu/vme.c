@@ -117,7 +117,7 @@ _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, 
   context->cs = 0x8;
   context->eflags = 0x2 | (0x1 << 9); // pre-set value | eflags.IF
   
-  *(uintptr_t *)(ustack.end-sizeof(sizeof(uintptr_t))) = 0;//main的参数
+  //*(uintptr_t *)(ustack.end-sizeof(sizeof(uintptr_t))) = 0;//main的参数
 
   return context;
 }
