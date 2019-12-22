@@ -12,7 +12,7 @@ void raise_intr(uint32_t NO, vaddr_t ret_addr) {
   t0 = cpu.cs;
   rtl_push(&t0);
   rtl_push(&ret_addr);
-  cpu.eflags.IF = 0;
+  cpu.eflags.IF = 0; //关中断
   
   /*union {
 		GateDesc gd;
