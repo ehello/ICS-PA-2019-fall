@@ -55,7 +55,7 @@ _Context* schedule(_Context *prev) {
   //current = &pcb[0];
 
   //PA 4.1-4.2
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
   //PA4.3 
   if (current ==  &pcb[0]){
