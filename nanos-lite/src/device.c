@@ -2,7 +2,7 @@
 #include <amdev.h>
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
-  _yield();
+  //_yield();
   char *s = (char*)buf;
     size_t i = 0;
     while(i<len){
@@ -24,7 +24,7 @@ extern int read_key();
 extern unsigned int uptime();
 
 size_t events_read(void *buf, size_t offset, size_t len) {
-  _yield();
+  //_yield();
   int key = read_key();
   int down = 0;
   if (key & 0x8000) {
@@ -55,7 +55,7 @@ extern int screen_height();
 extern void draw_rect(unsigned int *pixels, int x, int y, int w, int h);
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
-  _yield();
+  //_yield();
   int w = screen_width();
   int col = (offset/4) % w;
   int row = (offset/4) / w;
