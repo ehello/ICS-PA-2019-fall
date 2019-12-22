@@ -58,11 +58,11 @@ _Context* schedule(_Context *prev) {
   current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
   //PA4.3 
-  if (current == &pcb[0]){
+  if (current ==  &pcb[0]){
     for (int i =  0; i < 10; i++)
       current = &pcb[1];
   }
-  else 
+  else if (current == &pcb[1])
     current = &pcb[0];
   
   
