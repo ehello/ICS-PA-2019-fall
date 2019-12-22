@@ -23,6 +23,8 @@ void hello_fun(void *arg) {
 extern void naive_uload(PCB *, const char *);
 extern void context_kload(PCB *, void *);
 extern void context_uload(PCB *, const char *);
+extern void proc_mm(_AddressSpace *, void (*)());
+
 void init_proc() {
   //PA 3
   //naive_uload(NULL, "/bin/init");
@@ -37,11 +39,13 @@ void init_proc() {
   //PA4.2 TASK 4
   context_uload(&pcb[0], "/bin/hello");
   context_uload(&pcb[1], "/bin/pal");
-  //context_uload(&pcb[2], "/bin/pal");
-  //context_uload(&pcb[3], "/bin/pal");
+  context_uload(&pcb[2], "/bin/pal");
+  context_uload(&pcb[3], "/bin/pal");
  
   fg_pcb = &pcb[1];
-  
+  //run_proc
+  current = pcb;
+  proc_mm(&pcb->as, (void(*)())pcb->cp->eip);
   //switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -52,17 +56,23 @@ void init_proc() {
 }
 
 _Context* schedule(_Context *prev) {
-  
   // save the context pointer
   current->cp = prev;
 
-  // always select pcb[0] as the new process
+  // PA4.1 always select pcb[0] as the new process
   //current = &pcb[0];
 
   //PA 4.1-4.2
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
+  int cnt = 0;
+  int fg = 50;
+  current = (cnt ++ % fg ? fg_pcb : &pcb[0]);
   
   // then return the new context
   return current->cp;
+}
+
+void set_fg_pcb(int idx){
+  fg_pcb = &pcb[idx]; 
 }

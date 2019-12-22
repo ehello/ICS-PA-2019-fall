@@ -1,5 +1,6 @@
 #include "common.h"
 #include <amdev.h>
+#include "proc.h"
 
 size_t serial_write(const void *buf, size_t offset, size_t len) {
   //_yield();
@@ -32,7 +33,22 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     down = 1;
   }
   if (key != _KEY_NONE){
-    sprintf(buf,"%s %s\n", down?"kd":"ku", keyname[key]);
+    //sprintf(buf,"%s %s\n", down?"kd":"ku", keyname[key]);
+    if (down){
+      sprintf(buf, "kd %s\n", keyname[key]);
+      if (keyname[key][0] == 'F'){
+        Log("F* key down\n");
+        if (keyname[key][1] == '1')
+          set_fg_pcb(1);
+        else if (keyname[key][1] == '2')
+          set_fg_pcb(2);
+        else if (keyname[key][1] == '3')
+          set_fg_pcb(3);
+      }
+    }
+    else{
+      sprintf(buf, "ku %s\n", keyname[key]);
+    }
   }
   else{
     unsigned int t = uptime();
@@ -52,7 +68,7 @@ size_t dispinfo_read(void *buf, size_t offset, size_t len) {
 
 extern int screen_width();
 extern int screen_height();
-extern void draw_rect(unsigned int *pixels, int x, int y, int w, int h);
+extern void draw_rect(unsigned int *, int, int, int, int);
 
 size_t fb_write(const void *buf, size_t offset, size_t len) {
   //_yield();
