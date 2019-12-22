@@ -20,11 +20,6 @@ void hello_fun(void *arg) {
   }
 }
 
-void run_proc(PCB *pcb) {
-  extern void proc_mm(_AddressSpace *as, void (*entry)());
-  current = pcb;
-  proc_mm(&pcb->as, (void (*)())pcb->cp->eip);
-}
 
 extern void naive_uload(PCB *, const char *);
 extern void context_kload(PCB *, void *);
@@ -52,7 +47,6 @@ void init_proc() {
   context_uload(&pcb[3], "/bin/pal");
   
   fg_pcb = &pcb[1];
-  //run_proc(&pcb[1]); 
   switch_boot_pcb();
 }
 

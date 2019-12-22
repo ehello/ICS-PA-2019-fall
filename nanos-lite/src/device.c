@@ -27,7 +27,7 @@ extern unsigned int uptime();
 
 size_t events_read(void *buf, size_t offset, size_t len) {
   //_yield();
-  /*int key = read_key();
+  int key = read_key();
   int down = 0;
   if (key & 0x8000) { 
     key ^= 0x8000;
@@ -55,8 +55,9 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     unsigned int t = uptime();
     sprintf(buf,"t %d\n",t);
   }
-  return strlen(buf);*/
-  int keycode = read_key();
+  return strlen(buf);
+
+  /*int keycode = read_key();
   if ((keycode & ~KEYDOWN_MASK) == _KEY_NONE) {
     sprintf(buf, "t %d\n", uptime());
   } 
@@ -82,7 +83,7 @@ size_t events_read(void *buf, size_t offset, size_t len) {
   else {
     sprintf(buf, "ku %s\n", keyname[keycode & ~KEYDOWN_MASK]);
   }
-return strlen(buf);
+return strlen(buf);*/
 }
 
 static char dispinfo[128] __attribute__((used)) = {};

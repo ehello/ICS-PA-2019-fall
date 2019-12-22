@@ -122,8 +122,3 @@ _Context *_ucontext(_AddressSpace *as, _Area ustack, _Area kstack, void *entry, 
   return context;
 }
 
-void proc_mm (_AddressSpace * as, void (*entry)()){
-  set_cr3(as->ptr);
-  cur_as = as;
-  entry();
-}
