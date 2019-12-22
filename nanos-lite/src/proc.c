@@ -20,6 +20,12 @@ void hello_fun(void *arg) {
   }
 }
 
+void run_proc(PCB *pcb) {
+  extern void proc_mm(_AddressSpace *as, void (*entry)());
+  current = pcb;
+  proc_mm(&pcb->as, (void (*)())pcb->cp->eip);
+}
+
 extern void naive_uload(PCB *, const char *);
 extern void context_kload(PCB *, void *);
 extern void context_uload(PCB *, const char *);
@@ -43,9 +49,8 @@ void init_proc() {
   context_uload(&pcb[3], "/bin/pal");
  
   fg_pcb = &pcb[1];
-  //run_proc
-  current = pcb;
-  proc_mm(&pcb->as, (void(*)())pcb->cp->eip);
+  run_proc(&pcb[1]);
+  
   //switch_boot_pcb();
 
   Log("Initializing processes...");
@@ -67,7 +72,7 @@ _Context* schedule(_Context *prev) {
 
   int cnt = 0;
   int fg = 50;
-  current = (cnt ++ % fg ? fg_pcb : &pcb[0]);
+  current = ((cnt ++ % fg) ? fg_pcb : &pcb[0]);
   
   // then return the new context
   return current->cp;
