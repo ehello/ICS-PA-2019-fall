@@ -51,8 +51,8 @@ void init_proc() {
   context_uload(&pcb[2], "/bin/pal");
   context_uload(&pcb[3], "/bin/pal");
   
-  fg_pcb = &pcb[1];
-  run_proc(&pcb[1]); 
+  //fg_pcb = &pcb[1];
+  //run_proc(&pcb[1]); 
   //switch_boot_pcb();
 }
 
