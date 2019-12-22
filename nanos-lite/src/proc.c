@@ -34,7 +34,7 @@ void init_proc() {
   //context_uload(&pcb[0], "/bin/dummy");
 
   //PA4.2 TASK 4
-  context_uload(&pcb[0], "/bin/hello");
+  context_uload(&pcb[0], "/bin/text");
   context_uload(&pcb[1], "/bin/pal");
  
   switch_boot_pcb();
@@ -57,11 +57,8 @@ _Context* schedule(_Context *prev) {
   //PA 4.1-4.2
   //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
-  //PA4.3
-  current = &pcb[0];
-  current = &pcb[1];
-  current = &pcb[1];
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  
+  
   // then return the new context
   return current->cp;
 }
