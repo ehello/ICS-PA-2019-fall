@@ -23,10 +23,11 @@ static const char *keyname[256] __attribute__((used)) = {
 
 extern int read_key();
 extern unsigned int uptime();
+#define KEYDOWN_MASK 0x8000
 
 size_t events_read(void *buf, size_t offset, size_t len) {
   //_yield();
-  int key = read_key();
+  /*int key = read_key();
   int down = 0;
   if (key & 0x8000) { 
     key ^= 0x8000;
@@ -54,7 +55,32 @@ size_t events_read(void *buf, size_t offset, size_t len) {
     unsigned int t = uptime();
     sprintf(buf,"t %d\n",t);
   }
-  return strlen(buf);
+  return strlen(buf);*/
+  int keycode = read_key();
+  if ((keycode & ~KEYDOWN_MASK) == _KEY_NONE) {
+    sprintf(buf, "t %d\n", uptime());
+  } else if (keycode & KEYDOWN_MASK) {
+    sprintf(buf, "kd %s\n", keyname[keycode & ~KEYDOWN_MASK]);
+    if (keyname[keycode & ~KEYDOWN_MASK][0] == 'F') {
+      Log("F key down!");
+      switch (keyname[keycode & ~KEYDOWN_MASK][1]) {
+        case '1':
+          set_fg_pcb(1);
+          break;
+        case '2':
+          set_fg_pcb(2);
+          break;
+        case '3':
+          set_fg_pcb(3);
+          break;
+        default:
+          break;
+      }
+    }
+  } else {
+    sprintf(buf, "ku %s\n", keyname[keycode & ~KEYDOWN_MASK]);
+  }
+return strlen(buf);
 }
 
 static char dispinfo[128] __attribute__((used)) = {};
