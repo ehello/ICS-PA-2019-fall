@@ -5,6 +5,7 @@
 static PCB pcb[MAX_NR_PROC] __attribute__((used)) = {};
 static PCB pcb_boot = {};
 PCB *current = NULL;
+PCB *fg_pcb = NULL;
 
 void switch_boot_pcb() {
   current = &pcb_boot;
@@ -36,8 +37,12 @@ void init_proc() {
   //PA4.2 TASK 4
   context_uload(&pcb[0], "/bin/hello");
   context_uload(&pcb[1], "/bin/pal");
+  //context_uload(&pcb[2], "/bin/pal");
+  //context_uload(&pcb[3], "/bin/pal");
  
-  switch_boot_pcb();
+  fg_pcb = &pcb[1];
+  
+  //switch_boot_pcb();
 
   Log("Initializing processes...");
 
@@ -55,16 +60,8 @@ _Context* schedule(_Context *prev) {
   //current = &pcb[0];
 
   //PA 4.1-4.2
-  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
-  //PA4.3 
-  if (current ==  &pcb[0]){
-    //for (int i =  0; i < 10000000; i++)
-      current = &pcb[1];
-  }
-  else
-    current = &pcb[0];
-  
   
   // then return the new context
   return current->cp;

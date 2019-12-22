@@ -3,6 +3,7 @@
 _Area _heap = {};
 
 void _trm_init() {
+  
 }
 
 void _putc(char ch) {
