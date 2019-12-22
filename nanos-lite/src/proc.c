@@ -32,6 +32,9 @@ extern void context_uload(PCB *, const char *);
 extern void proc_mm(_AddressSpace *, void (*)());
 
 void init_proc() {
+  Log("Initializing processes...");
+  // load program here
+
   //PA 3
   //naive_uload(NULL, "/bin/init");
 
@@ -47,19 +50,13 @@ void init_proc() {
   context_uload(&pcb[1], "/bin/pal");
   context_uload(&pcb[2], "/bin/pal");
   context_uload(&pcb[3], "/bin/pal");
- 
+  
   fg_pcb = &pcb[1];
-  run_proc(&pcb[1]);
-  
+  run_proc(&pcb[1]); 
   //switch_boot_pcb();
-
-  Log("Initializing processes...");
-
-  // load program here
-  
-  
 }
 
+static uint32_t cnt = 0;
 _Context* schedule(_Context *prev) {
   // save the context pointer
   current->cp = prev;
@@ -70,9 +67,9 @@ _Context* schedule(_Context *prev) {
   //PA 4.1-4.2
   //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
-  int cnt = 0;
+  
   int fg = 50;
-  current = ((cnt ++ % fg) ? fg_pcb : &pcb[0]);
+  current = ((cnt++ % fg) ? fg_pcb : &pcb[0]);
   
   // then return the new context
   return current->cp;
