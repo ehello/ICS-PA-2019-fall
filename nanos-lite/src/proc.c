@@ -54,8 +54,14 @@ _Context* schedule(_Context *prev) {
   // always select pcb[0] as the new process
   //current = &pcb[0];
 
-  current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  //PA 4.1-4.2
+  //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
 
+  //PA4.3
+  current = &pcb[0];
+  current = &pcb[1];
+  current = &pcb[1];
+  current = &pcb[1];
   // then return the new context
   return current->cp;
 }
