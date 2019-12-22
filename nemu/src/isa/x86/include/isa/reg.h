@@ -48,7 +48,7 @@ typedef struct {
       uint32_t ZF:1; 
       uint32_t SF:1; 
       unsigned :1; 
-      uint32_t IF:1; 
+      uint32_t IF:1;  
       unsigned :1; 
       uint32_t OF:1; 
       unsigned : 20;
@@ -63,6 +63,8 @@ typedef struct {
   
   CR0 cr0;
   CR3 cr3;
+
+  bool INTR;
 
 } CPU_state;
 
