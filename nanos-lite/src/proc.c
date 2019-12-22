@@ -59,7 +59,7 @@ _Context* schedule(_Context *prev) {
 
   //PA4.3 
   if (current ==  &pcb[0]){
-    for (int i =  0; i < 1000000000000000; i++)
+    for (int i =  0; i < 10000000000000; i++)
       current = &pcb[1];
   }
   else
