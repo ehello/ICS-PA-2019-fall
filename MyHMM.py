@@ -7,7 +7,7 @@ testSetPath = "./test.txt"
 #模型版本号
 modelVer = "2020-09-20-10_16_55"
 
-labels = ['B', 'E', 'S', 'M']
+labels = ['B', 'E', 'S', 'M'] 
 
 def import_models():
     a = np.load("./Models/" + modelVer + "-A.npy", allow_pickle=True).item()
