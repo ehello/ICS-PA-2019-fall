@@ -1,0 +1,9 @@
+*.zip
+*.rar
+*.docx
+util.py
+cws.pdf
+ExtraDataSet/
+Models/
+Results/
+__pycache__/
