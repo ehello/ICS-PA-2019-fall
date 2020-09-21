@@ -21,7 +21,7 @@ extern __ssize_t fs_read(int, void*, size_t);
 extern __off_t fs_lseek(int , __off_t , int );
 extern int fs_close(int);
 
-#define min(x, y) ((x) < (y) ? (x) : (y))
+
 #define PTE_ADDR(pte)     ((uint32_t)(pte) & ~0xfff)
 #define OFF(va) ((uint32_t)(va) & 0xfff)
 
@@ -62,8 +62,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
       void *pa;
       int32_t filesz_left = phdr.p_filesz;
 
-      // 这里注意在映射后由于没有修改CR3寄存器，所以现在的映射还没有启用，在
-      // fs_read和memset时要对物理地址进行修改而不是虚拟地址
+      // 这里注意在映射后由于没有修改CR3寄存器，所以现在的映射还没有启用，在fs_read和memset时要对物理地址进行修改而不是虚拟地址
 
       // 处理第一页 (第一页可能不是页对齐)
       pa = new_page(1);
@@ -114,11 +113,7 @@ static uintptr_t loader(PCB *pcb, const char *filename) {
         memset(pa, 0, PGSIZE);
         delt_size -= PGSIZE;
         va += PGSIZE;
-      }
-
-      //fs_read(fd, (void *)phdr.p_vaddr, phdr.p_filesz);
-      //memset((void *)(phdr.p_vaddr + phdr.p_filesz), 0, phdr.p_memsz - phdr.p_filesz);
-      
+      }  
     }
   }
 
@@ -150,5 +145,5 @@ void context_uload(PCB *pcb, const char *filename) {
   stack.start = pcb->stack;
   stack.end = stack.start + sizeof(pcb->stack);
 
-  pcb->cp = _ucontext(&pcb->as, stack, stack, (void *)entry, NULL);
+  pcb->cp = _ucontext(&pcb->as, stack, stack, (void *)entry, NULL); 
 }
